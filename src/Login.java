@@ -1,4 +1,6 @@
 public class Login {
+    private String username;
+    private String password;
     public boolean checkUsername(String username){
         boolean checku = false;
         return checku;
