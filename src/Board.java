@@ -5,7 +5,6 @@ public class Board {
     private final int sizeRows_board = 9;
     private final int sizeCols_board = 14;
     private Square[][] board = new Square[sizeCols_board][sizeRows_board];
-    private Zone zone;
 
 
     //that's how we define the zones in the board
