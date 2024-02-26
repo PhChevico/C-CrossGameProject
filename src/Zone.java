@@ -2,8 +2,6 @@ import java.util.List;
 
 public class Zone {
 
-    //I don't think we need "limitSquares"
-    //private int limitSquares;
     private Player owner;
     private char zoneID;
     private List<Square> squareOfZone;
@@ -22,4 +20,23 @@ public class Zone {
         this.zoneID = zoneID;
         this.squareOfZone = squareOfZone;
     }
+
+
+
+    //receives a zone as argument and iterate through the squares checking if they're occupied or not.
+    // if all squares dominated (true) return true (zoneIsDominated)
+    public boolean isZoneDominated(Zone zone){
+        for(Square square : squareOfZone){
+            if(square.isStatus())
+                return true;
+        }
+        return false;
+    }
+
+
+
+
+
+
+
 }
