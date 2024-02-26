@@ -3,8 +3,31 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Login {
+public class Authentication {
     private Connection connection;
+
+
+    public boolean registerUser(String name, String password){
+        String createUserDatabase = "INSERT INTO logs_info (name, password) VALUES (?,?)";
+
+        if(isUsernameInDatabase(name)){
+            System.out.println("Username already exists, try another name.");
+            return false;
+        }
+
+        try(PreparedStatement statement = connection.prepareStatement(createUserDatabase)){
+            statement.setString(1, name);
+            statement.setString(2, password);
+            statement.executeUpdate();
+        } catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+
+        return true;
+    }
+
+
+
 
     public boolean isUsernameInDatabase(String login){
 
