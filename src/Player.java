@@ -26,8 +26,13 @@ public class Player {
     }
 
 
-    public insertPawnInCell (){
-
+    //CHANGE IT TO A TRY AND CATCH --- you parse in the player and the square, it checks it the square is occupied
+    // if not, it assigns ownership for the square and makes the squares status occupied
+    public void insertPawnInCell (Player player, Square square){
+        if(!square.isStatus()){
+            square.setOwnership(player);
+            square.setStatus(true);
+        }
     }
 
 
