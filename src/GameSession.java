@@ -7,11 +7,20 @@ public class GameSession {
     Database database = new Database();
     Player player = new Player();
     Screen screen = new Screen();
-    public void start(){
+    public void initgame(){
         if(screen.LoginScreen()==2){
         authentication.registerUser();}
         else{
             authentication.isLoginCorrect();
         }
     }
+    public void game(){}
+    public void start(){
+        initgame();
+        while () {
+            game();
+        }
+    }
+
+
 }
