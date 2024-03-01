@@ -8,4 +8,9 @@ public class Screen {
         choice = scanner.nextInt();
         return choice;
     }
+    public boolean askToExit() { //ask the user at the end of the game if he wants to exit the game
+        System.out.println("Do you want to exit the game? (yes/no)");
+        String answer = scanner.nextLine().trim().toLowerCase();
+        return answer.equals("yes") || answer.equals("y");
+    }
 }
