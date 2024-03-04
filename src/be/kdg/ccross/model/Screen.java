@@ -1,3 +1,5 @@
+package be.kdg.ccross.model;
+
 import java.util.Scanner;
 
 public class Screen {

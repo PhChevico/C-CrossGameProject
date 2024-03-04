@@ -1,3 +1,5 @@
+package be.kdg.ccross.model;
+
 public class GameTime {
     private long startTime;
     private long endTime;

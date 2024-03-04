@@ -1,3 +1,5 @@
+package be.kdg.ccross.model;
+
 public class Square {
     private boolean status;
     private Player ownership;

@@ -1,3 +1,5 @@
+package be.kdg.ccross.model;
+
 public class Player {
     private String name;
     private int pawnNumber; //current player's pawn number

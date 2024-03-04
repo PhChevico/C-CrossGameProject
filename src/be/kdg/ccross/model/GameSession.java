@@ -1,4 +1,4 @@
-//In this implementation we will use hard-code to show how the actual game logic will look like since
+package be.kdg.ccross.model;//In this implementation we will use hard-code to show how the actual game logic will look like since
 //we didn't start implementing javaFX
 //import java.awt.font.GlyphMetrics;
 

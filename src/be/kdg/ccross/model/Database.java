@@ -1,4 +1,4 @@
-import java.sql.*;
+package be.kdg.ccross.model;
 
 public class Database {
     private int idGame;

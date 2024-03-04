@@ -1,4 +1,5 @@
-import java.util.ArrayList;
+package be.kdg.ccross.model;
+
 import java.util.List;
 
 public class Board {
