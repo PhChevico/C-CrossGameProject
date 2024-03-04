@@ -7,6 +7,7 @@ import javafx.scene.layout.BorderPane;
 
 public class AuthenticationView extends BorderPane {
     private Button button;
+    private Tex
 
     protected Button getButton() {
         return button;
