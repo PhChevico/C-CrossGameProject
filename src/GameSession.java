@@ -1,6 +1,6 @@
 //In this implementation we will use hard-code to show how the actual game logic will look like since
 //we didn't start implementing javaFX
-import java.awt.font.GlyphMetrics;
+//import java.awt.font.GlyphMetrics;
 
 public class GameSession {
     private String time;
@@ -19,11 +19,11 @@ public class GameSession {
         }
     }
     public void initgame(){
-        if(screen.LoginScreen()==2){ //the screen.LoginScreen is just a hashcode of how the actual JavaFX screen would look like.
+        /*if(screen.LoginScreen()==2){ //the screen.LoginScreen is just a hashcode of how the actual JavaFX screen would look like.
         authentication.registerUser();} //user enter name and password
         else{
             authentication.isLoginCorrect(); //check if the login is correct
-        }
+        }*/
     }
     public void game(){
         //display the screen with javaFX
