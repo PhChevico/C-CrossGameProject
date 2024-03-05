@@ -3,11 +3,12 @@ package be.kdg.ccross.view.authenticationscreen;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 
 public class AuthenticationView extends BorderPane {
     private Button button;
-    private Tex
+    private TextField textField;
 
     protected Button getButton() {
         return button;
