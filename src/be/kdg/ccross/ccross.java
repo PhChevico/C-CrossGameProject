@@ -22,7 +22,6 @@ public class ccross extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        Board board = new Board();
         GameRunner game = new GameRunner();
         BoardView boardView = new BoardView();
         primaryStage.setScene(new Scene(boardView));
