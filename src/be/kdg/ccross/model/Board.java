@@ -1,5 +1,6 @@
 package be.kdg.ccross.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
@@ -52,7 +53,83 @@ public class Board {
     }
 
 
+//    public String[][] getSquaresAsArray(){
+//
+//        // Get all squares
+//        List<Square> squares = getAllSquaresFromZones();
+//
+//        // Sort by position
+//        squares.sort((Square one, Square two) -> {
+//
+//            if(one.getRow() == two.getRow())
+//                return one.getColumn() - two.getColumn();
+//
+//            return one.getRow() - two.getRow();
+//
+//        });
+//
+//
+//        // Init array
+//        String[][] result = new String[0][];
+//
+//        for (int i = 0; i < sizeRows_board; i++) {
+//            for (int j = 0; j < sizeCols_board; j++) {
+//                int index = i * sizeCols_board + j;  // Corrected line
+//                Square square = squares.get(index);
+//                result[i][j] = square.toString();
+//            }
+//        }
+//
+//
+//        return result;
+//    }
 
+    public List<String> getSquaresAsList(){
+
+        // Get all squares
+        List<Square> squares = getAllSquaresFromZones();
+
+        // Sort by position
+        squares.sort((Square one, Square two) -> {
+
+            if(one.getRow() == two.getRow())
+                return one.getColumn() - two.getColumn();
+
+            return one.getRow() - two.getRow();
+
+        });
+
+        // Initialize the array with the correct dimensions
+        //String[][] result = new String[sizeRows_board][sizeCols_board];
+        List<String> result = new ArrayList<>();
+
+        // Check if the size of the squares list is compatible with the array dimensions
+            try{
+                for (int i = 0; i < sizeRows_board; i++) {
+                    for (int j = 0; j < sizeCols_board; j++) {
+                        int index = i * sizeCols_board + j;
+                        Square square = squares.get(index);
+                        result.add(square.toString());
+                    }
+                }
+            } catch (Exception e){
+                System.out.println("error: " + e.getMessage());
+            }
+
+
+        return result;
+    }
+
+
+
+    private List<Square> getAllSquaresFromZones(){
+        List<Square> squares = new ArrayList<>();
+
+        for (Zone zone : zones)
+            squares.addAll(zone.getSquareOfZone());
+
+        return squares;
+    }
 
 
     //to the continued

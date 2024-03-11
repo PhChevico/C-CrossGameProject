@@ -2,6 +2,8 @@ package be.kdg.ccross.model;//In this implementation we will use hard-code to sh
 //we didn't start implementing javaFX
 //import java.awt.font.GlyphMetrics;
 
+import java.util.List;
+
 public class GameSession {
     private String time;
     Authentication authentication = new Authentication();
@@ -40,6 +42,12 @@ public class GameSession {
         isFinished= screen.askToExit(); //we set the boolean is Finished to the choice of the player(exit the game or continue in the loop)
     }
 
+    public List<String> getSquaresAsList(){
+        return board.getSquaresAsList();
+    }
+
+    // Z1 Z1 Z1
+    // Z1 Z2 Z1
 
 
 }

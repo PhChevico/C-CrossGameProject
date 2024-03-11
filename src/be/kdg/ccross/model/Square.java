@@ -32,24 +32,14 @@
             return column;
         }
 
-        public void setColumn(int column) {
-            this.column = column;
-        }
-
         public int getRow() {
             return row;
         }
 
-        public void setRow(int row) {
-            this.row = row;
-        }
 
         @Override
         public String toString() {
-            return "Square{" +
-                    "status=" + status +
-                    ", ownership=" + ownership +
-                    '}';
+            return String.valueOf(row) + "-" + String.valueOf(column) ;
         }
 
 
