@@ -1,5 +1,6 @@
 package be.kdg.ccross.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Zone {
@@ -16,11 +17,23 @@ public class Zone {
         this.squareOfZone = squareOfZone;
     }
 
-
     public Zone(Player owner, char zoneID, List<Square> squareOfZone) {
         this.owner = owner;
         this.zoneID = zoneID;
         this.squareOfZone = squareOfZone;
+    }
+
+
+    public Player getOwner() {
+        return owner;
+    }
+
+    public char getZoneID() {
+        return zoneID;
+    }
+
+    public List<Square> getSquareOfZone() {
+        return squareOfZone;
     }
 
 
@@ -34,11 +47,5 @@ public class Zone {
         }
         return false;
     }
-
-
-
-
-
-
 
 }
