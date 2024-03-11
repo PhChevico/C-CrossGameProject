@@ -2,7 +2,9 @@ CREATE DATABASE c_cross_team21;
 
 
 DROP TABLE IF EXISTS logs_info cascade ;
-DROP TABLE IF EXISTS game_statistics cascade ;
+DROP TABLE IF EXISTS Players cascade ;
+DROP TABLE IF EXISTS Games cascade ;
+DROP TABLE IF EXISTS Moves cascade ;
 DROP SEQUENCE IF EXISTS seq_game_id;
 
 
@@ -12,20 +14,20 @@ CREATE TABLE IF NOT EXISTS logs_info (
                                         password VARCHAR(25)
 );
 
-CREATE TABLE Players (
+CREATE TABLE IF NOT EXISTS Players (
                          player_id INT PRIMARY KEY,
                          player_name VARCHAR(255)
 );
 
-CREATE TABLE Games (
+CREATE TABLE IF NOT EXISTS Games (
                        game_id INT PRIMARY KEY,
-                       start_time DATETIME,
-                       end_time DATETIME,
+                       start_time TIMESTAMP,
+                       end_time TIMESTAMP,
                        winner_id INT,
                        total_play_time TIME
 );
 
-CREATE TABLE Moves (
+CREATE TABLE IF NOT EXISTS Moves (
                        move_id INT PRIMARY KEY,
                        game_id INT,
                        player_id INT,
