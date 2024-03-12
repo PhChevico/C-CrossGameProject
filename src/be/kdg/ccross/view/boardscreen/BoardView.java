@@ -1,9 +1,7 @@
 package be.kdg.ccross.view.boardscreen;
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
 import java.util.ArrayList;
@@ -31,8 +29,6 @@ public class BoardView extends GridPane {
 
 
     private void layoutNodes() {
-//        GridPane gridPane = new GridPane();
-//        gridPane.setAlignment(Pos.CENTER);
 
         this.setAlignment(Pos.CENTER);
         BackgroundImage backgroundImage = new BackgroundImage(

@@ -4,7 +4,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
-import java.util.List;
 
 
 public class BoardPresenter {
@@ -25,7 +24,6 @@ public class BoardPresenter {
 
         for (ImageView img : view.getBoardImages()) {
             img.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "No HI");
                 System.out.println("javafx is cool");
                 System.out.println(img.getLayoutX());
                 System.out.println(img.getLayoutY());
