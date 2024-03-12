@@ -1,14 +1,11 @@
 package be.kdg.ccross.view.boardscreen;
-
-import be.kdg.ccross.model.Board;
 import be.kdg.ccross.model.GameSession;
 import javafx.scene.input.MouseEvent;
 
 
 public class BoardPresenter {
-    GameSession session;
-    Board board = new Board();
-    BoardView view;
+    GameSession session; //model
+    BoardView view; //view
 
     public BoardPresenter(GameSession session, BoardView view){
         this.session = session;
@@ -22,15 +19,9 @@ public class BoardPresenter {
 
 
     private void addEventHandlers(){
-        view.img.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+        view.squares.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
             System.out.println("javafx sucks");
             mouseEvent.consume();
         });
     }
-
-
-
-
-
-
 }

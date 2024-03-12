@@ -1,23 +1,19 @@
 package be.kdg.ccross.view.boardscreen;
-
-import be.kdg.ccross.model.Board;
-import be.kdg.ccross.model.Square;
+import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-
+import javafx.scene.layout.*;
 import java.util.List;
 
 
 public class BoardView extends GridPane {
 
-    ImageView img = new ImageView(new Image("images/squareTest.jpg"));
+    final ImageView squares = new ImageView(new Image("images/squareTest.jpg"));
+    private final int SQUARE_SIZE = 85;
 
     public BoardView(){
         this.initialiseNodes();
         this.layoutNodes();
-
-
     }
 
     private void initialiseNodes(){
@@ -25,39 +21,38 @@ public class BoardView extends GridPane {
 
 
     private void layoutNodes() {
+        this.setAlignment(Pos.CENTER);
+        BackgroundImage backgroundImage = new BackgroundImage(
+                new Image("images/bg1.jpg", false),
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                BackgroundSize.DEFAULT);
+        this.setBackground(new Background(backgroundImage));
 
     }
 
     public void boardMaker(List<String> boardAsArray) {
 
-        for (int i = 0; i < boardAsArray.size(); i++) {
-                if (boardAsArray.get(i) != null) {
-                    String[] parts = boardAsArray.get(i).split("-");
-                    ImageView img = new ImageView(new Image("images/squareTest.jpg"));
-                    img.setFitWidth(85);
-                    img.setFitHeight(85);
-                    this.add(img, Integer.parseInt(parts[1]), Integer.parseInt(parts[0]));
-                } else {
-                    // Handle the case when the string is null
-                    System.out.println("crash");
-                }
+        for (String boardAsList : boardAsArray) {
+            if (boardAsList != null) {
+                //splitting the list in by "-"
+                String[] parts = boardAsList.split("-");
+
+                //creating the image and setting the size of the images
+                ImageView img = new ImageView(squares.getImage());
+                img.setFitWidth(SQUARE_SIZE);
+                img.setFitHeight(SQUARE_SIZE);
+                //adding the image to the view
+                this.add(img, Integer.parseInt(parts[1]), Integer.parseInt(parts[0]));
             }
         }
-
-
-
-//        for(int i = 'A'; i <= 'P'; i ++) {
-//            List<Square> list = board.getZone((char) i).getSquareOfZone();
-//
-//            for (Square square : list) {
-//                ImageView img = new ImageView(new Image("images/squareTest.jpg"));
-//                img.setFitWidth(85);
-//                img.setFitHeight(85);
-//                this.add(img, square.getColumn(), square.getRow());
-//            }
-//        }
-
-
-
-
     }
+
+}
+
+
+
+
+
+

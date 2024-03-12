@@ -20,6 +20,7 @@ public class ccross extends Application {
         GameSession session = new GameSession();
         BoardView boardView = new BoardView();
         primaryStage.setScene(new Scene(boardView));
+        primaryStage.setFullScreen(true);
         new BoardPresenter(session, boardView);
 
         primaryStage.show();

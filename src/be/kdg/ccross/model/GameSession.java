@@ -46,6 +46,11 @@ public class GameSession {
         return board.getSquaresAsList();
     }
 
+
+    public void HandleClickBoard(){
+
+    }
+
     // Z1 Z1 Z1
     // Z1 Z2 Z1
 
