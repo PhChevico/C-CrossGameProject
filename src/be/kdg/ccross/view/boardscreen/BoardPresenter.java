@@ -1,9 +1,12 @@
 package be.kdg.ccross.view.boardscreen;
 import be.kdg.ccross.model.GameSession;
+import javafx.event.Event;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 
 public class BoardPresenter {
@@ -29,6 +32,26 @@ public class BoardPresenter {
                 System.out.println(img.getLayoutY());
                 mouseEvent.consume();
             });
+        }
+
+        //fix this, is not working -- Scene for some reason is NULL
+        if(view.getScene() != null)
+            view.getScene().getWindow().setOnCloseRequest(this::closeApplication);
+
+    }
+
+    private void closeApplication(WindowEvent event) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setHeaderText("You are about to quit the game!");
+        alert.setContentText("Do you really want to leave?");
+        alert.setTitle("Bye ;-; !");
+        alert.getButtonTypes().clear();
+        ButtonType no = new ButtonType("NO");
+        ButtonType yes = new ButtonType("YES");
+        alert.getButtonTypes().addAll(no, yes);
+        alert.showAndWait();
+        if (alert.getResult() == null || alert.getResult().equals(no)) {
+            event.consume();
         }
     }
 
