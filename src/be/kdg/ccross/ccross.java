@@ -29,11 +29,6 @@ public class ccross extends Application {
         new HomeScreenPresenter(session, homeScreenView);
         primaryStage.show();
 
-//        BoardView boardView = new BoardView();
-//        primaryStage.setScene(new Scene(boardView));
-//        primaryStage.setFullScreen(true);
-//        new BoardPresenter(session, boardView);
-
 
     }
 }
