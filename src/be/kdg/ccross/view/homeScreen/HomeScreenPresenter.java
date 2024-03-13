@@ -7,6 +7,7 @@ import javafx.event.Event;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class HomeScreenPresenter {
@@ -27,13 +28,23 @@ public class HomeScreenPresenter {
     }
 
     private void setGameView(){
-        BoardView boardView = new BoardView();
-        BoardPresenter boardPresenter = new BoardPresenter(model, boardView);
+        // ONE WAY TO DO IT BUT MISSING THE OWNERSHIP OF THE NEW STAGE
+//        BoardView boardView = new BoardView();
+//        BoardPresenter boardPresenter = new BoardPresenter(model, boardView);
+//        Stage stage = new Stage();
+//        stage.setScene(new Scene(boardView));
+//        stage.show();
+//        ((Stage)view.getScene().getWindow()).close();
 
-        Stage stage = new Stage();
-        stage.setScene(new Scene(boardView));
-        stage.show();
-        ((Stage)view.getScene().getWindow()).close();
+        BoardView boardView = new BoardView();
+        view.getScene().setRoot(boardView);
+        BoardPresenter boardPresenter = new BoardPresenter(model, boardView);
+        boardView.getScene().getWindow().sizeToScene();
+        double centerX = Screen.getPrimary().getVisualBounds().getWidth() / 2 - boardView.getScene().getWindow().getWidth() / 2;
+        double centerY = Screen.getPrimary().getVisualBounds().getHeight() / 2 - boardView.getScene().getWindow().getHeight() / 2;
+        boardView.getScene().getWindow().setX(centerX);
+        boardView.getScene().getWindow().setY(centerY);
+
     }
 
     private void closeApplication(Event event) {

@@ -35,22 +35,24 @@ public class BoardPresenter {
         }
 
         //fix this, is not working -- Scene for some reason is NULL
-        if(view.getScene() != null)
+        //if(view.getScene() != null)
             view.getScene().getWindow().setOnCloseRequest(this::closeApplication);
 
     }
 
-    private void closeApplication(WindowEvent event) {
+    private void closeApplication(Event event) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setHeaderText("You are about to quit the game!");
         alert.setContentText("Do you really want to leave?");
         alert.setTitle("Bye ;-; !");
         alert.getButtonTypes().clear();
-        ButtonType no = new ButtonType("NO");
         ButtonType yes = new ButtonType("YES");
-        alert.getButtonTypes().addAll(no, yes);
+        ButtonType no = new ButtonType("NO");
+        alert.getButtonTypes().addAll(yes, no);
         alert.showAndWait();
-        if (alert.getResult() == null || alert.getResult().equals(no)) {
+        if (alert.getResult().equals(yes)) {
+            ((Stage)view.getScene().getWindow()).close();
+        } else {
             event.consume();
         }
     }
