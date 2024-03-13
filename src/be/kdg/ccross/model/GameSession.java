@@ -46,6 +46,16 @@ public class GameSession {
         return board.getSquaresAsList();
     }
 
+    public boolean registerUser(String userName, String password){
+        try {
+            //authentication.registerUser(userName, password);
+            return true;
+        } catch (Exception e){
+            System.out.println("Not possible to register: " + e.getMessage());
+            return false;
+        }
+    }
+
 
     public void HandleClickBoard(){
 

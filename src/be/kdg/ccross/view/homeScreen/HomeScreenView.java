@@ -45,6 +45,9 @@ public class HomeScreenView extends VBox {
                 BackgroundSize.DEFAULT);
         this.setBackground(new Background(backgroundImage));
 
+        setMinHeight(600);
+        setMinWidth(300);
+
     }
 
     public Button getPlay() {

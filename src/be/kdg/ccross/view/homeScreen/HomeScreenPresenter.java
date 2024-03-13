@@ -14,6 +14,8 @@ public class HomeScreenPresenter {
 
     GameSession model;
     HomeScreenView view;
+
+
     public HomeScreenPresenter(GameSession model, HomeScreenView view){
         this.model = model;
         this.view = view;
