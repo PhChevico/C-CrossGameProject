@@ -5,6 +5,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -13,9 +14,9 @@ public class BoardView extends GridPane {
     static final String IMAGES_SQUARE_TEST_JPG = "images/squareTest.jpg";
     private final int SQUARE_SIZE = 85;
 
-    List<ImageView> boardImages = new ArrayList<>();
+    HashMap<ImageView, String> boardImages = new HashMap<ImageView, String>();
 
-    public List<ImageView> getBoardImages() {
+    public HashMap<ImageView, String> getBoardImages() {
         return boardImages;
     }
 
@@ -44,6 +45,7 @@ public class BoardView extends GridPane {
 
     public void boardMaker(List<String> boardAsArray) {
 
+        System.out.println(boardAsArray);
         for (String boardAsList : boardAsArray) {
             if (boardAsList != null) {
                 //splitting the list in by "-"
@@ -54,8 +56,8 @@ public class BoardView extends GridPane {
                 img.setFitWidth(SQUARE_SIZE);
                 img.setFitHeight(SQUARE_SIZE);
                 //adding the image to the view
-                add(img, Integer.parseInt(parts[1]), Integer.parseInt(parts[0]));
-                getBoardImages().add(img);
+                add(img, Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
+                getBoardImages().put(img, boardAsList);
 
             }
         }

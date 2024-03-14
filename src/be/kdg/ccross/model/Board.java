@@ -89,18 +89,17 @@ public class Board {
         // Get all squares
         List<Square> squares = getAllSquaresFromZones();
 
-        // Sort by position
-        squares.sort((Square one, Square two) -> {
+//        // Sort by position
+//        squares.sort((Square one, Square two) -> {
+//
+//            if(one.getRow() == two.getRow())
+//                return one.getColumn() - two.getColumn();
+//
+//            return one.getRow() - two.getRow();
+//
+//        });
 
-            if(one.getRow() == two.getRow())
-                return one.getColumn() - two.getColumn();
-
-            return one.getRow() - two.getRow();
-
-        });
-
-        // Initialize the array with the correct dimensions
-        //String[][] result = new String[sizeRows_board][sizeCols_board];
+        // Initialize the ArrayList
         List<String> result = new ArrayList<>();
 
         // Check if the size of the squares list is compatible with the array dimensions

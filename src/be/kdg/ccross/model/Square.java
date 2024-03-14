@@ -39,7 +39,7 @@
 
         @Override
         public String toString() {
-            return String.valueOf(row) + "-" + String.valueOf(column) ;
+            return String.valueOf(column) + "-" + String.valueOf(row) ;
         }
 
 
