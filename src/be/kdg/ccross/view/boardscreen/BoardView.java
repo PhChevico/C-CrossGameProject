@@ -3,6 +3,9 @@ import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Shape;
+import javafx.scene.shape.Shape3D;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,12 +16,10 @@ public class BoardView extends GridPane {
 
     static final String IMAGES_SQUARE_TEST_JPG = "images/squareTest.jpg";
     private final int SQUARE_SIZE = 85;
+    private HashMap<String, ImageView> boardImages = new HashMap<String, ImageView>();
+    Circle pawn;
 
-    HashMap<ImageView, String> boardImages = new HashMap<ImageView, String>();
 
-    public HashMap<ImageView, String> getBoardImages() {
-        return boardImages;
-    }
 
     public BoardView(){
         this.initialiseNodes();
@@ -26,11 +27,12 @@ public class BoardView extends GridPane {
     }
 
     private void initialiseNodes(){
+        pawn = new Circle();
     }
 
 
     private void layoutNodes() {
-
+        //board layout
         this.setAlignment(Pos.CENTER);
         BackgroundImage backgroundImage = new BackgroundImage(
                 new Image("images/bg1.jpg", false),
@@ -40,8 +42,15 @@ public class BoardView extends GridPane {
                 BackgroundSize.DEFAULT);
         this.setBackground(new Background(backgroundImage));
 
+
+        //pawn layout
+        pawn.setRadius(10);
     }
 
+
+    public HashMap<String, ImageView> getBoardImages() {
+        return boardImages;
+    }
 
     public void boardMaker(List<String> boardAsArray) {
 
@@ -57,7 +66,7 @@ public class BoardView extends GridPane {
                 img.setFitHeight(SQUARE_SIZE);
                 //adding the image to the view
                 add(img, Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
-                getBoardImages().put(img, boardAsList);
+                getBoardImages().put(boardAsList, img);
 
             }
         }

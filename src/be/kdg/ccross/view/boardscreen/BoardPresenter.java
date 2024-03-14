@@ -30,14 +30,19 @@ public class BoardPresenter {
     private void addEventHandlers(){
 
 
-
-        for (ImageView img : view.getBoardImages().keySet()) {
+        //return the coordinates of the square.
+        for (Map.Entry<String, ImageView> entry : view.getBoardImages().entrySet()) {
+            ImageView img = entry.getValue();
             img.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
                 System.out.println("javafx is cool");
-                System.out.println(view.getBoardImages().get(img));
+                System.out.println(entry.getKey()); // This will give you the key corresponding to the clicked image
                 mouseEvent.consume();
             });
         }
+
+
+        //put a pawn into the square
+
 
         view.getScene().getWindow().setOnCloseRequest(this::closeApplication);
 
