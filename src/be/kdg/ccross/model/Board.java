@@ -8,10 +8,12 @@ public class Board {
     private final int sizeCols_board = 14;
     private Square[][] board = new Square[sizeCols_board][sizeRows_board];
     private Zone[] zones;
+    private List<Square> squaresOfTheBoard;
     public Board() {
+        squaresOfTheBoard = new ArrayList<>();
         for (int i = 0; i < sizeCols_board; i++) {
             for (int j = 0; j < sizeRows_board; j++) {
-                board[i][j] = new Square(i, j); // Initialize Square objects here
+                board[i][j] = new Square(i, j);; // Initialize Square objects here
             }
         }
 
@@ -38,8 +40,10 @@ public class Board {
     }
 
 
-
-
+    public Square getSquare(String coordinates){
+        String[] parts = coordinates.split("-");
+        return board [Integer.parseInt(parts[0])] [Integer.parseInt(parts[1])];
+    }
     public Zone getZone(char selectedZone){
 
         int charAsInt = (int) selectedZone;

@@ -56,8 +56,11 @@ public class GameSession {
         }
     }
 
+    public Board getBoard(){
+        return board;
+    }
 
-    public void HandleClickBoard(){
+    public void handleClickBoard(String coordinates){
 
     }
 

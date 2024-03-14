@@ -34,8 +34,21 @@ public class BoardPresenter {
         for (Map.Entry<String, ImageView> entry : view.getBoardImages().entrySet()) {
             ImageView img = entry.getValue();
             img.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
-                System.out.println("javafx is cool");
-                System.out.println(entry.getKey()); // This will give you the key corresponding to the clicked image
+
+                System.out.println(entry.getKey());
+
+                if(!session.getBoard().getSquare(entry.getKey()).isStatus()){
+                    session.getBoard().getSquare(entry.getKey()).setStatus(true);
+                    //here we put a pawn into the square
+                    System.out.println(session.getBoard().getSquare(entry.getKey()).isStatus());
+                } else {
+                    System.out.println("Impossible to put a pawn in that square");
+                }
+
+
+                // gives the key corresponding to the clicked image
+                //session.handleClickBoard(entry.getKey());
+
                 mouseEvent.consume();
             });
         }
@@ -47,6 +60,7 @@ public class BoardPresenter {
         view.getScene().getWindow().setOnCloseRequest(this::closeApplication);
 
     }
+
 
 
 
