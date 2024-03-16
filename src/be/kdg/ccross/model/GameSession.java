@@ -3,7 +3,7 @@ package be.kdg.ccross.model;//In this implementation we will use hard-code to sh
 //import java.awt.font.GlyphMetrics;
 
 import java.util.List;
-
+;
 public class GameSession {
     private String time;
     Authentication authentication = new Authentication();
@@ -30,7 +30,7 @@ public class GameSession {
     public void game(){
         //display the screen with javaFX
         String color = pawn.pawnColor();//we ask the user for a pawn color(we still didn't handle the input of it since we still have to work with javaFX
-                        //so this is just an example of how it should work USING ENUMS
+        //so this is just an example of how it should work USING ENUMS
         //display the board with JavaFX;
         gameTime.start();
         //ask where the user wants to put the pawn with a method stored in ??? that we will implement once we will start working with javaFX
@@ -46,7 +46,7 @@ public class GameSession {
         return board.getSquaresAsList();
     }
 
-    public boolean registerUser(String userName, String password){
+    public boolean registerUser(String userName, String password,String confirmPasswd){
         try {
             //authentication.registerUser(userName, password);
             return true;
@@ -63,6 +63,15 @@ public class GameSession {
     public void handleClickBoard(String coordinates){
 
     }
+
+    public String getUsername(){
+        return player.getName();
+    }
+
+    public void setUsername(String username){
+        player.setName(username);
+    }
+
 
     // Z1 Z1 Z1
     // Z1 Z2 Z1

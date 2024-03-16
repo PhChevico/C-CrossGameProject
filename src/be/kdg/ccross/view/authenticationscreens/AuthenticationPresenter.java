@@ -1,9 +1,10 @@
-package be.kdg.ccross.view.registerscreen;
+package be.kdg.ccross.view.authenticatonscreens;
 
 
 import be.kdg.ccross.model.GameSession;
-import be.kdg.ccross.view.boardscreen.BoardPresenter;
-import be.kdg.ccross.view.boardscreen.BoardView;
+import be.kdg.ccross.view.authenticationscreens.AuthenticationView;
+import be.kdg.ccross.view.registerscreens.RegisterPresenter;
+import be.kdg.ccross.view.registerscreens.RegisterView;
 import be.kdg.ccross.view.homeScreen.HomeScreenPresenter;
 import be.kdg.ccross.view.homeScreen.HomeScreenView;
 import javafx.event.Event;
@@ -11,29 +12,30 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import org.w3c.dom.events.MouseEvent;
 
-public class RegisterPresenter {
-    RegisterView view;
+public class AuthenticationPresenter {
+    be.kdg.ccross.view.authenticationscreens.AuthenticationView view;
     GameSession model;
-    public RegisterPresenter(GameSession model, RegisterView view){
+    public AuthenticationPresenter(GameSession model, AuthenticationView view){
         this.model = model;
         this.view = view;
         addEventHandlers();
     }
     private void addEventHandlers(){
-        //view.getRegister().setOnAction(actionEvent ->  );
         view.getScene().getWindow().setOnCloseRequest(this::closeApplication);
+        view.getCancel().setOnAction(this::closeApplication);
+
+        view.getcreateacc().setOnAction(actionEvent -> {
+            setRegisterView();
+        } );
 
         view.getLog_in().setOnAction(actionEvent -> {
-            String username = view.getUserName().getText();
-            String password = view.getPasswd().getText();
-
-            model.registerUser(username, password);
-            setHomeScreenView();
-
-
+            String username = view.getUsernamefield().getText();
+            String password = view.getPasswordField().getText();
+//            model.registerUser(username, password); here we have to creat a method for login as well
+            welcome(null);
         });
+
 
     }
 
@@ -56,8 +58,18 @@ public class RegisterPresenter {
         homeScreenView.getScene().getWindow().setY(centerY);
 
     }
+    private void setRegisterView(){
+        RegisterView registerView = new RegisterView();
+        view.getScene().setRoot(registerView);
+        RegisterPresenter registerPresenter = new RegisterPresenter(model, registerView);
+        registerView.getScene().getWindow();
+//        double centerX = Screen.getPrimary().getVisualBounds().getWidth() / 2 - registerView.getScene().getWindow().getWidth() / 2;
+//        double centerY = Screen.getPrimary().getVisualBounds().getHeight() / 2 - registerView.getScene().getWindow().getHeight() / 2;
+//        registerView.getScene().getWindow().setX(centerX);
+//        registerView.getScene().getWindow().setY(centerY);
 
 
+    }
 
     private void closeApplication(Event event) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -75,4 +87,20 @@ public class RegisterPresenter {
             event.consume();
         }
     }
+    private void welcome(Event event) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("Log in successfully");
+        model.setUsername(view.getUsernamefield().getText());
+        alert.setContentText("Welcome " + model.getUsername());
+        ButtonType next = new ButtonType("Next !");
+        alert.getButtonTypes().setAll(next);
+        // using setOnAction instead of addEventFilter
+        alert.setOnCloseRequest(e -> {
+            setHomeScreenView();
+        });
+
+        alert.showAndWait();
+    }
+
+
 }

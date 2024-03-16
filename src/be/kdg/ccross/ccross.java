@@ -1,13 +1,8 @@
 package be.kdg.ccross;
 
-import be.kdg.ccross.model.GameRunner;
 import be.kdg.ccross.model.GameSession;
-import be.kdg.ccross.view.boardscreen.BoardPresenter;
-import be.kdg.ccross.view.boardscreen.BoardView;
-import be.kdg.ccross.view.homeScreen.HomeScreenPresenter;
-import be.kdg.ccross.view.homeScreen.HomeScreenView;
-import be.kdg.ccross.view.registerscreen.RegisterPresenter;
-import be.kdg.ccross.view.registerscreen.RegisterView;
+import be.kdg.ccross.view.registerscreens.RegisterPresenter;
+import be.kdg.ccross.view.registerscreens.RegisterView;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -25,18 +20,30 @@ public class ccross extends Application {
 //        GameSession session = new GameSession();
 //        HomeScreenView homeScreenView = new HomeScreenView();
 //        primaryStage.setScene(new Scene(homeScreenView));
-//        primaryStage.getIcons().add(new Image("images/Instagram_icon.png"));
 //        primaryStage.setMinWidth(300);
 //        primaryStage.setMinHeight(600);
 //        new HomeScreenPresenter(session, homeScreenView);
 //        primaryStage.show();
+
         GameSession gameSession = new GameSession();
         RegisterView registerView = new RegisterView();
         primaryStage.setScene(new Scene(registerView));
+        primaryStage.getIcons().add(new Image("images/C-Cross.png"));
+        primaryStage.setTitle("C-Cross");
         new RegisterPresenter(gameSession, registerView);
         primaryStage.setMinHeight(500);
         primaryStage.setMinWidth(400);
         primaryStage.show();
+
+//        GameSession gameSession = new GameSession();
+//        RegisterView authenticationView = new RegisterView();
+//        primaryStage.setScene(new Scene(authenticationView));
+//        new RegisterPresenter(gameSession, authenticationView);
+//        primaryStage.setMinHeight(500);
+//        primaryStage.setMinWidth(400);
+//        primaryStage.show();
+
+
 
 
     }

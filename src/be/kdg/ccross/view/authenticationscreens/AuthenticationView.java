@@ -1,4 +1,4 @@
-package be.kdg.ccross.view.registerscreen;
+package be.kdg.ccross.view.authenticationscreens;
 
 
 import javafx.geometry.Pos;
@@ -6,64 +6,66 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 
-public class RegisterView extends VBox {
+public class AuthenticationView extends VBox {
     Label screenTitle;
     Label name;
     Label password;
-    TextField userName;
-    PasswordField passwd;
-    Button register;
+    TextField usernamefield;
+    PasswordField passwordField;
+    Button createacc;
     Button cancel;
     Button log_in;
     HBox HBOXLOGIN;
     HBox HBOXPASSWORD;
     HBox buttonsConfirm;
 
-    public RegisterView() {
+    public AuthenticationView() {
         initialiseNodes();
         layoutNodes();
+        this.setStyle("-fx-background-color: #e5d9c7");
     }
     public void initialiseNodes(){
-        screenTitle = new Label("Register");
-        screenTitle.setFont(Font.font("Register", FontWeight.BOLD,10));
+        screenTitle = new Label("Login ");
+        screenTitle.setFont(Font.font("Login", FontWeight.BOLD, FontPosture.ITALIC,30));
         name = new Label("Username: ");
-        userName = new TextField("");
+        name.setFont(Font.font("Arial",15));
+        usernamefield = new TextField("");
         password = new Label("Password: ");
-        passwd = new PasswordField();
-        register = new Button("Register");
+        password.setFont(Font.font("Arial",15));
+        passwordField = new PasswordField();
+        createacc = new Button("Create an account?");
         cancel= new Button("Cancel");
         log_in = new Button("Log in");
-        HBOXLOGIN = new HBox();
-        HBOXPASSWORD = new HBox();
-        buttonsConfirm = new HBox();
+        HBOXLOGIN = new HBox(5);
+        HBOXPASSWORD = new HBox(5);
+        buttonsConfirm = new HBox(5);
     }
     private void layoutNodes(){
         //screenTitle.setTextAlignment(TextAlignment.CENTER);
-        userName.setMaxHeight(20);
-        userName.setMaxWidth(100);
-        passwd.setMaxHeight(20);
-        passwd.setMaxWidth(100);
-        HBOXLOGIN.getChildren().addAll(name, userName);
-        HBOXPASSWORD.getChildren().addAll(password, passwd);
-        buttonsConfirm.getChildren().addAll(register,cancel,log_in);
+        usernamefield.setMaxHeight(20);
+        usernamefield.setMaxWidth(120);
+        passwordField.setMaxHeight(20);
+        passwordField.setMaxWidth(120);
+        HBOXLOGIN.getChildren().addAll(name, usernamefield);
+        HBOXPASSWORD.getChildren().addAll(password, passwordField);
+        buttonsConfirm.getChildren().addAll(createacc,cancel,log_in);
         HBOXLOGIN.setAlignment(Pos.CENTER);
         HBOXPASSWORD.setAlignment(Pos.CENTER);
         buttonsConfirm.setAlignment(Pos.CENTER);
         super.getChildren().addAll(screenTitle, HBOXLOGIN, HBOXPASSWORD, buttonsConfirm);
         setAlignment(Pos.CENTER);
-        register.setMinSize(80,15);
-        cancel.setMinSize(80,15);
-        log_in.setMinSize(80,15);
-        setSpacing(20);
+        createacc.setMinSize(80,15);
+        cancel.setMinSize(90,15);
+        log_in.setMinSize(90,15);
+        setSpacing(25);
 
 
 
     }
-    public Button getRegister(){return register;}
+    public Button getcreateacc(){return createacc;}
     public Button getCancel(){return cancel;}
     public Button getLog_in(){return log_in;}
 
@@ -79,12 +81,12 @@ public class RegisterView extends VBox {
         return password;
     }
 
-    public TextField getUserName() {
-        return userName;
+    public TextField getUsernamefield() {
+        return usernamefield;
     }
 
-    public PasswordField getPasswd() {
-        return passwd;
+    public PasswordField getPasswordField() {
+        return passwordField;
     }
 
     public HBox getHBOXLOGIN() {
