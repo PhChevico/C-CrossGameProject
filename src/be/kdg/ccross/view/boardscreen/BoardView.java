@@ -1,12 +1,9 @@
 package be.kdg.ccross.view.boardscreen;
-import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.util.Pair;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.Consumer;
@@ -72,10 +69,6 @@ public class BoardView extends GridPane {
 
             }
         }
-    }
-
-    HashMap<String, ImageView> getPawnImages() {
-        return pawnImages;
     }
 
     ImageView createPawn(String coordinates){
