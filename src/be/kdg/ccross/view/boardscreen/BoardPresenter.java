@@ -74,6 +74,10 @@ public class BoardPresenter {
             System.out.println(session.getBoard().getSquare(pair.getKey()).isStatus());
 
             session.setLastMove(pair.getKey());
+            session.updateCounter(1);
+            if(session.getCounter() % 2 == 0){
+                session.setLastMove(null);
+            }
         } else {
             //if zone dominated
             System.out.println("Impossible to put a pawn in that square");

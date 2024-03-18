@@ -14,6 +14,9 @@ public class GameSession {
     private Pawn pawn = new Pawn();
     private GameTime gameTime = new GameTime();
     private String lastMove;
+    private int counter = 0;
+
+
     private boolean isFinished; //boolean used in the while to check if the user exits the game
     public void start(){
         initgame(); //once the authentication part is done we start with the actual loop og the game
@@ -69,6 +72,16 @@ public class GameSession {
         return lastMove;
     }
 
+
+    public int getCounter() {
+        return counter;
+    }
+
+    public void updateCounter(int i) {
+        this.counter = counter + i;
+    }
+
+    //Rules for putting pawns in the board. Almost everything working, just trying to reset the setLastMove after 2 moves.
     public boolean validMove(String coordinates) {
         // If it's the first move, return true
         if (getLastMove() == null) {
