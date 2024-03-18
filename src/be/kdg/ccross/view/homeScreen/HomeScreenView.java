@@ -8,10 +8,10 @@ import javafx.scene.layout.*;
 
 public class HomeScreenView extends VBox {
 
-    Button play;
-    Button load;
-    Button leaderboard;
-    Button exit;
+    private Button play;
+    private Button load;
+    private Button leaderboard;
+    private Button exit;
 
 
     public HomeScreenView(){
@@ -19,14 +19,14 @@ public class HomeScreenView extends VBox {
         layoutNodes();
     }
 
-    public void initialiseNodes(){
+    void initialiseNodes(){
         play = new Button("Play");
         load = new Button("Load");
         leaderboard = new Button("LeaderBoard");
         exit = new Button("Exit");
     }
 
-    private void layoutNodes() {
+    void layoutNodes() {
         super.getChildren().addAll(play, load, leaderboard, exit);
 
         setAlignment(Pos.CENTER);
@@ -50,19 +50,19 @@ public class HomeScreenView extends VBox {
 
     }
 
-    public Button getPlay() {
+    Button getPlay() {
         return play;
     }
 
-    public Button getLoad() {
+    Button getLoad() {
         return load;
     }
 
-    public Button getLeaderboard() {
+    Button getLeaderboard() {
         return leaderboard;
     }
 
-    public Button getExit() {
+    Button getExit() {
         return exit;
     }
 }

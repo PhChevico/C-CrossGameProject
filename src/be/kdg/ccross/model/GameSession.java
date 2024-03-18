@@ -1,18 +1,17 @@
 package be.kdg.ccross.model;//In this implementation we will use hard-code to show how the actual game logic will look like since
 //we didn't start implementing javaFX
-//import java.awt.font.GlyphMetrics;
 
 import java.util.List;
 ;
 public class GameSession {
     private String time;
-    Authentication authentication = new Authentication();
-    Board board = new Board();
-    Database database = new Database();
-    Player player = new Player();
-    Screen screen = new Screen();
-    Pawn pawn = new Pawn();
-    GameTime gameTime = new GameTime();
+    private Authentication authentication = new Authentication();
+    private Board board = new Board();
+    private Database database = new Database();
+    private Player player = new Player();
+    private Screen screen = new Screen();
+    private Pawn pawn = new Pawn();
+    private GameTime gameTime = new GameTime();
     private boolean isFinished; //boolean used in the while to check if the user exits the game
     public void start(){
         initgame(); //once the authentication part is done we start with the actual loop og the game

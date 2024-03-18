@@ -1,4 +1,4 @@
-package be.kdg.ccross.view.authenticatonscreens;
+package be.kdg.ccross.view.authenticationscreens;
 
 
 import be.kdg.ccross.model.GameSession;
@@ -15,13 +15,13 @@ import javafx.stage.Stage;
 
 public class AuthenticationPresenter {
     be.kdg.ccross.view.authenticationscreens.AuthenticationView view;
-    GameSession model;
+    private GameSession model;
     public AuthenticationPresenter(GameSession model, AuthenticationView view){
         this.model = model;
         this.view = view;
         addEventHandlers();
     }
-    private void addEventHandlers(){
+    void addEventHandlers(){
         view.getScene().getWindow().setOnCloseRequest(this::closeApplication);
         view.getCancel().setOnAction(this::closeApplication);
 
@@ -39,14 +39,7 @@ public class AuthenticationPresenter {
 
     }
 
-    private void setHomeScreenView(){
-        // ONE WAY TO DO IT BUT MISSING THE OWNERSHIP OF THE NEW STAGE
-//        BoardView boardView = new BoardView();
-//        BoardPresenter boardPresenter = new BoardPresenter(model, boardView);
-//        Stage stage = new Stage();
-//        stage.setScene(new Scene(boardView));
-//        stage.show();
-//        ((Stage)view.getScene().getWindow()).close();
+    void setHomeScreenView(){
 
         HomeScreenView homeScreenView = new HomeScreenView();
         view.getScene().setRoot(homeScreenView);
@@ -58,7 +51,7 @@ public class AuthenticationPresenter {
         homeScreenView.getScene().getWindow().setY(centerY);
 
     }
-    private void setRegisterView(){
+    void setRegisterView(){
         RegisterView registerView = new RegisterView();
         view.getScene().setRoot(registerView);
         RegisterPresenter registerPresenter = new RegisterPresenter(model, registerView);
@@ -71,7 +64,7 @@ public class AuthenticationPresenter {
 
     }
 
-    private void closeApplication(Event event) {
+    void closeApplication(Event event) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setHeaderText("You are about to quit the game!");
         alert.setContentText("Do you really want to leave?");
@@ -87,7 +80,7 @@ public class AuthenticationPresenter {
             event.consume();
         }
     }
-    private void welcome(Event event) {
+    void welcome(Event event) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText("Log in successfully");
         model.setUsername(view.getUsernamefield().getText());

@@ -12,8 +12,8 @@ import javafx.stage.Stage;
 
 public class HomeScreenPresenter {
 
-    GameSession model;
-    HomeScreenView view;
+    private GameSession model;
+    private HomeScreenView view;
 
 
     public HomeScreenPresenter(GameSession model, HomeScreenView view){
@@ -22,21 +22,14 @@ public class HomeScreenPresenter {
         addEventHandlers();
     }
 
-    private void addEventHandlers() {
+    void addEventHandlers() {
         view.getPlay().setOnAction(actionEvent -> setGameView());
 
         view.getExit().setOnAction(this::closeApplication);
         view.getScene().getWindow().setOnCloseRequest(this::closeApplication);
     }
 
-    private void setGameView(){
-        // ONE WAY TO DO IT BUT MISSING THE OWNERSHIP OF THE NEW STAGE
-//        BoardView boardView = new BoardView();
-//        BoardPresenter boardPresenter = new BoardPresenter(model, boardView);
-//        Stage stage = new Stage();
-//        stage.setScene(new Scene(boardView));
-//        stage.show();
-//        ((Stage)view.getScene().getWindow()).close();
+    void setGameView(){
 
         BoardView boardView = new BoardView();
         view.getScene().setRoot(boardView);
@@ -49,7 +42,7 @@ public class HomeScreenPresenter {
 
     }
 
-    private void closeApplication(Event event) {
+    void closeApplication(Event event) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setHeaderText("You are about to quit the game!");
         alert.setContentText("Do you really want to leave?");

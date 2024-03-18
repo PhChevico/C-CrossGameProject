@@ -3,12 +3,11 @@ package be.kdg.ccross.view.registerscreens;
 import be.kdg.ccross.model.GameSession;
 import be.kdg.ccross.view.homeScreen.HomeScreenPresenter;
 import be.kdg.ccross.view.homeScreen.HomeScreenView;
-import be.kdg.ccross.view.authenticatonscreens.AuthenticationPresenter;
+import be.kdg.ccross.view.authenticationscreens.AuthenticationPresenter;
 import be.kdg.ccross.view.authenticationscreens.AuthenticationView;
 import javafx.event.Event;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class RegisterPresenter {
@@ -37,29 +36,14 @@ public class RegisterPresenter {
         AuthenticationView authenticationView = new AuthenticationView();
         view.getScene().setRoot(authenticationView);
         AuthenticationPresenter authenticationPresenter = new AuthenticationPresenter(model, authenticationView);
-//        double centerX = Screen.getPrimary().getVisualBounds().getWidth() / 2 - authenticationView.getScene().getWindow().getWidth() / 2;
-//        double centerY = Screen.getPrimary().getVisualBounds().getHeight() / 2 - authenticationView.getScene().getWindow().getHeight() / 2;
-//        authenticationView.getScene().getWindow().setX(centerX);
-//        authenticationView.getScene().getWindow().setY(centerY);
     }
 
     private void setHomeScreenView(){
-        // ONE WAY TO DO IT BUT MISSING THE OWNERSHIP OF THE NEW STAGE
-//        BoardView boardView = new BoardView();
-//        BoardPresenter boardPresenter = new BoardPresenter(model, boardView);
-//        Stage stage = new Stage();
-//        stage.setScene(new Scene(boardView));
-//        stage.show();
-//        ((Stage)view.getScene().getWindow()).close();
 
         HomeScreenView homeScreenView = new HomeScreenView();
         view.getScene().setRoot(homeScreenView);
         HomeScreenPresenter homeScreenPresenter = new HomeScreenPresenter(model, homeScreenView);
         homeScreenView.getScene().getWindow().sizeToScene();
-//        double centerX = Screen.getPrimary().getVisualBounds().getWidth() / 2 - homeScreenView.getScene().getWindow().getWidth() / 2;
-//        double centerY = Screen.getPrimary().getVisualBounds().getHeight() / 2 - homeScreenView.getScene().getWindow().getHeight() / 2;
-//        homeScreenView.getScene().getWindow().setX(centerX);
-//        homeScreenView.getScene().getWindow().setY(centerY);
 
     }
 

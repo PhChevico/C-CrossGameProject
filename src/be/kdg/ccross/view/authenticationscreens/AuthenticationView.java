@@ -10,17 +10,18 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 
 public class AuthenticationView extends VBox {
-    Label screenTitle;
-    Label name;
-    Label password;
-    TextField usernamefield;
-    PasswordField passwordField;
-    Button createacc;
-    Button cancel;
-    Button log_in;
-    HBox HBOXLOGIN;
-    HBox HBOXPASSWORD;
-    HBox buttonsConfirm;
+    //make all them private
+    private Label screenTitle;
+    private Label name;
+    private Label password;
+    private TextField usernamefield;
+    private PasswordField passwordField;
+    private Button createacc;
+    private Button cancel;
+    private Button log_in;
+    private HBox HBOXLOGIN;
+    private HBox HBOXPASSWORD;
+    private HBox buttonsConfirm;
 
     public AuthenticationView() {
         initialiseNodes();
@@ -28,23 +29,26 @@ public class AuthenticationView extends VBox {
         this.setStyle("-fx-background-color: #e5d9c7");
     }
     public void initialiseNodes(){
-        screenTitle = new Label("Login ");
-        screenTitle.setFont(Font.font("Login", FontWeight.BOLD, FontPosture.ITALIC,30));
-        name = new Label("Username: ");
-        name.setFont(Font.font("Arial",15));
+
+        //if i dont getter for the attributes i put them inside layout nodes.
         usernamefield = new TextField("");
-        password = new Label("Password: ");
-        password.setFont(Font.font("Arial",15));
         passwordField = new PasswordField();
         createacc = new Button("Create an account?");
         cancel= new Button("Cancel");
         log_in = new Button("Log in");
+
+    }
+    private void layoutNodes(){
+        screenTitle = new Label("Login ");
+        screenTitle.setFont(Font.font("Login", FontWeight.BOLD, FontPosture.ITALIC,30));
+        name = new Label("Username: ");
+        name.setFont(Font.font("Arial",15));
         HBOXLOGIN = new HBox(5);
         HBOXPASSWORD = new HBox(5);
         buttonsConfirm = new HBox(5);
-    }
-    private void layoutNodes(){
-        //screenTitle.setTextAlignment(TextAlignment.CENTER);
+        password = new Label("Password: ");
+        password.setFont(Font.font("Arial",15));
+        //putting here the nodes init nodes that are not used with getters
         usernamefield.setMaxHeight(20);
         usernamefield.setMaxWidth(120);
         passwordField.setMaxHeight(20);
@@ -65,39 +69,16 @@ public class AuthenticationView extends VBox {
 
 
     }
-    public Button getcreateacc(){return createacc;}
-    public Button getCancel(){return cancel;}
-    public Button getLog_in(){return log_in;}
+    Button getcreateacc(){return createacc;}
+    Button getCancel(){return cancel;}
+    Button getLog_in(){return log_in;}
 
-    public Label getScreenTitle() {
-        return screenTitle;
-    }
-
-    public Label getName() {
-        return name;
-    }
-
-    public Label getPassword() {
-        return password;
-    }
-
-    public TextField getUsernamefield() {
+    TextField getUsernamefield() {
         return usernamefield;
     }
 
-    public PasswordField getPasswordField() {
+    PasswordField getPasswordField() {
         return passwordField;
     }
 
-    public HBox getHBOXLOGIN() {
-        return HBOXLOGIN;
-    }
-
-    public HBox getHBOXPASSWORD() {
-        return HBOXPASSWORD;
-    }
-
-    public HBox getButtonsConfirm() {
-        return buttonsConfirm;
-    }
 }
