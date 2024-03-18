@@ -62,13 +62,18 @@ public class BoardPresenter {
 
     private void checkingActionToSquare(Pair<String, ImageView> pair) {
         //if zone not dominated
-        if (!session.getBoard().getSquare(pair.getKey()).isStatus()) {
+        if (!session.getBoard().getSquare(pair.getKey()).isStatus() && session.validMove(pair.getKey())) {
+
+            //System.out.println(session.validMove(pair.getKey()));
+            //here we put a pawn pair the square
             session.getBoard().getSquare(pair.getKey()).setStatus(true);
 
-            //here we put a pawn pair the square
             String[] parts = pair.getKey().split("-");
             view.add(view.createPawn(pair.getKey()), Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
+
             System.out.println(session.getBoard().getSquare(pair.getKey()).isStatus());
+
+            session.setLastMove(pair.getKey());
         } else {
             //if zone dominated
             System.out.println("Impossible to put a pawn in that square");

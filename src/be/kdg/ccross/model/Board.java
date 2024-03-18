@@ -2,6 +2,7 @@ package be.kdg.ccross.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Board {
     private final int sizeRows_board = 9;
@@ -44,6 +45,7 @@ public class Board {
         String[] parts = coordinates.split("-");
         return board [Integer.parseInt(parts[0])] [Integer.parseInt(parts[1])];
     }
+
     public Zone getZone(char selectedZone){
 
         int charAsInt = (int) selectedZone;
@@ -57,51 +59,12 @@ public class Board {
     }
 
 
-//    public String[][] getSquaresAsArray(){
-//
-//        // Get all squares
-//        List<Square> squares = getAllSquaresFromZones();
-//
-//        // Sort by position
-//        squares.sort((Square one, Square two) -> {
-//
-//            if(one.getRow() == two.getRow())
-//                return one.getColumn() - two.getColumn();
-//
-//            return one.getRow() - two.getRow();
-//
-//        });
-//
-//
-//        // Init array
-//        String[][] result = new String[0][];
-//
-//        for (int i = 0; i < sizeRows_board; i++) {
-//            for (int j = 0; j < sizeCols_board; j++) {
-//                int index = i * sizeCols_board + j;  // Corrected line
-//                Square square = squares.get(index);
-//                result[i][j] = square.toString();
-//            }
-//        }
-//
-//
-//        return result;
-//    }
 
     public List<String> getSquaresAsList(){
 
         // Get all squares
         List<Square> squares = getAllSquaresFromZones();
 
-//        // Sort by position
-//        squares.sort((Square one, Square two) -> {
-//
-//            if(one.getRow() == two.getRow())
-//                return one.getColumn() - two.getColumn();
-//
-//            return one.getRow() - two.getRow();
-//
-//        });
 
         // Initialize the ArrayList
         List<String> result = new ArrayList<>();
@@ -134,6 +97,21 @@ public class Board {
         return squares;
     }
 
+
+    //find out which zone this square is.
+    public char getSquareZone(String coordinates) {
+        // Iterate over each zone
+        for (Zone zone : zones) {
+            // Check if the coordinates belong to the current zone
+            for (Square square : zone.getSquareOfZone()) {
+                if (square.getCoordinates().equals(coordinates)) {
+                    return zone.getZoneID();
+                }
+            }
+        }
+        // Return space if the square doesn't belong to any zone
+        return ' ';
+    }
 
     //to the continued
 

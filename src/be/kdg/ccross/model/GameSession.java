@@ -1,6 +1,7 @@
 package be.kdg.ccross.model;//In this implementation we will use hard-code to show how the actual game logic will look like since
 //we didn't start implementing javaFX
 
+import java.util.ArrayList;
 import java.util.List;
 ;
 public class GameSession {
@@ -12,6 +13,7 @@ public class GameSession {
     private Screen screen = new Screen();
     private Pawn pawn = new Pawn();
     private GameTime gameTime = new GameTime();
+    private String lastMove;
     private boolean isFinished; //boolean used in the while to check if the user exits the game
     public void start(){
         initgame(); //once the authentication part is done we start with the actual loop og the game
@@ -59,9 +61,58 @@ public class GameSession {
         return board;
     }
 
-    public void handleClickBoard(String coordinates){
-
+    public void setLastMove(String lastMove){
+        this.lastMove = lastMove;
     }
+
+    public String getLastMove(){
+        return lastMove;
+    }
+
+    public boolean validMove(String coordinates) {
+        // If it's the first move, return true
+        if (getLastMove() == null) {
+            return true;
+        } else {
+            // If the move is in the same zone, return false
+            if (getBoard().getSquareZone(getLastMove()) == getBoard().getSquareZone(coordinates)) {
+                return false;
+            }
+
+            // If the move is not around the first move, return false
+            List<String> aroundSquares = aroundSquares(getLastMove());
+            String[] parts = coordinates.split("-");
+            int x = Integer.parseInt(parts[0]);
+            int y = Integer.parseInt(parts[1]);
+            if (!aroundSquares.contains(x + "-" + y)) {
+                return false;
+            }
+        }
+
+        // Check if the square at the specified coordinates is not already occupied
+        return !getBoard().getSquare(coordinates).isStatus();
+    }
+
+    public List<String> aroundSquares(String mainSquare) {
+        List<String> aroundSquares = new ArrayList<>();
+        String[] parts = mainSquare.split("-");
+
+        int x = Integer.parseInt(parts[0]);
+        int y = Integer.parseInt(parts[1]);
+
+        // Add adjacent squares`s coordinates
+        int xRight = x + 1;
+        int xLeft = x - 1;
+        int up = y - 1;
+        int down = y + 1;
+        aroundSquares.add(xRight + "-" + y);
+        aroundSquares.add(xLeft + "-" + y);
+        aroundSquares.add(x + "-" + up);
+        aroundSquares.add(x + "-" + down);
+
+        return aroundSquares;
+    }
+
 
     public String getUsername(){
         return player.getName();
@@ -72,8 +123,6 @@ public class GameSession {
     }
 
 
-    // Z1 Z1 Z1
-    // Z1 Z2 Z1
-
 
 }
+
