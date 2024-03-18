@@ -17,13 +17,6 @@ public class ccross extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-//        GameSession session = new GameSession();
-//        HomeScreenView homeScreenView = new HomeScreenView();
-//        primaryStage.setScene(new Scene(homeScreenView));
-//        primaryStage.setMinWidth(300);
-//        primaryStage.setMinHeight(600);
-//        new HomeScreenPresenter(session, homeScreenView);
-//        primaryStage.show();
 
         GameSession gameSession = new GameSession();
         RegisterView registerView = new RegisterView();

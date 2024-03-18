@@ -7,6 +7,7 @@ import javafx.event.Event;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -44,6 +45,8 @@ public class HomeScreenPresenter {
 
     void closeApplication(Event event) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image("images/C-Cross.png")); // To add an icon
         alert.setHeaderText("You are about to quit the game!");
         alert.setContentText("Do you really want to leave?");
         alert.setTitle("Bye ;-; !");

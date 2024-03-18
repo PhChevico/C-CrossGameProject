@@ -10,6 +10,7 @@ import be.kdg.ccross.view.homeScreen.HomeScreenView;
 import javafx.event.Event;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -56,16 +57,13 @@ public class AuthenticationPresenter {
         view.getScene().setRoot(registerView);
         RegisterPresenter registerPresenter = new RegisterPresenter(model, registerView);
         registerView.getScene().getWindow();
-//        double centerX = Screen.getPrimary().getVisualBounds().getWidth() / 2 - registerView.getScene().getWindow().getWidth() / 2;
-//        double centerY = Screen.getPrimary().getVisualBounds().getHeight() / 2 - registerView.getScene().getWindow().getHeight() / 2;
-//        registerView.getScene().getWindow().setX(centerX);
-//        registerView.getScene().getWindow().setY(centerY);
-
 
     }
 
     void closeApplication(Event event) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image("images/C-Cross.png")); // To add an icon
         alert.setHeaderText("You are about to quit the game!");
         alert.setContentText("Do you really want to leave?");
         alert.setTitle("Bye ;-; !");

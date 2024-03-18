@@ -78,6 +78,8 @@ public class BoardPresenter {
 
     void closeApplication(Event event) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image("images/C-Cross.png")); // To add an icon
         alert.setHeaderText("You are about to quit the game!");
         alert.setContentText("Do you really want to leave?");
         alert.setTitle("Bye ;-; !");
