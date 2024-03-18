@@ -1,11 +1,15 @@
 package be.kdg.ccross.view.boardscreen;
+import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.util.Pair;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.function.Consumer;
 
 
 public class BoardView extends GridPane {
@@ -16,10 +20,11 @@ public class BoardView extends GridPane {
     private HashMap<String, ImageView> boardImages = new HashMap<String, ImageView>();
     private HashMap<String, ImageView> pawnImages = new HashMap<String, ImageView>();
 
-
+    private Consumer<Pair<String, ImageView>> onPawnCreated;
 
 
     public BoardView(){
+
         this.initialiseNodes();
         this.layoutNodes();
     }
@@ -27,6 +32,9 @@ public class BoardView extends GridPane {
     private void initialiseNodes(){
     }
 
+    public void setHandlerOnPawnCreated(Consumer<Pair<String, ImageView>> event){
+        onPawnCreated = event;
+    }
 
     private void layoutNodes() {
         //board layout
@@ -66,14 +74,26 @@ public class BoardView extends GridPane {
         }
     }
 
+    HashMap<String, ImageView> getPawnImages() {
+        return pawnImages;
+    }
+
     ImageView createPawn(String coordinates){
         ImageView pawn = new ImageView(new Image("images/pawn.png"));
 
         pawn.setFitHeight(PAWN_SIZE);
         pawn.setFitWidth(PAWN_SIZE);
-        pawn.setTranslateX(Pos.CENTER.ordinal());
-        pawn.setTranslateY(Pos.CENTER.ordinal());
+
+        // Calculate the translation to center the pawn within the square
+        double translationX = (SQUARE_SIZE - PAWN_SIZE) / 2;
+
+        pawn.setTranslateX(translationX);
+
         pawnImages.put(coordinates, pawn);
+
+        // Inform listeners
+        onPawnCreated.accept(new Pair<>(coordinates, pawn));
+
         return pawn;
     }
 }
