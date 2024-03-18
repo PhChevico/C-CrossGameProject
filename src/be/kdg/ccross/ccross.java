@@ -26,6 +26,7 @@ public class ccross extends Application {
         new RegisterPresenter(gameSession, registerView);
         primaryStage.setMinHeight(500);
         primaryStage.setMinWidth(400);
+        primaryStage.setResizable(false);
         primaryStage.show();
 
 //        GameSession gameSession = new GameSession();

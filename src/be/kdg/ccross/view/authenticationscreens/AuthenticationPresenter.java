@@ -8,6 +8,7 @@ import be.kdg.ccross.view.registerscreens.RegisterView;
 import be.kdg.ccross.view.homeScreen.HomeScreenPresenter;
 import be.kdg.ccross.view.homeScreen.HomeScreenView;
 import javafx.event.Event;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
@@ -43,13 +44,12 @@ public class AuthenticationPresenter {
     void setHomeScreenView(){
 
         HomeScreenView homeScreenView = new HomeScreenView();
-        view.getScene().setRoot(homeScreenView);
+        Scene scene = view.getScene();
+        scene.setRoot(homeScreenView);
+        Stage stage = (Stage) scene.getWindow();
+        stage.setResizable(true);
         HomeScreenPresenter homeScreenPresenter = new HomeScreenPresenter(model, homeScreenView);
         homeScreenView.getScene().getWindow().sizeToScene();
-        double centerX = Screen.getPrimary().getVisualBounds().getWidth() / 2 - homeScreenView.getScene().getWindow().getWidth() / 2;
-        double centerY = Screen.getPrimary().getVisualBounds().getHeight() / 2 - homeScreenView.getScene().getWindow().getHeight() / 2;
-        homeScreenView.getScene().getWindow().setX(centerX);
-        homeScreenView.getScene().getWindow().setY(centerY);
 
     }
     void setRegisterView(){

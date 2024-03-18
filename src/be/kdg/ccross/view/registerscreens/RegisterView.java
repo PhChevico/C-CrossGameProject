@@ -1,5 +1,6 @@
 package be.kdg.ccross.view.registerscreens;
 
+import be.kdg.ccross.model.Screen;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -29,7 +30,6 @@ public class RegisterView extends VBox {
         initialiseNodes();
         layoutNodes();
         this.setStyle("-fx-background-color: #e5d9c7");
-
     }
 
     public void initialiseNodes(){
