@@ -60,6 +60,7 @@ public class LeaderboardView extends VBox {
         dataPane.getChildren().clear(); // Clear previous data
 
         int rowIndex = 1; // Start from the second row after header
+        int count = 1;
         for (PlayerStatistics stats : playerStatisticsList) {
             dataPane.add(new Label(stats.getPlayerName()), 1, rowIndex);
             dataPane.add(new Label(String.valueOf(stats.getGamesPlayed())), 2, rowIndex);
