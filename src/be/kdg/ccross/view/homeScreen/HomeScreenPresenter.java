@@ -3,6 +3,9 @@ package be.kdg.ccross.view.homeScreen;
 import be.kdg.ccross.model.GameSession;
 import be.kdg.ccross.view.boardscreen.BoardPresenter;
 import be.kdg.ccross.view.boardscreen.BoardView;
+import be.kdg.ccross.view.homeScreen.HomeScreenView;
+import be.kdg.ccross.view.leaderboardScreen.LeaderboardPresenter;
+import be.kdg.ccross.view.leaderboardScreen.LeaderboardView;
 import javafx.event.Event;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -26,6 +29,8 @@ public class HomeScreenPresenter {
     void addEventHandlers() {
         view.getPlay().setOnAction(actionEvent -> setGameView());
 
+        view.getLeaderboard().setOnAction(actionEvent -> setLeaderboardView());
+
         view.getExit().setOnAction(this::closeApplication);
         view.getScene().getWindow().setOnCloseRequest(this::closeApplication);
     }
@@ -41,6 +46,13 @@ public class HomeScreenPresenter {
         boardView.getScene().getWindow().setX(centerX);
         boardView.getScene().getWindow().setY(centerY);
 
+    }
+    void setLeaderboardView(){
+
+        LeaderboardView leaderboardView = new LeaderboardView();
+        view.getScene().setRoot(leaderboardView);
+        LeaderboardPresenter leaderboardPresenter = new LeaderboardPresenter(model,leaderboardView);
+        leaderboardView.getScene().getWindow().sizeToScene();
     }
 
     void closeApplication(Event event) {
