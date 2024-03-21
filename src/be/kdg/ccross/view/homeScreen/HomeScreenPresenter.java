@@ -28,6 +28,7 @@ public class HomeScreenPresenter {
 
     void addEventHandlers() {
         view.getPlay().setOnAction(actionEvent -> setGameView());
+
         view.getLeaderboard().setOnAction(actionEvent -> setLeaderboardView());
 
         view.getExit().setOnAction(this::closeApplication);

@@ -10,8 +10,18 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.util.Comparator;
+
 public class LeaderboardView extends VBox {
     private Button goBack;
+    private Label rank;
+    private Label gamesPlayed;
+    private Label playerName;
+    private Label wins;
+    private Label losses;
+    private Label percentageWon;
+    private Label avgMoves;
+    private Label avgDuration;
 
     public LeaderboardView() {
         initialiseNodes();
@@ -20,6 +30,15 @@ public class LeaderboardView extends VBox {
 
     private void initialiseNodes() {
         goBack = new Button("Go back");
+        rank = new Label("Rank");
+        gamesPlayed = new Label("Games Played");
+        playerName = new Label("Player Name");
+        wins = new Label("Wins");
+        losses = new Label("Losses");
+        percentageWon = new Label("% Games Won");
+        avgMoves = new Label("Avg Moves");
+        avgDuration = new Label("Avg Duration");
+
         goBack.setStyle("-fx-font-size: 14px; -fx-padding: 8px 16px;");
     }
 
@@ -32,14 +51,14 @@ public class LeaderboardView extends VBox {
         headerPane.setPadding(new Insets(10));
         headerPane.setAlignment(Pos.CENTER);
 
-        headerPane.add(new Label("Rank"), 0, 0);
-        headerPane.add(new Label("Player Name"), 1, 0);
-        headerPane.add(new Label("Games Played"), 2, 0);
-        headerPane.add(new Label("Wins"), 3, 0);
-        headerPane.add(new Label("Losses"), 4, 0);
-        headerPane.add(new Label("% Games Won"), 5, 0);
-        headerPane.add(new Label("Avg Moves"), 6, 0);
-        headerPane.add(new Label("Avg Duration"), 7, 0);
+        headerPane.add(rank, 0, 0);
+        headerPane.add(playerName, 1, 0);
+        headerPane.add(gamesPlayed, 2, 0);
+        headerPane.add(wins, 3, 0);
+        headerPane.add(losses, 4, 0);
+        headerPane.add(percentageWon, 5, 0);
+        headerPane.add(avgMoves, 6, 0);
+        headerPane.add(avgDuration, 7, 0);
 
         GridPane dataPane = new GridPane();
         dataPane.setHgap(10);
@@ -55,13 +74,17 @@ public class LeaderboardView extends VBox {
     }
 
     // Method to update the leaderboard with the fetched player statistics
-    public void updateLeaderboard(ObservableList<PlayerStatistics> playerStatisticsList) {
+    public void updateLeaderboard(ObservableList<PlayerStatistics> playerStatisticsList, String sortBy, boolean ascending) {
         GridPane dataPane = (GridPane) this.getChildren().get(1);
         dataPane.getChildren().clear(); // Clear previous data
 
+        // Sort the player statistics list based on the selected variable
+        playerStatisticsList.sort(getComparator(sortBy, ascending));
+
         int rowIndex = 1; // Start from the second row after header
-        int count = 1;
+        int rank = 1;
         for (PlayerStatistics stats : playerStatisticsList) {
+            dataPane.add(new Label(String.valueOf(rank)), 0, rowIndex);
             dataPane.add(new Label(stats.getPlayerName()), 1, rowIndex);
             dataPane.add(new Label(String.valueOf(stats.getGamesPlayed())), 2, rowIndex);
             dataPane.add(new Label(String.valueOf(stats.getWins())), 3, rowIndex);
@@ -70,6 +93,83 @@ public class LeaderboardView extends VBox {
             dataPane.add(new Label(String.valueOf(stats.getAvgMoves())), 6, rowIndex);
             dataPane.add(new Label(String.valueOf(stats.getAvgDuration())), 7, rowIndex);
             rowIndex++; // Move to the next row
+            rank++;
         }
+    }
+
+    // Helper method to get the comparator based on the selected variable and sorting order
+    private Comparator<PlayerStatistics> getComparator(String sortBy, boolean ascending) {
+        Comparator<PlayerStatistics> comparator = null;
+
+        switch (sortBy) {
+            case "Player Name":
+                comparator = Comparator.comparing(PlayerStatistics::getPlayerName);
+                break;
+            case "Games Played":
+                comparator = Comparator.comparing(PlayerStatistics::getGamesPlayed);
+                break;
+            case "Wins":
+                comparator = Comparator.comparing(PlayerStatistics::getWins);
+                break;
+            case "Losses":
+                comparator = Comparator.comparing(PlayerStatistics::getLosses);
+                break;
+            case "% Games Won":
+                comparator = Comparator.comparing(PlayerStatistics::getWinPercentage);
+                break;
+            case "Avg Moves":
+                comparator = Comparator.comparing(PlayerStatistics::getAvgMoves);
+                break;
+            case "Avg Duration":
+                comparator = Comparator.comparing(PlayerStatistics::getAvgDuration);
+                break;
+            default:
+                // Default to sorting by player name if the selected variable is not recognized
+                comparator = Comparator.comparing(PlayerStatistics::getPlayerName);
+                break;
+        }
+
+        // Apply sorting order
+        if (!ascending) {
+            comparator = comparator.reversed();
+        }
+
+        return comparator;
+    }
+
+    public Label getRank() {
+        return rank;
+    }
+
+    public Label getGamesPlayed() {
+        return gamesPlayed;
+    }
+
+    public Button getGoBack() {
+        return goBack;
+    }
+
+    public Label getPlayerName() {
+        return playerName;
+    }
+
+    public Label getWins() {
+        return wins;
+    }
+
+    public Label getLosses() {
+        return losses;
+    }
+
+    public Label getPercentageWon() {
+        return percentageWon;
+    }
+
+    public Label getAvgMoves() {
+        return avgMoves;
+    }
+
+    public Label getAvgDuration() {
+        return avgDuration;
     }
 }
