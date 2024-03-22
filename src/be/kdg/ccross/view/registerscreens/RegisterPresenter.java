@@ -12,6 +12,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
 public class RegisterPresenter {
     RegisterView view;
     GameSession model;
@@ -30,8 +32,15 @@ public class RegisterPresenter {
             String userName = view.getNameField().getText();
             String password = view.getPasswordField().getText();
             String confirmPasswd = view.getConfirmFiled().getText();
-            model.registerUser(userName,password,confirmPasswd);
-            registerAlert(null);
+            if (!model.getAuthentication().registerUser(userName ,password)){
+                userError(null);
+            } else if (!Objects.equals(password, confirmPasswd)) {
+                passwordError(null);
+            }else {
+                model.getAuthentication().registerUser(userName ,password);
+                registerAlert(null);
+            }
+
         });
     }
     private void setAuthenticationView(){
@@ -51,6 +60,13 @@ public class RegisterPresenter {
         stage.setResizable(true);
         HomeScreenPresenter homeScreenPresenter = new HomeScreenPresenter(model, homeScreenView);
         homeScreenView.getScene().getWindow().sizeToScene();
+
+    }
+    void setRegisterView(){
+        RegisterView registerView = new RegisterView();
+        view.getScene().setRoot(registerView);
+        RegisterPresenter registerPresenter = new RegisterPresenter(model, registerView);
+        registerView.getScene().getWindow();
 
     }
 
@@ -86,6 +102,31 @@ public class RegisterPresenter {
             setHomeScreenView();
         });
 
+        alert.showAndWait();
+    }
+    private void userError(Event event){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image("images/C-Cross.png"));
+        alert.setHeaderText("User already existing");
+        alert.setContentText("Try another name");
+        ButtonType retry = new ButtonType("Try again");
+        alert.getButtonTypes().setAll(retry);
+        alert.setOnCloseRequest(e -> {
+            setRegisterView();
+        });
+        alert.showAndWait();
+    }
+    private void passwordError(Event event){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image("images/C-Cross.png"));
+        alert.setHeaderText("Password are not matching");
+        ButtonType retry = new ButtonType("Try again");
+        alert.getButtonTypes().setAll(retry);
+        alert.setOnCloseRequest(e -> {
+            setRegisterView();
+        });
         alert.showAndWait();
     }
 }

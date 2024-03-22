@@ -52,7 +52,7 @@ public class GameSession {
 
     public boolean registerUser(String userName, String password,String confirmPasswd){
         try {
-            //authentication.registerUser(userName, password);
+            authentication.registerUser(userName, password);
             return true;
         } catch (Exception e){
             System.out.println("Not possible to register: " + e.getMessage());
@@ -126,6 +126,9 @@ public class GameSession {
         return aroundSquares;
     }
 
+    public Authentication getAuthentication() {
+        return authentication;
+    }
 
     public String getUsername(){
         return player.getName();

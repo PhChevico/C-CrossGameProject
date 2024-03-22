@@ -34,8 +34,12 @@ public class AuthenticationPresenter {
         view.getLog_in().setOnAction(actionEvent -> {
             String username = view.getUsernamefield().getText();
             String password = view.getPasswordField().getText();
-//            model.registerUser(username, password); here we have to creat a method for login as well
-            welcome(null);
+            if (model.getAuthentication().isLoginCorrect(username,password)){
+                welcome(null);
+            }else {
+                userError(null);
+            }
+
         });
 
 
@@ -59,6 +63,13 @@ public class AuthenticationPresenter {
         registerView.getScene().getWindow();
 
     }
+    private void setAuthenticationView(){
+        AuthenticationView authenticationView = new AuthenticationView();
+        view.getScene().setRoot(authenticationView);
+        AuthenticationPresenter authenticationPresenter = new
+                AuthenticationPresenter(model, authenticationView);
+
+    }
 
     void closeApplication(Event event) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -80,6 +91,8 @@ public class AuthenticationPresenter {
     }
     void welcome(Event event) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image("images/C-Cross.png"));
         alert.setHeaderText("Log in successfully");
         model.setUsername(view.getUsernamefield().getText());
         alert.setContentText("Welcome " + model.getUsername());
@@ -90,6 +103,19 @@ public class AuthenticationPresenter {
             setHomeScreenView();
         });
 
+        alert.showAndWait();
+    }
+    private void userError(Event event){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image("images/C-Cross.png"));
+        alert.setHeaderText("User or password are incorrect");
+        alert.setContentText("Try spell it correctly");
+        ButtonType retry = new ButtonType("Try again");
+        alert.getButtonTypes().setAll(retry);
+        alert.setOnCloseRequest(e -> {
+            setAuthenticationView();
+        });
         alert.showAndWait();
     }
 
