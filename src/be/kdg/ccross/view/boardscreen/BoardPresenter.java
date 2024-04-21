@@ -20,6 +20,8 @@ public class BoardPresenter {
     private GameSession session; //model
     private BoardView view; //view
 
+    private boolean nextRound = false;
+
     public BoardPresenter(GameSession session, BoardView view){
         this.session = session;
         this.view = view;
@@ -27,7 +29,6 @@ public class BoardPresenter {
         // Show initial board
         this.view.boardMaker(session.getSquaresAsList());
         this.addEventHandlers();
-
 
     }
 
@@ -44,6 +45,11 @@ public class BoardPresenter {
                 mouseEvent.consume();
             });
         }
+        view.getNextRound().setOnAction(actionEvent -> {
+            session.updateCounter(1);
+            session.setLastMove(null);
+            session.setRound(session.getRound()+1);
+        });
 
         // Add event listener
         view.setHandlerOnPawnCreated((Pair<String, ImageView> pair) -> {
@@ -54,7 +60,10 @@ public class BoardPresenter {
 
 
 
+
+
         view.getScene().getWindow().setOnCloseRequest(this::closeApplication);
+
 
 
 
@@ -69,14 +78,21 @@ public class BoardPresenter {
             session.getBoard().getSquare(pair.getKey()).setStatus(true);
 
             String[] parts = pair.getKey().split("-");
-            view.add(view.createPawn(pair.getKey()), Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
+            if(session.getRound()%2==0) {
+                view.add(view.createPawn1(pair.getKey()), Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
+            }else {
+                view.add(view.createPawn2(pair.getKey()), Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
+            }
 
             System.out.println(session.getBoard().getSquare(pair.getKey()).isStatus());
 
             session.setLastMove(pair.getKey());
             session.updateCounter(1);
+
             if(session.getCounter() % 2 == 0){
                 session.setLastMove(null);
+                session.setRound(session.getRound()+1);
+
             }
         } else {
             //if zone dominated

@@ -1,6 +1,8 @@
 package be.kdg.ccross.model;//In this implementation we will use hard-code to show how the actual game logic will look like since
 //we didn't start implementing javaFX
 
+import javafx.application.Platform;
+
 import java.util.ArrayList;
 import java.util.List;
 ;
@@ -9,12 +11,14 @@ public class GameSession {
     private Authentication authentication = new Authentication();
     private Board board = new Board();
     private Database database = new Database();
-    private Player player = new Player();
+    private Player player1 = new Player();
+    private Player player2 = new Player();
     private Screen screen = new Screen();
     private Pawn pawn = new Pawn();
     private GameTime gameTime = new GameTime();
     private String lastMove;
     private int counter = 0;
+    private int round = 0;
 
 
     private boolean isFinished; //boolean used in the while to check if the user exits the game
@@ -131,14 +135,19 @@ public class GameSession {
     }
 
     public String getUsername(){
-        return player.getName();
+        return player1.getName();
     }
 
     public void setUsername(String username){
-        player.setName(username);
+        player1.setName(username);
     }
 
+    public int getRound() {
+        return round;
+    }
 
-
+    public void setRound(int round) {
+        this.round = round;
+    }
 }
 
