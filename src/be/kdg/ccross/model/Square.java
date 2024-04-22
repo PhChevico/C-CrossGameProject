@@ -5,6 +5,7 @@
         private Player ownership;
         private int column;
         private int row;
+        Board board;
 
         public Square(int column, int row){
             this.column = column;
@@ -43,5 +44,8 @@
         }
 
 
+        public String getCoordinates(){
+            return this.getColumn() + "-" + this.getRow();
+        }
 
     }

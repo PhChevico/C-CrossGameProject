@@ -8,6 +8,7 @@ import be.kdg.ccross.view.registerscreens.RegisterView;
 import be.kdg.ccross.view.homeScreen.HomeScreenPresenter;
 import be.kdg.ccross.view.homeScreen.HomeScreenView;
 import javafx.event.Event;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
@@ -33,8 +34,12 @@ public class AuthenticationPresenter {
         view.getLog_in().setOnAction(actionEvent -> {
             String username = view.getUsernamefield().getText();
             String password = view.getPasswordField().getText();
-//            model.registerUser(username, password); here we have to creat a method for login as well
-            welcome(null);
+            if (model.getAuthentication().isLoginCorrect(username,password)){
+                welcome(null);
+            }else {
+                userError(null);
+            }
+
         });
 
 
@@ -43,13 +48,12 @@ public class AuthenticationPresenter {
     void setHomeScreenView(){
 
         HomeScreenView homeScreenView = new HomeScreenView();
-        view.getScene().setRoot(homeScreenView);
+        Scene scene = view.getScene();
+        scene.setRoot(homeScreenView);
+        Stage stage = (Stage) scene.getWindow();
+        stage.setResizable(true);
         HomeScreenPresenter homeScreenPresenter = new HomeScreenPresenter(model, homeScreenView);
         homeScreenView.getScene().getWindow().sizeToScene();
-        double centerX = Screen.getPrimary().getVisualBounds().getWidth() / 2 - homeScreenView.getScene().getWindow().getWidth() / 2;
-        double centerY = Screen.getPrimary().getVisualBounds().getHeight() / 2 - homeScreenView.getScene().getWindow().getHeight() / 2;
-        homeScreenView.getScene().getWindow().setX(centerX);
-        homeScreenView.getScene().getWindow().setY(centerY);
 
     }
     void setRegisterView(){
@@ -57,6 +61,13 @@ public class AuthenticationPresenter {
         view.getScene().setRoot(registerView);
         RegisterPresenter registerPresenter = new RegisterPresenter(model, registerView);
         registerView.getScene().getWindow();
+
+    }
+    private void setAuthenticationView(){
+        AuthenticationView authenticationView = new AuthenticationView();
+        view.getScene().setRoot(authenticationView);
+        AuthenticationPresenter authenticationPresenter = new
+                AuthenticationPresenter(model, authenticationView);
 
     }
 
@@ -80,6 +91,8 @@ public class AuthenticationPresenter {
     }
     void welcome(Event event) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image("images/C-Cross.png"));
         alert.setHeaderText("Log in successfully");
         model.setUsername(view.getUsernamefield().getText());
         alert.setContentText("Welcome " + model.getUsername());
@@ -90,6 +103,19 @@ public class AuthenticationPresenter {
             setHomeScreenView();
         });
 
+        alert.showAndWait();
+    }
+    private void userError(Event event){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image("images/C-Cross.png"));
+        alert.setHeaderText("User or password are incorrect");
+        alert.setContentText("Try spell it correctly");
+        ButtonType retry = new ButtonType("Try again");
+        alert.getButtonTypes().setAll(retry);
+        alert.setOnCloseRequest(e -> {
+            setAuthenticationView();
+        });
         alert.showAndWait();
     }
 

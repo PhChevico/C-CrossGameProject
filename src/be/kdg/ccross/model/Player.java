@@ -2,9 +2,9 @@ package be.kdg.ccross.model;
 
 public class Player {
     private String name;
-    private int pawnNumber; //current player's pawn number
     private int nOfWins; //get from database
     private final int MAX_NUMB_PAWNS = 25; //each player has a total of 25 pawns
+    private int pawnNumber = MAX_NUMB_PAWNS; //current player's pawn number
 
 
     public void setName(String name){
@@ -37,11 +37,9 @@ public class Player {
         }
     }
 
-
-
-
-
-
+    public void setPawnNumber(int pawnNumber) {
+        this.pawnNumber = pawnNumber;
+    }
     //methods when conquering zones...
 
 

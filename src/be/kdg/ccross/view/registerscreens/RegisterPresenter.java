@@ -6,10 +6,13 @@ import be.kdg.ccross.view.homeScreen.HomeScreenView;
 import be.kdg.ccross.view.authenticationscreens.AuthenticationPresenter;
 import be.kdg.ccross.view.authenticationscreens.AuthenticationView;
 import javafx.event.Event;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+
+import java.util.Objects;
 
 public class RegisterPresenter {
     RegisterView view;
@@ -29,22 +32,41 @@ public class RegisterPresenter {
             String userName = view.getNameField().getText();
             String password = view.getPasswordField().getText();
             String confirmPasswd = view.getConfirmFiled().getText();
-            model.registerUser(userName,password,confirmPasswd);
-            registerAlert(null);
+            if (!model.getAuthentication().registerUser(userName ,password)){
+                userError(null);
+            } else if (!Objects.equals(password, confirmPasswd)) {
+                passwordError(null);
+            }else {
+                model.getAuthentication().registerUser(userName ,password);
+                registerAlert(null);
+            }
+
         });
     }
     private void setAuthenticationView(){
         AuthenticationView authenticationView = new AuthenticationView();
         view.getScene().setRoot(authenticationView);
-        AuthenticationPresenter authenticationPresenter = new AuthenticationPresenter(model, authenticationView);
+        AuthenticationPresenter authenticationPresenter = new
+                AuthenticationPresenter(model, authenticationView);
+
     }
 
     private void setHomeScreenView(){
 
         HomeScreenView homeScreenView = new HomeScreenView();
-        view.getScene().setRoot(homeScreenView);
+        Scene scene = view.getScene();
+        scene.setRoot(homeScreenView);
+        Stage stage = (Stage) scene.getWindow();
+        stage.setResizable(true);
         HomeScreenPresenter homeScreenPresenter = new HomeScreenPresenter(model, homeScreenView);
         homeScreenView.getScene().getWindow().sizeToScene();
+
+    }
+    void setRegisterView(){
+        RegisterView registerView = new RegisterView();
+        view.getScene().setRoot(registerView);
+        RegisterPresenter registerPresenter = new RegisterPresenter(model, registerView);
+        registerView.getScene().getWindow();
 
     }
 
@@ -80,6 +102,31 @@ public class RegisterPresenter {
             setHomeScreenView();
         });
 
+        alert.showAndWait();
+    }
+    private void userError(Event event){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image("images/C-Cross.png"));
+        alert.setHeaderText("User already existing");
+        alert.setContentText("Try another name");
+        ButtonType retry = new ButtonType("Try again");
+        alert.getButtonTypes().setAll(retry);
+        alert.setOnCloseRequest(e -> {
+            setRegisterView();
+        });
+        alert.showAndWait();
+    }
+    private void passwordError(Event event){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image("images/C-Cross.png"));
+        alert.setHeaderText("Password are not matching");
+        ButtonType retry = new ButtonType("Try again");
+        alert.getButtonTypes().setAll(retry);
+        alert.setOnCloseRequest(e -> {
+            setRegisterView();
+        });
         alert.showAndWait();
     }
 }
