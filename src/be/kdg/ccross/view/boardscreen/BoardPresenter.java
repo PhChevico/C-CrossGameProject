@@ -88,10 +88,14 @@ public class BoardPresenter {
 
             String[] parts = pair.getKey().split("-");
             if(session.getRound()%2==0) {
-                view.add(view.createPawn1(pair.getKey()), Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
-
+                view.add(view.createPawn1(pair.getKey()), Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));//create and place the pawn on the board
+                session.getBoard().getSquare(pair.getKey()).setOwnership(session.getPlayer1());//we retrieve the square with coordinate and we pass the ownership of
+                                                                                                // who clicked on that square
             }else {
                 view.add(view.createPawn2(pair.getKey()), Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
+                session.getBoard().getSquare(pair.getKey()).setOwnership(session.getPlayer2());//we do the same but for player 2
+                //now go through it for player 2
+                //session.getPlayer2().
             }
 
             System.out.println(session.getBoard().getSquare(pair.getKey()).isStatus());
@@ -117,7 +121,7 @@ public class BoardPresenter {
             alert.setContentText("Impossible to put a pawn in that square");
             alert.showAndWait();
         }
-
+        session.dominateZones();
         view.getPlayer1pawns().setText("= " + String.valueOf(session.getPlayer1().getPawnNumber()));//update the label of player1 for the number of Pawns left
         view.getPlayer2pawns().setText("= " + String.valueOf(session.getPlayer2().getPawnNumber()));//update the label of player2 for the number of Pawns left
     }

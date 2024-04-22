@@ -157,5 +157,57 @@ public class GameSession {
     public Player getPlayer2() {
         return player2;
     }
+    public void dominateZones(){//check if player owns at least 3 squares in the same zone
+        for (int i = 65; i <= 80; i++) {//loop through all the coordinates
+            List<Square> checkingSquares = board.getZone((char)i).getSquareOfZone();
+
+            int countp1 = 0;
+            int countp2 = 0;
+            for(Square c : checkingSquares){
+                if(c.isStatus()){
+                    if(c.getOwnership() == getPlayer1()){
+                        countp1 += 1;
+                    } else if(c.getOwnership() == getPlayer2()){
+                        countp2 += 1;
+                    }
+                }
+            }
+            if (!(board.getZone((char)i).getOwner()==getPlayer1()||board.getZone((char)i).getOwner()==getPlayer2())){
+                if (countp1 == 3) {
+                    board.getZone((char) i).setOwner(getPlayer1());
+                    getPlayer1().addPawnNumber(3);
+                    System.out.println("Player1");
+                    switch (countp2) {
+                        case 1:
+                            if (getPlayer2().getPawnNumber() <= 24) {
+                                getPlayer2().addPawnNumber(1);
+                            }
+                            break;
+                        case 2:
+                            if (getPlayer2().getPawnNumber() <= 23) {
+                                getPlayer2().addPawnNumber(2);
+                            }
+                            break;
+                    }
+                } else if (countp2 == 3) {
+                    board.getZone((char) i).setOwner(getPlayer2());
+                    getPlayer2().addPawnNumber(3);
+                    System.out.println("Player2");
+                    switch (countp1) {
+                        case 1:
+                            if (getPlayer1().getPawnNumber() < 25) {
+                                getPlayer1().addPawnNumber(1);
+                            }
+                            break;
+                        case 2:
+                            if (getPlayer1().getPawnNumber() < 24) {
+                                getPlayer1().addPawnNumber(2);
+                            }
+                            break;
+                    }
+                }
+            }
+        };
+    }
 }
 

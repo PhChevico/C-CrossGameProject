@@ -8,6 +8,9 @@ public class Player {
     private final int MAX_NUMB_PAWNS = 25; //each player has a total of 25 pawns
     private int pawnNumber = MAX_NUMB_PAWNS; //current player's pawn number
 
+    private List<Square> dominatedSquare;
+
+    private List<Zone> dominatedZones;
 
     public void setName(String name){
         this.name = name;
@@ -42,7 +45,19 @@ public class Player {
     public void setPawnNumber(int pawnNumber) {
         this.pawnNumber = pawnNumber;
     }
+
+    public List<Square> getDominatedSquare() {
+        return dominatedSquare;
+    }
+
+    public void setDominatedSquare(List<Square> dominatedSquare) {
+        this.dominatedSquare = dominatedSquare;
+    }
+
+
     //methods when conquering zones...
+
+
 
 
 }

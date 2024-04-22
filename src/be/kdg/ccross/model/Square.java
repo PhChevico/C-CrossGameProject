@@ -12,6 +12,8 @@
             this.row = row;
         }
 
+        public Square() {
+        }
 
         public boolean isStatus() {
             return status;
@@ -47,5 +49,6 @@
         public String getCoordinates(){
             return this.getColumn() + "-" + this.getRow();
         }
+
 
     }
