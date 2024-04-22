@@ -1,5 +1,7 @@
 package be.kdg.ccross.model;
 
+import java.util.List;
+
 public class Player {
     private String name;
     private int nOfWins; //get from database

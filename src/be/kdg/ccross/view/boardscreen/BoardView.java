@@ -22,9 +22,9 @@ public class BoardView extends GridPane {
 
     private Consumer<Pair<String, ImageView>> onPawnCreated;//?
 
-    private Button nextRound;
-    private Label player1pawns;
-    private Label player2pawns;
+    private Button nextRound; //button used to place only one pawn nad pass the round to the opponent
+    private Label player1pawns; //label used to indicate how many pawns are left for player1
+    private Label player2pawns; //same but for player 2
 
 
     public BoardView(){
@@ -33,7 +33,7 @@ public class BoardView extends GridPane {
         this.layoutNodes();
     }
 
-    private void initialiseNodes(){//?
+    private void initialiseNodes(){
         nextRound = new Button("Next Round");
         player1pawns = new Label("Player 1 pawns number:");
         player2pawns = new Label("Player 2 pawns number:");
@@ -54,7 +54,7 @@ public class BoardView extends GridPane {
                 BackgroundSize.DEFAULT);
         this.setBackground(new Background(backgroundImage));
 
-        add(nextRound,1,0);
+        add(nextRound,1,0);//adding nextRound button to the view
 
     }
 
@@ -67,8 +67,8 @@ public class BoardView extends GridPane {
 
         System.out.println(boardAsArray);
 
-        int counter = 1;
-        int counterForFlip = 0;
+        int counter = 1; //counter used to choose the right pic for the right angle of the square(see images "Fundo..." in resources)
+        int counterForFlip = 0; //used to understand if the C shape is either reversed or normal
         int countingWhenFlip = 1;
         for (String boardAsList : boardAsArray) {
             if (boardAsList != null) {//check everytime if the square is actually used(part of the board) or not
@@ -111,7 +111,7 @@ public class BoardView extends GridPane {
     }
 
 
-    ImageView createPawn1(String coordinates){
+    ImageView createPawn1(String coordinates){//create pawn for player 1
         ImageView pawn = new ImageView(new Image("images/PinoLaranja.png"));
 
         pawn.setFitHeight(PAWN_SIZE);
@@ -129,7 +129,7 @@ public class BoardView extends GridPane {
 
         return pawn;
     }
-    ImageView createPawn2(String coordinates){
+    ImageView createPawn2(String coordinates){//create pawn for player 2
         ImageView pawn = new ImageView(new Image("images/PinoVerde.png"));
 
         pawn.setFitHeight(PAWN_SIZE);
@@ -148,7 +148,7 @@ public class BoardView extends GridPane {
         return pawn;
     }
 
-    public Button getNextRound() {
+    public Button getNextRound() { //used for eventHandler
         return nextRound;
     }
 }

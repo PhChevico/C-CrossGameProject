@@ -20,14 +20,14 @@ public class BoardPresenter {
     private GameSession session; //model
     private BoardView view; //view
 
-    private boolean nextRound = false;
 
     public BoardPresenter(GameSession session, BoardView view){
         this.session = session;
         this.view = view;
 
         // Show initial board
-        this.view.boardMaker(session.getSquaresAsList());
+        this.view.boardMaker(session.getSquaresAsList());//call the method boardMaker to create the board passing the List of squares
+                                                         //(see in Board class)
         this.addEventHandlers();
 
     }
@@ -45,10 +45,10 @@ public class BoardPresenter {
                 mouseEvent.consume();
             });
         }
-        view.getNextRound().setOnAction(actionEvent -> {
-            session.updateCounter(1);
+        view.getNextRound().setOnAction(actionEvent -> { //when nextRound is pressed
+            session.updateCounter(1);//we update the counter of pawns placed as if 2 pawns were places already even if only 1 was placed
             session.setLastMove(null);
-            session.setRound(session.getRound()+1);
+            session.setRound(session.getRound()+1);//we pass to the other round by adding 1 to the number of rounds
         });
 
         // Add event listener
@@ -80,6 +80,7 @@ public class BoardPresenter {
             String[] parts = pair.getKey().split("-");
             if(session.getRound()%2==0) {
                 view.add(view.createPawn1(pair.getKey()), Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
+
             }else {
                 view.add(view.createPawn2(pair.getKey()), Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
             }
@@ -96,7 +97,11 @@ public class BoardPresenter {
             }
         } else {
             //if zone dominated
-            System.out.println("Impossible to put a pawn in that square");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Impossible to put a pawn in that square");
+            alert.showAndWait();
         }
     }
 
