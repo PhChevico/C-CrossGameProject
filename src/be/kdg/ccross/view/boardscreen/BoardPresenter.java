@@ -46,9 +46,20 @@ public class BoardPresenter {
             });
         }
         view.getNextRound().setOnAction(actionEvent -> { //when nextRound is pressed
+            if(session.getRound()%2==0){//decrease player Pawns by 1
+                session.getPlayer1().decreasePawnNumber(1);
+            }else {
+                session.getPlayer2().decreasePawnNumber(1);
+            }
             session.updateCounter(1);//we update the counter of pawns placed as if 2 pawns were places already even if only 1 was placed
+            if(session.getRound()%2==0){//decrease player Pawns by 2
+                session.getPlayer1().addPawnNumber(1);
+            }else {
+                session.getPlayer2().addPawnNumber(1);
+            }
             session.setLastMove(null);
             session.setRound(session.getRound()+1);//we pass to the other round by adding 1 to the number of rounds
+
         });
 
         // Add event listener
@@ -57,8 +68,6 @@ public class BoardPresenter {
                 checkingActionToSquare(pair);
             });
         });
-
-
 
 
 
@@ -89,6 +98,11 @@ public class BoardPresenter {
 
             session.setLastMove(pair.getKey());
             session.updateCounter(1);
+            if(session.getRound()%2==0){//decrease player Pawns by 2
+                session.getPlayer1().decreasePawnNumber(1);
+            }else {
+                session.getPlayer2().decreasePawnNumber(1);
+            }
 
             if(session.getCounter() % 2 == 0){
                 session.setLastMove(null);
@@ -103,6 +117,9 @@ public class BoardPresenter {
             alert.setContentText("Impossible to put a pawn in that square");
             alert.showAndWait();
         }
+
+        view.getPlayer1pawns().setText("= " + String.valueOf(session.getPlayer1().getPawnNumber()));//update the label of player1 for the number of Pawns left
+        view.getPlayer2pawns().setText("= " + String.valueOf(session.getPlayer2().getPawnNumber()));//update the label of player2 for the number of Pawns left
     }
 
 

@@ -149,5 +149,13 @@ public class GameSession {
     public void setRound(int round) {
         this.round = round;
     }
+
+    public Player getPlayer1() {
+        return player1;
+    }
+
+    public Player getPlayer2() {
+        return player2;
+    }
 }
 

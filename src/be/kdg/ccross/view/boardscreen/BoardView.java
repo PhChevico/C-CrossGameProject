@@ -35,8 +35,8 @@ public class BoardView extends GridPane {
 
     private void initialiseNodes(){
         nextRound = new Button("Next Round");
-        player1pawns = new Label("Player 1 pawns number:");
-        player2pawns = new Label("Player 2 pawns number:");
+        player1pawns = new Label();
+        player2pawns = new Label();
     }
 
     public void setHandlerOnPawnCreated(Consumer<Pair<String, ImageView>> event){
@@ -54,7 +54,21 @@ public class BoardView extends GridPane {
                 BackgroundSize.DEFAULT);
         this.setBackground(new Background(backgroundImage));
 
-        add(nextRound,1,0);//adding nextRound button to the view
+        add(nextRound,0,0);//adding nextRound button to the view
+
+        ImageView pawn1 = new ImageView(new Image("images/PinoVerde.png"));
+
+        pawn1.setFitHeight(PAWN_SIZE);
+        pawn1.setFitWidth(PAWN_SIZE);
+        add(pawn1,0,1);
+        add(player1pawns,1,1);
+
+        ImageView pawn2 = new ImageView(new Image("images/PinoLaranja.png"));
+
+        pawn2.setFitHeight(PAWN_SIZE);
+        pawn2.setFitWidth(PAWN_SIZE);
+        add(pawn2,0,2);
+        add(player2pawns,1,2);
 
     }
 
@@ -112,7 +126,7 @@ public class BoardView extends GridPane {
 
 
     ImageView createPawn1(String coordinates){//create pawn for player 1
-        ImageView pawn = new ImageView(new Image("images/PinoLaranja.png"));
+        ImageView pawn = new ImageView(new Image("images/PinoVerde.png"));
 
         pawn.setFitHeight(PAWN_SIZE);
         pawn.setFitWidth(PAWN_SIZE);
@@ -130,7 +144,7 @@ public class BoardView extends GridPane {
         return pawn;
     }
     ImageView createPawn2(String coordinates){//create pawn for player 2
-        ImageView pawn = new ImageView(new Image("images/PinoVerde.png"));
+        ImageView pawn = new ImageView(new Image("images/PinoLaranja.png"));
 
         pawn.setFitHeight(PAWN_SIZE);
         pawn.setFitWidth(PAWN_SIZE);
@@ -150,6 +164,14 @@ public class BoardView extends GridPane {
 
     public Button getNextRound() { //used for eventHandler
         return nextRound;
+    }
+
+    public Label getPlayer1pawns() {
+        return player1pawns;
+    }
+
+    public Label getPlayer2pawns() {
+        return player2pawns;
     }
 }
 
