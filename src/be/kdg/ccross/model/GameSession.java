@@ -16,6 +16,7 @@ public class GameSession {
     private Screen screen = new Screen();
     private Pawn pawn = new Pawn();
     private GameTime gameTime = new GameTime();
+    private EndGame endGame = new EndGame();
     private String lastMove;
     private int counter = 0;
     private int round = 0;
@@ -208,6 +209,10 @@ public class GameSession {
                 }
             }
         };
+    }
+
+    public EndGame getEndGame() {
+        return endGame;
     }
 }
 

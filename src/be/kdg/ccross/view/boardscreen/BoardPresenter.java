@@ -64,6 +64,7 @@ public class BoardPresenter {
             session.setLastMove(null);
             session.setRound(session.getRound()+1);//we pass to the other round by adding 1 to the number of rounds
             CheckZonesClaimed();
+            CheckPlayerWonbyPawnsNumber();
         });
 
         // Add event listener
@@ -127,7 +128,7 @@ public class BoardPresenter {
         }
         session.dominateZones();
         CheckZonesClaimed();
-
+        CheckPlayerWonbyPawnsNumber();
         view.getPlayer1pawns().setText("= " + String.valueOf(session.getPlayer1().getPawnNumber()));//update the label of player1 for the number of Pawns left
         view.getPlayer2pawns().setText("= " + String.valueOf(session.getPlayer2().getPawnNumber()));//update the label of player2 for the number of Pawns left
     }
@@ -162,6 +163,20 @@ public class BoardPresenter {
             event.consume();
         }
     }
-
+    public void CheckPlayerWonbyPawnsNumber(){
+        if(session.getEndGame().Checkpawns(session.getPlayer1(), session.getPlayer2())==1){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("GAME OVER");
+            alert.setHeaderText(null);
+            alert.setContentText("PLAYER 1 WON");
+            alert.showAndWait();
+        }else if(session.getEndGame().Checkpawns(session.getPlayer1(), session.getPlayer2())==1){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("GAME OVER");
+            alert.setHeaderText(null);
+            alert.setContentText("PLAYER 2 WON");
+            alert.showAndWait();
+        }
+    }
 
 }
