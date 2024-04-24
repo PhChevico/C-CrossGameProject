@@ -1,5 +1,5 @@
 CREATE DATABASE c_cross_team21;
-
+/*u should also turn number that is specific to each game*/
 
 DROP TABLE IF EXISTS logs_info cascade ;
 DROP TABLE IF EXISTS Players cascade ;

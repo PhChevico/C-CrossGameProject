@@ -1,4 +1,6 @@
 package be.kdg.ccross.view.boardscreen;
+import be.kdg.ccross.model.Player;
+import be.kdg.ccross.model.Square;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -160,6 +162,46 @@ public class BoardView extends GridPane {
         onPawnCreated.accept(new Pair<>(coordinates, pawn));
 
         return pawn;
+    }
+    public void addZonePlayer1(List<Square> zoneAsList,boolean rotate) {
+        int counter = 1;
+
+        for (Square s : zoneAsList) {
+            String[] parts = s.getCoordinates().split("-");
+            String filename = "images/Verde0"+counter+".png";
+            Image image = new Image(filename);
+            ImageView img = new ImageView(image);
+            img.setFitWidth(SQUARE_SIZE);
+            img.setFitHeight(SQUARE_SIZE);
+            counter = (counter % 5) + 1;
+
+
+            if (rotate) {
+                img.setRotate(180);
+            }
+            add(img, Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
+        }
+
+    }
+    public void addZonePlayer2(List<Square> zoneAsList,boolean rotate){
+        int counter = 1;
+        int counterForFlip=0;
+        int countingWhenFlip = 1;
+
+        for (Square s : zoneAsList) {
+            String[] parts = s.getCoordinates().split("-");
+            String filename = "images/Laranja0"+counter+".png";
+            Image image = new Image(filename);
+            ImageView img = new ImageView(image);
+            img.setFitWidth(SQUARE_SIZE);
+            img.setFitHeight(SQUARE_SIZE);
+            counter = (counter % 5) + 1;
+
+            if (rotate) {
+                img.setRotate(180);
+            }
+            add(img, Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
+        }
     }
 
     public Button getNextRound() { //used for eventHandler

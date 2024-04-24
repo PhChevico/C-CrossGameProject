@@ -1,5 +1,6 @@
 package be.kdg.ccross.view.boardscreen;
 import be.kdg.ccross.model.GameSession;
+import be.kdg.ccross.model.Square;
 import javafx.event.Event;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
@@ -12,6 +13,7 @@ import javafx.stage.WindowEvent;
 import javafx.util.Pair;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -44,8 +46,10 @@ public class BoardPresenter {
                 checkingActionToSquare(new Pair<>(entry.getKey(), entry.getValue()));
                 mouseEvent.consume();
             });
+
         }
         view.getNextRound().setOnAction(actionEvent -> { //when nextRound is pressed
+
             if(session.getRound()%2==0){//decrease player Pawns by 1
                 session.getPlayer1().decreasePawnNumber(1);
             }else {
@@ -59,11 +63,12 @@ public class BoardPresenter {
             }
             session.setLastMove(null);
             session.setRound(session.getRound()+1);//we pass to the other round by adding 1 to the number of rounds
-
+            CheckZonesClaimed();
         });
 
         // Add event listener
         view.setHandlerOnPawnCreated((Pair<String, ImageView> pair) -> {
+
             pair.getValue().addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
                 checkingActionToSquare(pair);
             });
@@ -94,8 +99,7 @@ public class BoardPresenter {
             }else {
                 view.add(view.createPawn2(pair.getKey()), Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
                 session.getBoard().getSquare(pair.getKey()).setOwnership(session.getPlayer2());//we do the same but for player 2
-                //now go through it for player 2
-                //session.getPlayer2().
+
             }
 
             System.out.println(session.getBoard().getSquare(pair.getKey()).isStatus());
@@ -122,8 +126,21 @@ public class BoardPresenter {
             alert.showAndWait();
         }
         session.dominateZones();
+        CheckZonesClaimed();
+
         view.getPlayer1pawns().setText("= " + String.valueOf(session.getPlayer1().getPawnNumber()));//update the label of player1 for the number of Pawns left
         view.getPlayer2pawns().setText("= " + String.valueOf(session.getPlayer2().getPawnNumber()));//update the label of player2 for the number of Pawns left
+    }
+    private void CheckZonesClaimed(){
+        for (int i = 65; i <= 80; i++) {//loop through all the coordinates
+            List<Square> checkingSquares = session.getBoard().getZone((char)i).getSquareOfZone();
+            if(session.getBoard().getZone((char)i).getOwner()==session.getPlayer1()){
+                view.addZonePlayer1(checkingSquares,session.getBoard().getZone((char)i).isRotate());
+            };
+            if (session.getBoard().getZone((char)i).getOwner()==session.getPlayer2()){
+                view.addZonePlayer2(checkingSquares,session.getBoard().getZone((char)i).isRotate());
+            }
+    }
     }
 
 

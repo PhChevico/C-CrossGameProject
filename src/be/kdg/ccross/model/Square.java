@@ -12,8 +12,10 @@
             this.row = row;
         }
 
+
         public Square() {
         }
+
 
         public boolean isStatus() {
             return status;

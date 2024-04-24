@@ -8,13 +8,15 @@ public class Zone {
     private Player owner;
     private char zoneID;
     private List<Square> squareOfZone;
+    private boolean rotate = false;
 
 
 
     //zone has and id + its owned squares.
-    public Zone(char zoneId, List<Square> squareOfZone){
+    public Zone(char zoneId, List<Square> squareOfZone,boolean rotate){
         this.zoneID = zoneId;
         this.squareOfZone = squareOfZone;
+        this.rotate= rotate;
     }
 
     public Zone(Player owner, char zoneID, List<Square> squareOfZone) {
@@ -50,5 +52,13 @@ public class Zone {
 
     public void setOwner(Player owner) {
         this.owner = owner;
+    }
+
+    public boolean isRotate() {
+        return rotate;
+    }
+
+    public void setRotate(boolean rotate) {
+        this.rotate = rotate;
     }
 }
