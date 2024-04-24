@@ -57,6 +57,7 @@ public class BoardView extends GridPane {
         this.setBackground(new Background(backgroundImage));
 
         add(nextRound,0,0);//adding nextRound button to the view
+        nextRound.setVisible(false);
 
         ImageView pawn1 = new ImageView(new Image("images/PinoVerde.png"));
 

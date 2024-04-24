@@ -65,6 +65,7 @@ public class BoardPresenter {
             session.setRound(session.getRound()+1);//we pass to the other round by adding 1 to the number of rounds
             CheckZonesClaimed();
             CheckPlayerWonbyPawnsNumber();
+            view.getNextRound().setVisible(false);
         });
 
         // Add event listener
@@ -107,6 +108,7 @@ public class BoardPresenter {
 
             session.setLastMove(pair.getKey());
             session.updateCounter(1);
+            view.getNextRound().setVisible(true);
             if(session.getRound()%2==0){//decrease player Pawns by 2
                 session.getPlayer1().decreasePawnNumber(1);
             }else {
@@ -116,7 +118,7 @@ public class BoardPresenter {
             if(session.getCounter() % 2 == 0){
                 session.setLastMove(null);
                 session.setRound(session.getRound()+1);
-
+                view.getNextRound().setVisible(false);
             }
         } else {
             //if zone dominated
@@ -137,6 +139,7 @@ public class BoardPresenter {
             List<Square> checkingSquares = session.getBoard().getZone((char)i).getSquareOfZone();
             if(session.getBoard().getZone((char)i).getOwner()==session.getPlayer1()){
                 view.addZonePlayer1(checkingSquares,session.getBoard().getZone((char)i).isRotate());
+
             };
             if (session.getBoard().getZone((char)i).getOwner()==session.getPlayer2()){
                 view.addZonePlayer2(checkingSquares,session.getBoard().getZone((char)i).isRotate());
