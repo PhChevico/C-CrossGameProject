@@ -1,6 +1,8 @@
 package be.kdg.ccross.view.boardscreen;
 import be.kdg.ccross.model.GameSession;
+import be.kdg.ccross.model.Player;
 import be.kdg.ccross.model.Square;
+import be.kdg.ccross.model.Zone;
 import javafx.event.Event;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
@@ -64,7 +66,7 @@ public class BoardPresenter {
             session.setLastMove(null);
             session.setRound(session.getRound()+1);//we pass to the other round by adding 1 to the number of rounds
             CheckZonesClaimed();
-            CheckPlayerWonbyPawnsNumber();
+            CheckPlayerWon();
             view.getNextRound().setVisible(false);
         });
 
@@ -130,7 +132,7 @@ public class BoardPresenter {
         }
         session.dominateZones();
         CheckZonesClaimed();
-        CheckPlayerWonbyPawnsNumber();
+        CheckPlayerWon();
         view.getPlayer1pawns().setText("= " + String.valueOf(session.getPlayer1().getPawnNumber()));//update the label of player1 for the number of Pawns left
         view.getPlayer2pawns().setText("= " + String.valueOf(session.getPlayer2().getPawnNumber()));//update the label of player2 for the number of Pawns left
     }
@@ -140,9 +142,12 @@ public class BoardPresenter {
             if(session.getBoard().getZone((char)i).getOwner()==session.getPlayer1()){
                 view.addZonePlayer1(checkingSquares,session.getBoard().getZone((char)i).isRotate());
 
+
             };
             if (session.getBoard().getZone((char)i).getOwner()==session.getPlayer2()){
                 view.addZonePlayer2(checkingSquares,session.getBoard().getZone((char)i).isRotate());
+
+
             }
     }
     }
@@ -166,14 +171,16 @@ public class BoardPresenter {
             event.consume();
         }
     }
-    public void CheckPlayerWonbyPawnsNumber(){
-        if(session.getEndGame().Checkpawns(session.getPlayer1(), session.getPlayer2())==1){
+    public void CheckPlayerWon(){
+        if(session.getEndGame().Checkpawns(session.getPlayer1(), session.getPlayer2())==1||
+                session.getEndGame().CheckZones(session.getPlayer1(),session.getBoard())){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("GAME OVER");
             alert.setHeaderText(null);
             alert.setContentText("PLAYER 1 WON");
             alert.showAndWait();
-        }else if(session.getEndGame().Checkpawns(session.getPlayer1(), session.getPlayer2())==1){
+        }else if(session.getEndGame().Checkpawns(session.getPlayer1(), session.getPlayer2())==1 ||
+                session.getEndGame().CheckZones(session.getPlayer2(),session.getBoard())){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("GAME OVER");
             alert.setHeaderText(null);

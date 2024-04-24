@@ -4,6 +4,7 @@ package be.kdg.ccross.model;//In this implementation we will use hard-code to sh
 import javafx.application.Platform;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 ;
 public class GameSession {
@@ -23,20 +24,23 @@ public class GameSession {
 
 
     private boolean isFinished; //boolean used in the while to check if the user exits the game
-    public void start(){
+
+    public void start() {
         initgame(); //once the authentication part is done we start with the actual loop og the game
         while (isFinished) {
             game();//the game logic
         }
     }
-    public void initgame(){
+
+    public void initgame() {
         /*if(screen.LoginScreen()==2){ //the screen.LoginScreen is just a hashcode of how the actual JavaFX screen would look like.
         authentication.registerUser();} //user enter name and password
         else{
             authentication.isLoginCorrect(); //check if the login is correct
         }*/
     }
-    public void game(){
+
+    public void game() {
         //display the screen with javaFX
         String color = pawn.pawnColor();//we ask the user for a pawn color(we still didn't handle the input of it since we still have to work with javaFX
         //so this is just an example of how it should work USING ENUMS
@@ -48,32 +52,32 @@ public class GameSession {
         //store the game in the database calling a method from database manager in which we pass the player name,the time(with getElapsedTime method)
         //and if he won or lost.
         //we call this method 2 TIMES, one for the PLAYER1 and one for the PLAYER2 ;
-        isFinished= screen.askToExit(); //we set the boolean is Finished to the choice of the player(exit the game or continue in the loop)
+        isFinished = screen.askToExit(); //we set the boolean is Finished to the choice of the player(exit the game or continue in the loop)
     }
 
-    public List<String> getSquaresAsList(){
+    public List<String> getSquaresAsList() {
         return board.getSquaresAsList();
     }
 
-    public boolean registerUser(String userName, String password,String confirmPasswd){
+    public boolean registerUser(String userName, String password, String confirmPasswd) {
         try {
             authentication.registerUser(userName, password);
             return true;
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Not possible to register: " + e.getMessage());
             return false;
         }
     }
 
-    public Board getBoard(){
+    public Board getBoard() {
         return board;
     }
 
-    public void setLastMove(String lastMove){
+    public void setLastMove(String lastMove) {
         this.lastMove = lastMove;
     }
 
-    public String getLastMove(){
+    public String getLastMove() {
         return lastMove;
     }
 
@@ -135,11 +139,11 @@ public class GameSession {
         return authentication;
     }
 
-    public String getUsername(){
+    public String getUsername() {
         return player1.getName();
     }
 
-    public void setUsername(String username){
+    public void setUsername(String username) {
         player1.setName(username);
     }
 
@@ -158,22 +162,23 @@ public class GameSession {
     public Player getPlayer2() {
         return player2;
     }
-    public void dominateZones(){//check if player owns at least 3 squares in the same zone
+
+    public void dominateZones() {//check if player owns at least 3 squares in the same zone
         for (int i = 65; i <= 80; i++) {//loop through all the coordinates
-            List<Square> checkingSquares = board.getZone((char)i).getSquareOfZone();
+            List<Square> checkingSquares = board.getZone((char) i).getSquareOfZone();
 
             int countp1 = 0;
             int countp2 = 0;
-            for(Square c : checkingSquares){
-                if(c.isStatus()){
-                    if(c.getOwnership() == getPlayer1()){
+            for (Square c : checkingSquares) {
+                if (c.isStatus()) {
+                    if (c.getOwnership() == getPlayer1()) {
                         countp1 += 1;
-                    } else if(c.getOwnership() == getPlayer2()){
+                    } else if (c.getOwnership() == getPlayer2()) {
                         countp2 += 1;
                     }
                 }
             }
-            if (!(board.getZone((char)i).getOwner()==getPlayer1()||board.getZone((char)i).getOwner()==getPlayer2())){
+            if (!(board.getZone((char) i).getOwner() == getPlayer1() || board.getZone((char) i).getOwner() == getPlayer2())) {
                 if (countp1 == 3) {
                     board.getZone((char) i).setOwner(getPlayer1());
                     getPlayer1().addPawnNumber(3);
@@ -208,11 +213,13 @@ public class GameSession {
                     }
                 }
             }
-        };
+        }
+        ;
     }
 
     public EndGame getEndGame() {
         return endGame;
     }
 }
+
 

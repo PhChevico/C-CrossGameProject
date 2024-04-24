@@ -61,4 +61,5 @@ public class Zone {
     public void setRotate(boolean rotate) {
         this.rotate = rotate;
     }
+
 }
