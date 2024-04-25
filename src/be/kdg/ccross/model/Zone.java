@@ -8,7 +8,7 @@ public class Zone {
     private Player owner;
     private char zoneID;
     private List<Square> squareOfZone;
-    private boolean rotate = false;
+    private boolean rotate = false;//used to check if the C shape should be 180 degrees or not
 
 
 

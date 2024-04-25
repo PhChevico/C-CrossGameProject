@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class WinningZones {
-    public List<List<Zone>> getWinningZones(Board board){
+    public List<List<Zone>> getWinningZones(Board board){//declare all possible winning possibilities-->more to add
         List<List<Zone>> zone = new ArrayList<>();
 
         zone.add(Arrays.asList(board.getZone('A'), board.getZone('B'), board.getZone('C'), board.getZone('D')));

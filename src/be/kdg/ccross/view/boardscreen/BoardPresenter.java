@@ -58,16 +58,15 @@ public class BoardPresenter {
                 session.getPlayer2().decreasePawnNumber(1);
             }
             session.updateCounter(1);//we update the counter of pawns placed as if 2 pawns were places already even if only 1 was placed
-            if(session.getRound()%2==0){//decrease player Pawns by 2
+            if(session.getRound()%2==0){//decrease player Pawns by 1
                 session.getPlayer1().addPawnNumber(1);
             }else {
                 session.getPlayer2().addPawnNumber(1);
             }
             session.setLastMove(null);
-            session.setRound(session.getRound()+1);//we pass to the other round by adding 1 to the number of rounds
-            CheckZonesClaimed();
-            CheckPlayerWon();
-            view.getNextRound().setVisible(false);
+            session.setRound(session.getRound()+1);//we go to the other round by adding 1 to the number of rounds
+
+            view.getNextRound().setVisible(false);//we make the nextRound button non-visible
         });
 
         // Add event listener
@@ -80,7 +79,7 @@ public class BoardPresenter {
 
 
 
-        view.getScene().getWindow().setOnCloseRequest(this::closeApplication);
+        view.getScene().getWindow().setOnCloseRequest(this::closeApplication);//close the app
 
 
 
@@ -131,29 +130,50 @@ public class BoardPresenter {
             alert.showAndWait();
         }
         session.dominateZones();
-        CheckZonesClaimed();
-        CheckPlayerWon();
+        CheckZonesClaimed();//check if player dominated the zone
+        CheckPlayerWon();//check if player won
         view.getPlayer1pawns().setText("= " + String.valueOf(session.getPlayer1().getPawnNumber()));//update the label of player1 for the number of Pawns left
         view.getPlayer2pawns().setText("= " + String.valueOf(session.getPlayer2().getPawnNumber()));//update the label of player2 for the number of Pawns left
     }
-    private void CheckZonesClaimed(){
-        for (int i = 65; i <= 80; i++) {//loop through all the coordinates
-            List<Square> checkingSquares = session.getBoard().getZone((char)i).getSquareOfZone();
-            if(session.getBoard().getZone((char)i).getOwner()==session.getPlayer1()){
-                view.addZonePlayer1(checkingSquares,session.getBoard().getZone((char)i).isRotate());
+
+    private void CheckZonesClaimed(){//used to check the zones claimed.We use this method each time a pawn is placed
+        for (int i = 65; i <= 80; i++) {//loop through all the zones (from A to P in integer)
+            List<Square> checkingSquares = session.getBoard().getZone((char)i).getSquareOfZone();//pass the list of squares of a single zone to a list
+            if(session.getBoard().getZone((char)i).getOwner()==session.getPlayer1()){//if the zone is owned by player 1
+                view.addZonePlayer1(checkingSquares,session.getBoard().getZone((char)i).isRotate());//add the zone visually by calling the method
 
 
             };
-            if (session.getBoard().getZone((char)i).getOwner()==session.getPlayer2()){
+            if (session.getBoard().getZone((char)i).getOwner()==session.getPlayer2()){//same as previous step
                 view.addZonePlayer2(checkingSquares,session.getBoard().getZone((char)i).isRotate());
 
 
             }
+        }
     }
+
+    public void CheckPlayerWon(){//used method to check if the player has either connected the zones or opponent's pawns==0;
+
+        if(session.getEndGame().Checkpawns(session.getPlayer1(), session.getPlayer2())==1||
+                session.getEndGame().CheckZones(session.getPlayer1(),session.getBoard())){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("GAME OVER");
+            alert.setHeaderText(null);
+            alert.setContentText("PLAYER 1 WON");
+            alert.showAndWait();
+
+        }else if(session.getEndGame().Checkpawns(session.getPlayer1(), session.getPlayer2())==1 ||
+                session.getEndGame().CheckZones(session.getPlayer2(),session.getBoard())){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("GAME OVER");
+            alert.setHeaderText(null);
+            alert.setContentText("PLAYER 2 WON");
+            alert.showAndWait();
+        }
     }
 
 
-    void closeApplication(Event event) {
+    void closeApplication(Event event) {//alert to in case of end application
         Alert alert = new Alert(Alert.AlertType.WARNING);
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
         stage.getIcons().add(new Image("images/C-Cross.png")); // To add an icon
@@ -171,22 +191,6 @@ public class BoardPresenter {
             event.consume();
         }
     }
-    public void CheckPlayerWon(){
-        if(session.getEndGame().Checkpawns(session.getPlayer1(), session.getPlayer2())==1||
-                session.getEndGame().CheckZones(session.getPlayer1(),session.getBoard())){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("GAME OVER");
-            alert.setHeaderText(null);
-            alert.setContentText("PLAYER 1 WON");
-            alert.showAndWait();
-        }else if(session.getEndGame().Checkpawns(session.getPlayer1(), session.getPlayer2())==1 ||
-                session.getEndGame().CheckZones(session.getPlayer2(),session.getBoard())){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("GAME OVER");
-            alert.setHeaderText(null);
-            alert.setContentText("PLAYER 2 WON");
-            alert.showAndWait();
-        }
-    }
+
 
 }

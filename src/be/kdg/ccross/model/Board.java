@@ -112,8 +112,9 @@ public class Board {
         // Return space if the square doesn't belong to any zone
         return ' ';
     }
-    public List<Zone> dominatedZonesAsList(Player p1){
-        List<Zone> dominatedZones = new ArrayList<>();
+
+    public List<Zone> dominatedZonesAsList(Player p1){//we go through all the zones and fill a list(dominatedZones) of a player by checking
+        List<Zone> dominatedZones = new ArrayList<>();//whether the zone is owned by that player or not.
         for(Zone z : zones){
             if(z.getOwner()==p1){
                 dominatedZones.add(z);
