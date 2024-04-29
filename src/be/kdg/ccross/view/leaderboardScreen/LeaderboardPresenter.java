@@ -25,7 +25,20 @@ public class LeaderboardPresenter {
         addEventHandlers();
         updateView(); // Call updateView to initially populate the leaderboard
     }
+    private void setHomeScreenView(){
+
+        HomeScreenView homeScreenView = new HomeScreenView();
+        Scene scene = view.getScene();
+        scene.setRoot(homeScreenView);
+        Stage stage = (Stage) scene.getWindow();
+        stage.setResizable(true);
+        HomeScreenPresenter homeScreenPresenter = new HomeScreenPresenter(model, homeScreenView);
+        homeScreenView.getScene().getWindow().sizeToScene();
+
+    }
     private void addEventHandlers() {
+
+        view.getGoBack().setOnAction(actionEvent -> setHomeScreenView());
         view.getRank().setOnMouseClicked(mouseEvent -> {
             sortBy = "Rank";
             updateView();
