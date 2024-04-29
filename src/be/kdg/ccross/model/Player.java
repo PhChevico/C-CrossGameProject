@@ -5,7 +5,7 @@ import java.util.List;
 public class Player {
     private String name;
     private int nOfWins; //get from database
-    private final int MAX_NUMB_PAWNS = 25; //each player has a total of 25 pawns
+    private final int MAX_NUMB_PAWNS = 12; //each player has a total of 12 pawns
     private int pawnNumber = MAX_NUMB_PAWNS; //current player's pawn number
 
     private List<Square> dominatedSquare;

@@ -10,6 +10,7 @@ public class Board {
     private Square[][] board = new Square[sizeCols_board][sizeRows_board];
     private Zone[] zones;
     private List<Square> squaresOfTheBoard;
+
     public Board() {
         squaresOfTheBoard = new ArrayList<>();
         for (int i = 0; i < sizeCols_board; i++) {
@@ -70,17 +71,17 @@ public class Board {
         List<String> result = new ArrayList<>();
 
         // Check if the size of the squares list is compatible with the array dimensions
-            try{
-                for (int i = 0; i < sizeRows_board; i++) {
-                    for (int j = 0; j < sizeCols_board; j++) {
-                        int index = i * sizeCols_board + j;
-                        Square square = squares.get(index);
-                        result.add(square.toString());
-                    }
+        try{
+            for (int i = 0; i < sizeRows_board; i++) {
+                for (int j = 0; j < sizeCols_board; j++) {
+                    int index = i * sizeCols_board + j;
+                    Square square = squares.get(index);
+                    result.add(square.toString());
                 }
-            } catch (Exception e){
-                System.out.println("error: " + e.getMessage());
             }
+        } catch (Exception e){
+            System.out.println("error: " + e.getMessage());
+        }
 
 
         return result;
@@ -122,7 +123,28 @@ public class Board {
         }
         return dominatedZones;
     }
+    public void determineStartWinningPathPossible(Move move){
 
+    }
+    public void determineCotinuePath(Move move){
+
+    }
+    public void determineBlockPlayerFromWinning(Move move){
+
+    }
+    public void determineRandomMove(Move move){
+
+    }
+    public boolean endStartWinningPathPossible(){
+        return true;
+    }
+    public boolean endCotinuePath(){
+        return true;
+    }
+
+    public boolean endBlockPlayerFromWinning(){
+        return true;
+    }
     //to the continued
 
 

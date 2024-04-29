@@ -1,6 +1,7 @@
 package be.kdg.ccross.model;//In this implementation we will use hard-code to show how the actual game logic will look like since
 //we didn't start implementing javaFX
 
+import be.kdg.ccross.model.rulebasedsystem.InferenceEngine;
 import javafx.application.Platform;
 
 import java.util.ArrayList;
@@ -21,6 +22,9 @@ public class GameSession {
     private String lastMove;
     private int counter = 0;
     private int round = 0;
+    InferenceEngine engine = new InferenceEngine();
+    Move move = new Move();
+
 
 
     private boolean isFinished; //boolean used in the while to check if the user exits the game
@@ -185,12 +189,12 @@ public class GameSession {
                     System.out.println("Player1");
                     switch (countp2) {
                         case 1:
-                            if (getPlayer2().getPawnNumber() <= 24) {
+                            if (getPlayer2().getPawnNumber() <= 11) {
                                 getPlayer2().addPawnNumber(1);
                             }
                             break;
                         case 2:
-                            if (getPlayer2().getPawnNumber() <= 23) {
+                            if (getPlayer2().getPawnNumber() <= 10) {
                                 getPlayer2().addPawnNumber(2);
                             }
                             break;
@@ -201,12 +205,12 @@ public class GameSession {
                     System.out.println("Player2");
                     switch (countp1) {
                         case 1:
-                            if (getPlayer1().getPawnNumber() < 25) {
+                            if (getPlayer1().getPawnNumber() < 12) {
                                 getPlayer1().addPawnNumber(1);
                             }
                             break;
                         case 2:
-                            if (getPlayer1().getPawnNumber() < 24) {
+                            if (getPlayer1().getPawnNumber() < 11) {
                                 getPlayer1().addPawnNumber(2);
                             }
                             break;
@@ -217,6 +221,7 @@ public class GameSession {
         ;
     }
 
+
     public EndGame getEndGame() {
         return endGame;
     }
@@ -224,6 +229,16 @@ public class GameSession {
     public GameTime getGameTime() {
         return gameTime;
     }
+
+    public InferenceEngine getEngine() {
+        return engine;
+    }
+
+    public Move getMove() {
+        return move;
+    }
 }
+
+
 
 

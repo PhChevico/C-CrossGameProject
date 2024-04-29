@@ -29,7 +29,7 @@ public class BoardPresenter {
 
         // Show initial board
         this.view.boardMaker(session.getSquaresAsList());//call the method boardMaker to create the board passing the List of squares
-                                                         //(see in Board class)
+        //(see in Board class)
         this.addEventHandlers();
 
     }
@@ -65,6 +65,9 @@ public class BoardPresenter {
             session.setRound(session.getRound()+1);//we go to the other round by adding 1 to the number of rounds
 
             view.getNextRound().setVisible(false);//we make the nextRound button non-visible
+            Move move = new Move();
+            session.getEngine().determineFacts(session);
+            session.getEngine().applyRules(session, move);
         });
 
         // Add event listener
@@ -96,7 +99,7 @@ public class BoardPresenter {
             if(session.getRound()%2==0) {
                 view.add(view.createPawn1(pair.getKey()), Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));//create and place the pawn on the board
                 session.getBoard().getSquare(pair.getKey()).setOwnership(session.getPlayer1());//we retrieve the square with coordinate and we pass the ownership of
-                                                                                                // who clicked on that square
+                // who clicked on that square
             }else {
                 view.add(view.createPawn2(pair.getKey()), Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
                 session.getBoard().getSquare(pair.getKey()).setOwnership(session.getPlayer2());//we do the same but for player 2
@@ -170,36 +173,18 @@ public class BoardPresenter {
         }
     }
     public void displaySummary(boolean winner) {
-        // Calculate total play time
-        long totalPlayTimeMillis = session.getGameTime().getElapsedTime();
-
-        // Determine the winner
+        long totalPlayTimeMillis = this.session.getGameTime().getElapsedTime();
         String playerWinner;
         if (winner) {
-            playerWinner = session.getPlayer1().getName();
+            playerWinner = this.session.getPlayer1().getName();
         } else {
             playerWinner = "AI";
         }
 
-
-        // Calculate total number of turns/moves per player
-        //int totalMovesPlayer1 = session.playerStatsList.get(0).getWins() + playerStatsList.get(0).getLosses();
-        //int totalMovesPlayer2 = playerStatsList.get(1).getWins() + playerStatsList.get(1).getLosses();
-
-        // Calculate average duration per turn/move per player
-        //double avgDurationPlayer1 = playerStatsList.get(0).getAvgDuration();
-        //double avgDurationPlayer2 = playerStatsList.get(1).getAvgDuration();
-
-        // Display the summary in a pop-up window
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("End of Game Summary");
-        alert.setHeaderText(null);
-        alert.setContentText("Winner: " + winner + "\n" +
-                "Total Play Time: " + totalPlayTimeMillis + " milliseconds\n");
-                //"Total Moves Player 1: " + totalMovesPlayer1 + "\n" +
-                //"Total Moves Player 2: " + totalMovesPlayer2 + "\n" +
-                //"Average Duration per Move Player 1: " + avgDurationPlayer1 + " milliseconds\n" +
-                //"Average Duration per Move Player 2: " + avgDurationPlayer2 + " milliseconds");
+        alert.setHeaderText((String)null);
+        alert.setContentText("Winner: " + winner + "\nTotal Play Time: " + totalPlayTimeMillis + " milliseconds\n");
         alert.showAndWait();
     }
 
