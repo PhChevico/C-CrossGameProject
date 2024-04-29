@@ -19,13 +19,13 @@ public class InferenceEngine {
         currentFacts.resetFacts();//we reset the facts going on every time we call this method
         currentFacts.setFactsEvolved(false);//no new facts added to the list of what is happening
         // Determine which FactValues are currently present on the given board
-        if(session.getBoard().endStartWinningPathPossible()){//check if a possible "START_NEW_WINNING_PATH" situation is on
+        if(session.getBoard().endStartWinningPathPossible(session)){//check if a possible "START_NEW_WINNING_PATH" situation is on
             currentFacts.addFact(FactValues.START_NEW_WINNING_PATH);//if so add to the currentFacts(facts happening on the board) the fact value of "START..."
         }
-        if (session.getBoard().endCotinuePath()) {//check if a possible "CONTINUE_PATH" situation is on
+        if (session.getBoard().endCotinuePath(session)) {//check if a possible "CONTINUE_PATH" situation is on
             currentFacts.addFact(FactValues.CONTINUE_PATH);//if so add to the current facts
 
-        } if (session.getBoard().endBlockPlayerFromWinning()) {//check if a possible "BLOCK_PLAYER_FROM_WINNING" situation is on
+        } if (session.getBoard().endBlockPlayerFromWinning(session)) {//check if a possible "BLOCK_PLAYER_FROM_WINNING" situation is on
             currentFacts.addFact(FactValues.BLOCK_PLAYER_FROM_WINNING);//if so add to the current facts
         }
     }
@@ -45,7 +45,7 @@ public class InferenceEngine {
                         ruleFired = currentRules.fireActionRule(i, currentFacts, session.getBoard(), move);//if they do, we make the AI move
                         //we return then to ruleFired the boolean true to ruleFired to say "okay we have applied the rule" so that we can go out of the loop
                     }
-                    i++;//go to next rule to check if next rule matches the
+                    i++;//go to next rule to check if next rule matches the fact
                 }
             } while (i < currentRules.numberOfRules() && !ruleFired);
             if (!ruleFired) {//if we go out of the loop without firing a rule(so no move based on a Fact could be done) we,

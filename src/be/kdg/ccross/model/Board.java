@@ -135,14 +135,14 @@ public class Board {
     public void determineRandomMove(Move move){
 
     }
-    public boolean endStartWinningPathPossible(){
+    public boolean endStartWinningPathPossible(GameSession session){
         return true;
     }
-    public boolean endCotinuePath(){
+    public boolean endCotinuePath(GameSession session){
         return true;
     }
 
-    public boolean endBlockPlayerFromWinning(){
+    public boolean endBlockPlayerFromWinning(GameSession session){
         return true;
     }
     //to the continued
