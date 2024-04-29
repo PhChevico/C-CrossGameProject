@@ -1,8 +1,5 @@
 package be.kdg.ccross.view.boardscreen;
-import be.kdg.ccross.model.GameSession;
-import be.kdg.ccross.model.Player;
-import be.kdg.ccross.model.Square;
-import be.kdg.ccross.model.Zone;
+import be.kdg.ccross.model.*;
 import javafx.event.Event;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
@@ -14,6 +11,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Pair;
 
+import java.security.Timestamp;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -171,7 +169,39 @@ public class BoardPresenter {
             alert.showAndWait();
         }
     }
+    public void displaySummary(boolean winner) {
+        // Calculate total play time
+        long totalPlayTimeMillis = session.getGameTime().getElapsedTime();
 
+        // Determine the winner
+        String playerWinner;
+        if (winner) {
+            playerWinner = session.getPlayer1().getName();
+        } else {
+            playerWinner = "AI";
+        }
+
+
+        // Calculate total number of turns/moves per player
+        //int totalMovesPlayer1 = session.playerStatsList.get(0).getWins() + playerStatsList.get(0).getLosses();
+        //int totalMovesPlayer2 = playerStatsList.get(1).getWins() + playerStatsList.get(1).getLosses();
+
+        // Calculate average duration per turn/move per player
+        //double avgDurationPlayer1 = playerStatsList.get(0).getAvgDuration();
+        //double avgDurationPlayer2 = playerStatsList.get(1).getAvgDuration();
+
+        // Display the summary in a pop-up window
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("End of Game Summary");
+        alert.setHeaderText(null);
+        alert.setContentText("Winner: " + winner + "\n" +
+                "Total Play Time: " + totalPlayTimeMillis + " milliseconds\n");
+                //"Total Moves Player 1: " + totalMovesPlayer1 + "\n" +
+                //"Total Moves Player 2: " + totalMovesPlayer2 + "\n" +
+                //"Average Duration per Move Player 1: " + avgDurationPlayer1 + " milliseconds\n" +
+                //"Average Duration per Move Player 2: " + avgDurationPlayer2 + " milliseconds");
+        alert.showAndWait();
+    }
 
     void closeApplication(Event event) {//alert to in case of end application
         Alert alert = new Alert(Alert.AlertType.WARNING);

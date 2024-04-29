@@ -220,6 +220,10 @@ public class GameSession {
     public EndGame getEndGame() {
         return endGame;
     }
+
+    public GameTime getGameTime() {
+        return gameTime;
+    }
 }
 
 
