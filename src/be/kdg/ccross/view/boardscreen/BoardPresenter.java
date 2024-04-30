@@ -166,7 +166,7 @@ public class BoardPresenter {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("GAME OVER");
             alert.setHeaderText(null);
-            alert.setContentText("AI WON");
+            alert.setContentText("PLAYER WON");
             alert.showAndWait();
 
         }else if(session.getEndGame().Checkpawns(session.getPlayer1(), session.getPlayerAI())==1 ||
@@ -174,7 +174,7 @@ public class BoardPresenter {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("GAME OVER");
             alert.setHeaderText(null);
-            alert.setContentText("PLAYER WON");
+            alert.setContentText("AI WON");
             alert.showAndWait();
         }
     }

@@ -22,6 +22,7 @@ public class RuleBlockPlayerFromWinning extends Rule{
     public boolean actionRule(GameSession session, Move move) {
         System.out.println("action on DEFEND");
         Zone zone = session.getBoard().getZone(session.getBoard().getZoneToDefend());
+        square = 0;
         while (session.getBoard().getZone(session.getBoard().getZoneToDefend()).getSquareOfZone().get(getSquare()).isStatus()){
             square ++;
         }
