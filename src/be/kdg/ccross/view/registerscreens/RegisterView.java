@@ -1,6 +1,5 @@
 package be.kdg.ccross.view.registerscreens;
 
-import be.kdg.ccross.model.Screen;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;

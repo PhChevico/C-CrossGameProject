@@ -1,7 +1,10 @@
 package be.kdg.ccross.view.boardscreen;
 import be.kdg.ccross.model.*;
+import be.kdg.ccross.view.homeScreen.HomeScreenPresenter;
+import be.kdg.ccross.view.homeScreen.HomeScreenView;
 import javafx.event.Event;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
@@ -26,7 +29,7 @@ public class BoardPresenter {
     public BoardPresenter(GameSession session, BoardView view){
         this.session = session;
         this.view = view;
-
+        session.getGameTime().start();
         // Show initial board
         this.view.boardMaker(session.getSquaresAsList());//call the method boardMaker to create the board passing the List of squares
         //(see in Board class)
@@ -129,8 +132,6 @@ public class BoardPresenter {
             alert.showAndWait();
         }
         session.dominateZones();
-        CheckZonesClaimed();//check if player dominated the zone
-        CheckPlayerWon();//check if player won
         if(!(session.getRound()%2==0)) {
             session.getEngine().determineFacts(session);
             session.getEngine().applyRules(session, session.getMove());
@@ -163,21 +164,18 @@ public class BoardPresenter {
 
         if(session.getEndGame().Checkpawns(session.getPlayer1(), session.getPlayerAI())==1||
                 session.getEndGame().CheckZones(session.getPlayer1(),session.getBoard())){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("GAME OVER");
-            alert.setHeaderText(null);
-            alert.setContentText("PLAYER WON");
-            alert.showAndWait();
+            session.getGameTime().stop();
+            displaySummary(true);
+            reset();
 
         }else if(session.getEndGame().Checkpawns(session.getPlayer1(), session.getPlayerAI())==1 ||
                 session.getEndGame().CheckZones(session.getPlayerAI(),session.getBoard())){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("GAME OVER");
-            alert.setHeaderText(null);
-            alert.setContentText("AI WON");
-            alert.showAndWait();
+            session.getGameTime().stop();
+            displaySummary(false);
+            reset();
         }
     }
+
     public void displaySummary(boolean winner) {
         long totalPlayTimeMillis = this.session.getGameTime().getElapsedTime();
         String playerWinner;
@@ -189,9 +187,29 @@ public class BoardPresenter {
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("End of Game Summary");
-        alert.setHeaderText((String)null);
-        alert.setContentText("Winner: " + winner + "\nTotal Play Time: " + totalPlayTimeMillis + " milliseconds\n");
-        alert.showAndWait();
+        alert.setHeaderText(null);
+        alert.setContentText("Winner: " + (winner ? session.getPlayer1().getName() : "AI") + "\nTotal Play Time: " +
+                ((double) (totalPlayTimeMillis)) / 1000 + " seconds\n" +
+                "Total Rounds " + session.getPlayer1().getName() + ": " + session.getRound() / 2 + " Rounds\n" +
+                "Average Duration per Move: " + ((double) (totalPlayTimeMillis / (session.getRound() / 2))) / 1000 + " seconds"
+        );
+
+        ButtonType closeButton = new ButtonType("Visual Presentation");
+        ButtonType exitButton = new ButtonType("Exit");
+        alert.getButtonTypes().clear();
+        alert.getButtonTypes().addAll(closeButton, exitButton);
+
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image("images/C-Cross.png"));
+
+        alert.showAndWait().ifPresent(buttonType -> {
+            if (buttonType == closeButton) {
+                //Visual Presentation
+            } else if (buttonType == exitButton) {
+                // Exit the application
+                System.exit(0);
+            }
+        });
     }
     public void aiTurn(){
         System.out.println("AI TURN");
@@ -243,6 +261,21 @@ public class BoardPresenter {
         } else {
             event.consume();
         }
+    }
+    void setHomeScreenView(){
+
+        HomeScreenView homeScreenView = new HomeScreenView();
+        Scene scene = view.getScene();
+        scene.setRoot(homeScreenView);
+        Stage stage = (Stage) scene.getWindow();
+        stage.setResizable(true);
+        HomeScreenPresenter homeScreenPresenter = new HomeScreenPresenter(session, homeScreenView);
+        homeScreenView.getScene().getWindow().sizeToScene();
+
+    }
+    public void reset(){//used to reset all variable
+        session = new GameSession();
+        view = new BoardView();
     }
 
 

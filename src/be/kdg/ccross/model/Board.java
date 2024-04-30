@@ -8,7 +8,7 @@ import java.util.Random;
 public class Board {
     private final int sizeRows_board = 9;
     private final int sizeCols_board = 14;
-    private Square[][] board = new Square[sizeCols_board][sizeRows_board];
+    private Square[][] board;
     private Zone[] zones;
     private List<Square> squaresOfTheBoard;
     private boolean continuePath;
@@ -17,6 +17,7 @@ public class Board {
 
 
     public Board() {
+        board = new Square[sizeCols_board][sizeRows_board];
         squaresOfTheBoard = new ArrayList<>();
         for (int i = 0; i < sizeCols_board; i++) {
             for (int j = 0; j < sizeRows_board; j++) {

@@ -19,8 +19,8 @@ public class BoardView extends GridPane {
     //static final String IMAGES_SQUARE_TEST_JPG = "images/squareTest.jpg";
     private final int SQUARE_SIZE = 85;//size of the square(same as the pawn)
     private final int PAWN_SIZE = 85;
-    private HashMap<String, ImageView> boardImages = new HashMap<String, ImageView>();//?
-    private HashMap<String, ImageView> pawnImages = new HashMap<String, ImageView>();//?
+    private HashMap<String, ImageView> boardImages;//?
+    private HashMap<String, ImageView> pawnImages;//?
 
     private Consumer<Pair<String, ImageView>> onPawnCreated;//?
 
@@ -31,6 +31,8 @@ public class BoardView extends GridPane {
 
     public BoardView(){
 
+        boardImages = new HashMap<String, ImageView>();
+        pawnImages = new HashMap<String, ImageView>();
         this.initialiseNodes();
         this.layoutNodes();
     }

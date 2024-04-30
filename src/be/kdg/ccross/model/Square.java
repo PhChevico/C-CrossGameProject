@@ -5,18 +5,13 @@
         private Player ownership;
         private int column;
         private int row;
-        Board board;
+
 
         public Square(int column, int row){
             this.column = column;
             this.row = row;
+            ownership = new Player();
         }
-
-
-        public Square() {
-        }
-
-
         public boolean isStatus() {
             return status;
         }

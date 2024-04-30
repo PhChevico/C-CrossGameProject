@@ -10,7 +10,10 @@ public class Zone {
     private List<Square> squareOfZone;
     private boolean rotate = false;//used to check if the C shape should be 180 degrees or not
 
-
+    public Zone() {
+        owner = new Player();
+        squareOfZone = new ArrayList<>();
+    }
 
     //zone has and id + its owned squares.
     public Zone(char zoneId, List<Square> squareOfZone,boolean rotate){

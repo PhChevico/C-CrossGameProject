@@ -1,5 +1,6 @@
 package be.kdg.ccross.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
@@ -10,7 +11,11 @@ public class Player {
 
     private List<Square> dominatedSquare;
 
-    private List<Zone> dominatedZones;
+    public Player() {
+        name = new String();
+        dominatedSquare = new ArrayList<>();
+    }
+
 
     public void setName(String name){
         this.name = name;
