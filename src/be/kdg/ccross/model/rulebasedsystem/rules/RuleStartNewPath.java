@@ -23,20 +23,24 @@ public class RuleStartNewPath extends Rule{
         move.setStartNewPathMove(true);
         session.setWinningPath(null);
         Random r = new Random();
-        boolean freeWinningPath =false;
-
+        boolean freeWinningPath =true;
         session.setWinningPath(session.getEndGame().getWinningListZones().getWinningZones(session.getBoard()).get(r.nextInt(34)));
         for (int i = 0; i < session.getBoard().dominatedZonesAsList(session.getPlayer1()).size(); i++) {
 
             if (!(session.getWinningPath().contains(session.getBoard().dominatedZonesAsList(session.getPlayer1()).get(i)))) {
-                    freeWinningPath = true;
-                    break;
-            }else {
-                session.setWinningPath(session.getEndGame().getWinningListZones().getWinningZones(session.getBoard()).get(r.nextInt(34)));
+                freeWinningPath = false;
+            }
+
+
+            }
+        for(int i=0; i<4;i++){
+            if(!(session.getWinningPath().get(0).getSquareOfZone().get(i).isStatus())){
+                move.setCoordinates(session.getWinningPath().get(0).getSquareOfZone().get(i).getCoordinates());
+                break;
             }
 
         }
-        move.setCoordinates(session.getWinningPath().get(0).getSquareOfZone().get(0).getCoordinates());
+
         return true;     // returns true if the new move was determined, returns false if only the facts have been modified
     }
 }

@@ -21,11 +21,9 @@ public class InferenceEngine {
         // Determine which FactValues are currently present on the given board
     if (session.getBoard().endBlockPlayerFromWinning(session)) {//check if a possible "BLOCK_PLAYER_FROM_WINNING" situation is on
         currentFacts.addFact(FactValues.BLOCK_PLAYER_FROM_WINNING);//if so add to the current facts
-    }
-    else if (session.getBoard().endContinuePath(session)) {//check if a possible "CONTINUE_PATH" situation is on
+    } else if (session.getBoard().endContinuePath(session)) {//check if a possible "CONTINUE_PATH" situation is on
         currentFacts.addFact(FactValues.CONTINUE_PATH);//if so add to the current facts
-    }
-    else if(session.getBoard().endStartWinningPathPossible(session)) {//check if a possible "START_NEW_WINNING_PATH" situation is on
+    } else if(session.getBoard().endStartWinningPathPossible(session)) {//check if a possible "START_NEW_WINNING_PATH" situation is on
         currentFacts.addFact(FactValues.START_NEW_WINNING_PATH);//if so add to the currentFacts(facts happening on the board) the fact value of "START..."
     }
 
