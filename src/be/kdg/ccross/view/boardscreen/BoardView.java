@@ -26,7 +26,7 @@ public class BoardView extends GridPane {
 
     private Button nextRound; //button used to place only one pawn nad pass the round to the opponent
     private Label player1pawns; //label used to indicate how many pawns are left for player1
-    private Label player2pawns; //same but for player 2
+    private Label playerAIpawns; //same but for player 2
 
 
     public BoardView(){
@@ -38,7 +38,7 @@ public class BoardView extends GridPane {
     private void initialiseNodes(){
         nextRound = new Button("Next Round");
         player1pawns = new Label();
-        player2pawns = new Label();
+        playerAIpawns = new Label();
     }
 
     public void setHandlerOnPawnCreated(Consumer<Pair<String, ImageView>> event){
@@ -71,7 +71,7 @@ public class BoardView extends GridPane {
         pawn2.setFitHeight(PAWN_SIZE);
         pawn2.setFitWidth(PAWN_SIZE);
         add(pawn2,0,2);
-        add(player2pawns,1,2);
+        add(playerAIpawns,1,2);
 
     }
 
@@ -184,7 +184,7 @@ public class BoardView extends GridPane {
         }
 
     }
-    public void addZonePlayer2(List<Square> zoneAsList,boolean rotate){
+    public void addZonePlayerAI(List<Square> zoneAsList,boolean rotate){
         int counter = 1;
         int counterForFlip=0;
         int countingWhenFlip = 1;
@@ -213,8 +213,8 @@ public class BoardView extends GridPane {
         return player1pawns;
     }
 
-    public Label getPlayer2pawns() {
-        return player2pawns;
+    public Label getPlayerAIpawns() {
+        return playerAIpawns;
     }
 }
 

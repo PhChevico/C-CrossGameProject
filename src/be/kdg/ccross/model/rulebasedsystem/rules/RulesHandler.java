@@ -31,8 +31,8 @@ public class RulesHandler {
     public boolean checkConditionRule (int index, FactsHandler facts) {//check if the condition of the Fact is okay to see if we can use
         return rules.get(index).conditionRule(facts);
     }
-    public boolean fireActionRule (int index, FactsHandler facts, Board board, Move move) {
-        return rules.get(index).actionRule(facts, board, move);
+    public boolean fireActionRule (int index, GameSession session, Move move) {
+        return rules.get(index).actionRule(session,move);
     }
     public int numberOfRules () {
         return rules.size();

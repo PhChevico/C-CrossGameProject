@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Stack;
 
 public class EndGame {
-    WinningZones winningZones = new WinningZones();
+    WinningZones winningListZones = new WinningZones();
 
 
     public int Checkpawns(Player p1,Player p2){//used to check a players pawns number. return 1 if p1 finished the pawns
@@ -18,12 +18,16 @@ public class EndGame {
     }
     public boolean CheckZones(Player p,Board board){//used to check if a player owned a correct combination of zones to win
         boolean playerWon = false;
-        for(List<Zone> listOfZone : winningZones.getWinningZones(board)){//go through all the possible winning combinations
+        for(List<Zone> listOfZone : winningListZones.getWinningZones(board)){//go through all the possible winning combinations
             if(board.dominatedZonesAsList(p).containsAll(listOfZone)){//see if the list contains the combination
                 playerWon = true;
             };
         }
         return playerWon;
+    }
+
+    public WinningZones getWinningListZones() {
+        return winningListZones;
     }
 }
 

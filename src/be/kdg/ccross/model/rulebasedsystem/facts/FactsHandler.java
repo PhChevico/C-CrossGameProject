@@ -25,16 +25,26 @@ public class FactsHandler {
     public boolean factAvailable (FactValues fact) {//see if a fact is happening
         return facts.contains(fact);
     }
-    public void resetFacts () {//remove all the facts that are happening
-        for (Iterator<FactValues> it = facts.iterator(); it.hasNext();) {
-            this.removeFact(it.next());
+    public void resetFacts() {
+        Iterator<FactValues> it = facts.iterator();
+        while (it.hasNext()) {
+            FactValues fact = it.next(); // Get the next element before removing
+            it.remove(); // Removes the current element from the underlying collection
         }
         factsEvolved = true;
+        System.out.println("Facts reset");
     }
     public boolean factsChanged () {//did something new happen??(that what it returns)
         return factsEvolved;
     }
     public void setFactsEvolved (Boolean newValue) {//set if facts are changed or not
         factsEvolved = newValue;
+    }
+
+    @Override
+    public String toString() {
+        return "FactsHandler{" +
+                "facts=" + facts +
+                '}';
     }
 }

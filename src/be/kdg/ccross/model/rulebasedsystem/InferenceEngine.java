@@ -21,11 +21,9 @@ public class InferenceEngine {
         // Determine which FactValues are currently present on the given board
         if(session.getBoard().endStartWinningPathPossible(session)){//check if a possible "START_NEW_WINNING_PATH" situation is on
             currentFacts.addFact(FactValues.START_NEW_WINNING_PATH);//if so add to the currentFacts(facts happening on the board) the fact value of "START..."
-        }
-        if (session.getBoard().endCotinuePath(session)) {//check if a possible "CONTINUE_PATH" situation is on
+        }else if (session.getBoard().endContinuePath(session)) {//check if a possible "CONTINUE_PATH" situation is on
             currentFacts.addFact(FactValues.CONTINUE_PATH);//if so add to the current facts
-
-        } if (session.getBoard().endBlockPlayerFromWinning(session)) {//check if a possible "BLOCK_PLAYER_FROM_WINNING" situation is on
+        }else if (session.getBoard().endBlockPlayerFromWinning(session)) {//check if a possible "BLOCK_PLAYER_FROM_WINNING" situation is on
             currentFacts.addFact(FactValues.BLOCK_PLAYER_FROM_WINNING);//if so add to the current facts
         }
     }
@@ -42,7 +40,8 @@ public class InferenceEngine {
                 while (i < currentRules.numberOfRules() && !ruleFired && !currentFacts.factsChanged()) {//as long as the Number of rules is less than i
                                                                                                         //,rule is not fired and facts did not evolve
                     if (currentRules.checkConditionRule(i, currentFacts)) {//check if the rule condition matches the current facts happening by going through all the rules
-                        ruleFired = currentRules.fireActionRule(i, currentFacts, session.getBoard(), move);//if they do, we make the AI move
+                        System.out.println("Rule is being fired following the current fact "+ currentFacts);
+                        ruleFired = currentRules.fireActionRule(i, session, move);//if they do, we make the AI move
                         //we return then to ruleFired the boolean true to ruleFired to say "okay we have applied the rule" so that we can go out of the loop
                     }
                     i++;//go to next rule to check if next rule matches the fact

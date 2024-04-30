@@ -9,12 +9,13 @@ import java.util.Arrays;
 import java.util.List;
 ;
 public class GameSession {
+    private List<Zone> winningPath;
     private String time;
     private Authentication authentication = new Authentication();
     private Board board = new Board();
     private Database database = new Database();
     private Player player1 = new Player();
-    private Player player2 = new Player();
+    private Player playerAI = new Player();
     private Screen screen = new Screen();
     private Pawn pawn = new Pawn();
     private GameTime gameTime = new GameTime();
@@ -163,8 +164,8 @@ public class GameSession {
         return player1;
     }
 
-    public Player getPlayer2() {
-        return player2;
+    public Player getPlayerAI() {
+        return playerAI;
     }
 
     public void dominateZones() {//check if player owns at least 3 squares in the same zone
@@ -177,31 +178,31 @@ public class GameSession {
                 if (c.isStatus()) {
                     if (c.getOwnership() == getPlayer1()) {
                         countp1 += 1;
-                    } else if (c.getOwnership() == getPlayer2()) {
+                    } else if (c.getOwnership() == getPlayerAI()) {
                         countp2 += 1;
                     }
                 }
             }
-            if (!(board.getZone((char) i).getOwner() == getPlayer1() || board.getZone((char) i).getOwner() == getPlayer2())) {
+            if (!(board.getZone((char) i).getOwner() == getPlayer1() || board.getZone((char) i).getOwner() == getPlayerAI())) {
                 if (countp1 == 3) {
                     board.getZone((char) i).setOwner(getPlayer1());
                     getPlayer1().addPawnNumber(3);
                     System.out.println("Player1");
                     switch (countp2) {
                         case 1:
-                            if (getPlayer2().getPawnNumber() <= 11) {
-                                getPlayer2().addPawnNumber(1);
+                            if (getPlayerAI().getPawnNumber() <= 11) {
+                                getPlayerAI().addPawnNumber(1);
                             }
                             break;
                         case 2:
-                            if (getPlayer2().getPawnNumber() <= 10) {
-                                getPlayer2().addPawnNumber(2);
+                            if (getPlayerAI().getPawnNumber() <= 10) {
+                                getPlayerAI().addPawnNumber(2);
                             }
                             break;
                     }
                 } else if (countp2 == 3) {
-                    board.getZone((char) i).setOwner(getPlayer2());
-                    getPlayer2().addPawnNumber(3);
+                    board.getZone((char) i).setOwner(getPlayerAI());
+                    getPlayerAI().addPawnNumber(3);
                     System.out.println("Player2");
                     switch (countp1) {
                         case 1:
@@ -236,6 +237,14 @@ public class GameSession {
 
     public Move getMove() {
         return move;
+    }
+
+    public List<Zone> getWinningPath() {
+        return winningPath;
+    }
+
+    public void setWinningPath(List<Zone> winningPath) {
+        this.winningPath = winningPath;
     }
 }
 

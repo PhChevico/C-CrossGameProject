@@ -53,21 +53,18 @@ public class BoardPresenter {
             if(session.getRound()%2==0){//decrease player Pawns by 1
                 session.getPlayer1().decreasePawnNumber(1);
             }else {
-                session.getPlayer2().decreasePawnNumber(1);
+                session.getPlayerAI().decreasePawnNumber(1);
             }
             session.updateCounter(1);//we update the counter of pawns placed as if 2 pawns were places already even if only 1 was placed
             if(session.getRound()%2==0){//decrease player Pawns by 1
                 session.getPlayer1().addPawnNumber(1);
             }else {
-                session.getPlayer2().addPawnNumber(1);
+                session.getPlayerAI().addPawnNumber(1);
             }
             session.setLastMove(null);
             session.setRound(session.getRound()+1);//we go to the other round by adding 1 to the number of rounds
 
             view.getNextRound().setVisible(false);//we make the nextRound button non-visible
-            Move move = new Move();
-            session.getEngine().determineFacts(session);
-            session.getEngine().applyRules(session, move);
         });
 
         // Add event listener
@@ -88,34 +85,26 @@ public class BoardPresenter {
     }
 
     private void checkingActionToSquare(Pair<String, ImageView> pair) {
-        //if zone not dominated
-        if (!session.getBoard().getSquare(pair.getKey()).isStatus() && session.validMove(pair.getKey())) {
+
+        if (!session.getBoard().getSquare(pair.getKey()).isStatus() && session.validMove(pair.getKey())){
 
             //System.out.println(session.validMove(pair.getKey()));
             //here we put a pawn pair the square
             session.getBoard().getSquare(pair.getKey()).setStatus(true);
 
             String[] parts = pair.getKey().split("-");
-            if(session.getRound()%2==0) {
-                view.add(view.createPawn1(pair.getKey()), Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));//create and place the pawn on the board
-                session.getBoard().getSquare(pair.getKey()).setOwnership(session.getPlayer1());//we retrieve the square with coordinate and we pass the ownership of
+            view.add(view.createPawn1(pair.getKey()), Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));//create and place the pawn on the board
+            session.getBoard().getSquare(pair.getKey()).setOwnership(session.getPlayer1());//we retrieve the square with coordinate and we pass the ownership of
                 // who clicked on that square
-            }else {
-                view.add(view.createPawn2(pair.getKey()), Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
-                session.getBoard().getSquare(pair.getKey()).setOwnership(session.getPlayer2());//we do the same but for player 2
-
-            }
 
             System.out.println(session.getBoard().getSquare(pair.getKey()).isStatus());
 
             session.setLastMove(pair.getKey());
             session.updateCounter(1);
             view.getNextRound().setVisible(true);
-            if(session.getRound()%2==0){//decrease player Pawns by 2
-                session.getPlayer1().decreasePawnNumber(1);
-            }else {
-                session.getPlayer2().decreasePawnNumber(1);
-            }
+
+            session.getPlayer1().decreasePawnNumber(1);
+
 
             if(session.getCounter() % 2 == 0){
                 session.setLastMove(null);
@@ -133,8 +122,38 @@ public class BoardPresenter {
         session.dominateZones();
         CheckZonesClaimed();//check if player dominated the zone
         CheckPlayerWon();//check if player won
+        if(!(session.getRound()%2==0)) {
+            session.getEngine().determineFacts(session);
+            session.getEngine().applyRules(session, session.getMove());
+
+            System.out.println("AI TURN");
+            if (session.getMove().isStartNewPathMove()) {
+                System.out.println("AI MOVE PAWN");
+                String[] parts = session.getMove().getCoordinates().split("-");
+                session.getBoard().getSquare(session.getMove().getCoordinates()).setStatus(true);
+                view.add(view.createPawn2(session.getMove().getCoordinates()), Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
+                session.getBoard().getSquare(session.getMove().getCoordinates()).setOwnership(session.getPlayerAI());//we do the same but for player 2
+                session.getMove().setStartNewPathMove(false);
+                session.setRound(session.getRound()+1);
+                session.getPlayerAI().decreasePawnNumber(1);
+                session.dominateZones();
+            }else if(session.getMove().isContinuePathMove()){
+                System.out.println("AI MOVE PAWN");
+                String[] parts = session.getMove().getCoordinates().split("-");
+                session.getBoard().getSquare(session.getMove().getCoordinates()).setStatus(true);
+                view.add(view.createPawn2(session.getMove().getCoordinates()), Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
+                session.getBoard().getSquare(session.getMove().getCoordinates()).setOwnership(session.getPlayerAI());//we do the same but for player 2
+                session.setRound(session.getRound()+1);
+                session.getMove().setContinuePathMove(false);
+                session.getPlayerAI().decreasePawnNumber(1);
+                session.dominateZones();
+
+            }
+        }
+        CheckZonesClaimed();//check if player dominated the zone
+        CheckPlayerWon();//check if player won
         view.getPlayer1pawns().setText("= " + String.valueOf(session.getPlayer1().getPawnNumber()));//update the label of player1 for the number of Pawns left
-        view.getPlayer2pawns().setText("= " + String.valueOf(session.getPlayer2().getPawnNumber()));//update the label of player2 for the number of Pawns left
+        view.getPlayerAIpawns().setText("= " + String.valueOf(session.getPlayerAI().getPawnNumber()));//update the label of player2 for the number of Pawns left
     }
 
     private void CheckZonesClaimed(){//used to check the zones claimed.We use this method each time a pawn is placed
@@ -145,8 +164,8 @@ public class BoardPresenter {
 
 
             };
-            if (session.getBoard().getZone((char)i).getOwner()==session.getPlayer2()){//same as previous step
-                view.addZonePlayer2(checkingSquares,session.getBoard().getZone((char)i).isRotate());
+            if (session.getBoard().getZone((char)i).getOwner()==session.getPlayerAI()){//same as previous step
+                view.addZonePlayerAI(checkingSquares,session.getBoard().getZone((char)i).isRotate());
 
 
             }
@@ -155,20 +174,20 @@ public class BoardPresenter {
 
     public void CheckPlayerWon(){//used method to check if the player has either connected the zones or opponent's pawns==0;
 
-        if(session.getEndGame().Checkpawns(session.getPlayer1(), session.getPlayer2())==1||
+        if(session.getEndGame().Checkpawns(session.getPlayer1(), session.getPlayerAI())==1||
                 session.getEndGame().CheckZones(session.getPlayer1(),session.getBoard())){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("GAME OVER");
             alert.setHeaderText(null);
-            alert.setContentText("PLAYER 1 WON");
+            alert.setContentText("AI WON");
             alert.showAndWait();
 
-        }else if(session.getEndGame().Checkpawns(session.getPlayer1(), session.getPlayer2())==1 ||
-                session.getEndGame().CheckZones(session.getPlayer2(),session.getBoard())){
+        }else if(session.getEndGame().Checkpawns(session.getPlayer1(), session.getPlayerAI())==1 ||
+                session.getEndGame().CheckZones(session.getPlayerAI(),session.getBoard())){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("GAME OVER");
             alert.setHeaderText(null);
-            alert.setContentText("PLAYER 2 WON");
+            alert.setContentText("PLAYER WON");
             alert.showAndWait();
         }
     }

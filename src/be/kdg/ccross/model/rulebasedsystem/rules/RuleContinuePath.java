@@ -4,22 +4,53 @@ import be.kdg.ccross.model.*;
 import be.kdg.ccross.model.rulebasedsystem.facts.FactValues;
 import be.kdg.ccross.model.rulebasedsystem.facts.FactsHandler;
 
+import static be.kdg.ccross.model.rulebasedsystem.facts.FactValues.BLOCK_PLAYER_FROM_WINNING;
+import static be.kdg.ccross.model.rulebasedsystem.facts.FactValues.CONTINUE_PATH;
+
 public class RuleContinuePath extends Rule{
+    private int i =0;
+    private int j= 1;
     public RuleContinuePath() {
     }
 
     @Override
     public boolean conditionRule(FactsHandler facts) {
-        // Test code - to be removed!
-        System.out.println("Condition RuleBlockWinningPositionPlayer executed");
-        return facts.factAvailable(FactValues.CONTINUE_PATH);
+        return facts.factAvailable(CONTINUE_PATH);
     }
     @Override
-    public boolean actionRule(FactsHandler facts, Board board, Move move) {
-        // Test code - to be removed!
-        System.out.println("Action RuleBlockWinningPositionPlayer executed");
-        // Code to be added is this rule could initiate a new fact
-        //board.determineBlockWinningPositionMove(move);
-        return true;     // returns true if the new move was determined, returns false if only the facts have been modified
+    public boolean actionRule(GameSession session,Move move) {
+        System.out.println("action on CONTINUE");
+        if (session.getWinningPath().get(getI()).getOwner()== session.getPlayerAI()){
+            setI(getI()+1);
+            setJ(0);
+        }
+        while((session.getWinningPath().get(getI()).getSquareOfZone().get(getJ()).isStatus())){
+            setJ(getJ()+1);
+        }
+        move.setCoordinates(session.getWinningPath().get(getI()).getSquareOfZone().get(getJ()).getCoordinates());
+        move.setContinuePathMove(true);
+        setJ(getJ()+1);
+        if (getJ()>4){
+            setI(getI()+1);
+            setJ(0);
+
+        }
+        return true;// returns true if the new move was determined, returns false if only the facts have been modified
+    }
+
+    public int getI() {
+        return i;
+    }
+
+    public void setI(int i) {
+        this.i = i;
+    }
+
+    public int getJ() {
+        return j;
+    }
+
+    public void setJ(int j) {
+        this.j = j;
     }
 }

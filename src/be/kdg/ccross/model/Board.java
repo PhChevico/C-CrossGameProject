@@ -3,6 +3,7 @@ package be.kdg.ccross.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 public class Board {
     private final int sizeRows_board = 9;
@@ -10,6 +11,7 @@ public class Board {
     private Square[][] board = new Square[sizeCols_board][sizeRows_board];
     private Zone[] zones;
     private List<Square> squaresOfTheBoard;
+    private boolean continuePath;
 
     public Board() {
         squaresOfTheBoard = new ArrayList<>();
@@ -136,14 +138,38 @@ public class Board {
 
     }
     public boolean endStartWinningPathPossible(GameSession session){
-        return true;
+        System.out.println("Checkin winning path");
+        if(session.getRound()<2 || !continuePath){
+            System.out.println("WINNING is true");
+            continuePath = true;
+            return true;
+        }else return false;
     }
-    public boolean endCotinuePath(GameSession session){
-        return true;
+
+    public boolean endContinuePath(GameSession session) {
+        System.out.println("Checking continue Path");
+        for (int i = 0; i < session.getBoard().dominatedZonesAsList(session.getPlayer1()).size(); i++) {
+            if (!(session.getWinningPath().contains(session.getBoard().dominatedZonesAsList(session.getPlayer1()).get(i)))) {
+                continuePath = true;
+            } else {
+                continuePath = false;
+                break;
+            }
+
+        }
+        return continuePath;
     }
 
     public boolean endBlockPlayerFromWinning(GameSession session){
-        return true;
+        List<Zone> checkList = session.getBoard().dominatedZonesAsList(session.getPlayer1());
+        for(int i = 65; i <= 80; i++){
+            checkList.add(getZone((char) i));
+            if(session.getEndGame().CheckZones(session.getPlayer1(), session.getBoard())){
+                return true;
+            }
+            checkList.remove(getZone((char)i));
+        }
+        return false;
     }
     //to the continued
 
