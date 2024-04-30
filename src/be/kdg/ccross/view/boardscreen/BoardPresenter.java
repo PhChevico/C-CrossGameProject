@@ -68,30 +68,8 @@ public class BoardPresenter {
             if(!(session.getRound()%2==0)) {
                 session.getEngine().determineFacts(session);
                 session.getEngine().applyRules(session, session.getMove());
+                aiTurn();
 
-                System.out.println("AI TURN");
-                if (session.getMove().isStartNewPathMove()) {
-                    System.out.println("AI MOVE PAWN");
-                    String[] parts = session.getMove().getCoordinates().split("-");
-                    session.getBoard().getSquare(session.getMove().getCoordinates()).setStatus(true);
-                    view.add(view.createPawn2(session.getMove().getCoordinates()), Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
-                    session.getBoard().getSquare(session.getMove().getCoordinates()).setOwnership(session.getPlayerAI());//we do the same but for player 2
-                    session.getMove().setStartNewPathMove(false);
-                    session.setRound(session.getRound()+1);
-                    session.getPlayerAI().decreasePawnNumber(1);
-                    session.dominateZones();
-                }else if(session.getMove().isContinuePathMove()){
-                    System.out.println("AI MOVE PAWN");
-                    String[] parts = session.getMove().getCoordinates().split("-");
-                    session.getBoard().getSquare(session.getMove().getCoordinates()).setStatus(true);
-                    view.add(view.createPawn2(session.getMove().getCoordinates()), Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
-                    session.getBoard().getSquare(session.getMove().getCoordinates()).setOwnership(session.getPlayerAI());//we do the same but for player 2
-                    session.setRound(session.getRound()+1);
-                    session.getMove().setContinuePathMove(false);
-                    session.getPlayerAI().decreasePawnNumber(1);
-                    session.dominateZones();
-
-                }
                 session.dominateZones();
                 CheckZonesClaimed();//check if player dominated the zone
                 CheckPlayerWon();//check if player won
@@ -156,35 +134,13 @@ public class BoardPresenter {
         if(!(session.getRound()%2==0)) {
             session.getEngine().determineFacts(session);
             session.getEngine().applyRules(session, session.getMove());
+            aiTurn();
 
-            System.out.println("AI TURN");
-            if (session.getMove().isStartNewPathMove()) {
-                System.out.println("AI MOVE PAWN");
-                String[] parts = session.getMove().getCoordinates().split("-");
-                session.getBoard().getSquare(session.getMove().getCoordinates()).setStatus(true);
-                view.add(view.createPawn2(session.getMove().getCoordinates()), Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
-                session.getBoard().getSquare(session.getMove().getCoordinates()).setOwnership(session.getPlayerAI());//we do the same but for player 2
-                session.getMove().setStartNewPathMove(false);
-                session.setRound(session.getRound()+1);
-                session.getPlayerAI().decreasePawnNumber(1);
-                session.dominateZones();
-            }else if(session.getMove().isContinuePathMove()){
-                System.out.println("AI MOVE PAWN");
-                String[] parts = session.getMove().getCoordinates().split("-");
-                session.getBoard().getSquare(session.getMove().getCoordinates()).setStatus(true);
-                view.add(view.createPawn2(session.getMove().getCoordinates()), Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
-                session.getBoard().getSquare(session.getMove().getCoordinates()).setOwnership(session.getPlayerAI());//we do the same but for player 2
-                session.setRound(session.getRound()+1);
-                session.getMove().setContinuePathMove(false);
-                session.getPlayerAI().decreasePawnNumber(1);
-                session.dominateZones();
-
-            }
         }
         CheckZonesClaimed();//check if player dominated the zone
         CheckPlayerWon();//check if player won
         view.getPlayer1pawns().setText("= " + String.valueOf(session.getPlayer1().getPawnNumber()));//update the label of player1 for the number of Pawns left
-        view.getPlayerAIpawns().setText("= " + String.valueOf(session.getPlayerAI().getPawnNumber()));//update the label of player2 for the number of Pawns left
+
     }
 
     private void CheckZonesClaimed(){//used to check the zones claimed.We use this method each time a pawn is placed
@@ -236,6 +192,38 @@ public class BoardPresenter {
         alert.setHeaderText((String)null);
         alert.setContentText("Winner: " + winner + "\nTotal Play Time: " + totalPlayTimeMillis + " milliseconds\n");
         alert.showAndWait();
+    }
+    public void aiTurn(){
+        System.out.println("AI TURN");
+        if(session.getMove().isBlockPlayerFromWinningMove()){
+            String[] parts = session.getMove().getCoordinates().split("-");
+            session.getBoard().getSquare(session.getMove().getCoordinates()).setStatus(true);
+            view.add(view.createPawn2(session.getMove().getCoordinates()), Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
+            session.getBoard().getSquare(session.getMove().getCoordinates()).setOwnership(session.getPlayerAI());//we do the same but for player 2
+            session.getMove().setBlockPlayerFromWinningMove(false);
+            session.setRound(session.getRound()+1);
+            session.dominateZones();
+
+        }else if (session.getMove().isStartNewPathMove()) {
+            String[] parts = session.getMove().getCoordinates().split("-");
+            session.getBoard().getSquare(session.getMove().getCoordinates()).setStatus(true);
+            view.add(view.createPawn2(session.getMove().getCoordinates()), Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
+            session.getBoard().getSquare(session.getMove().getCoordinates()).setOwnership(session.getPlayerAI());//we do the same but for player 2
+            session.getMove().setStartNewPathMove(false);
+            session.setRound(session.getRound()+1);
+            session.dominateZones();
+        }else if(session.getMove().isContinuePathMove()){
+            String[] parts = session.getMove().getCoordinates().split("-");
+            session.getBoard().getSquare(session.getMove().getCoordinates()).setStatus(true);
+            view.add(view.createPawn2(session.getMove().getCoordinates()), Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
+            session.getBoard().getSquare(session.getMove().getCoordinates()).setOwnership(session.getPlayerAI());//we do the same but for player 2
+            session.setRound(session.getRound()+1);
+            session.getMove().setContinuePathMove(false);
+            session.dominateZones();
+
+        }
+        session.getPlayerAI().decreasePawnNumber(1);
+        view.getPlayerAIpawns().setText("= " + String.valueOf(session.getPlayerAI().getPawnNumber()));//update the label of player2 for the number of Pawns left
     }
 
     void closeApplication(Event event) {//alert to in case of end application

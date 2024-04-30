@@ -19,11 +19,23 @@ public class RuleStartNewPath extends Rule{
     }
     @Override
     public boolean actionRule(GameSession session, Move move) {
-        System.out.println("action on START");
+        System.out.println("action on START NEW PATH");
         move.setStartNewPathMove(true);
         session.setWinningPath(null);
         Random r = new Random();
+        boolean freeWinningPath =false;
+
         session.setWinningPath(session.getEndGame().getWinningListZones().getWinningZones(session.getBoard()).get(r.nextInt(34)));
+        for (int i = 0; i < session.getBoard().dominatedZonesAsList(session.getPlayer1()).size(); i++) {
+
+            if (!(session.getWinningPath().contains(session.getBoard().dominatedZonesAsList(session.getPlayer1()).get(i)))) {
+                    freeWinningPath = true;
+                    break;
+            }else {
+                session.setWinningPath(session.getEndGame().getWinningListZones().getWinningZones(session.getBoard()).get(r.nextInt(34)));
+            }
+
+        }
         move.setCoordinates(session.getWinningPath().get(0).getSquareOfZone().get(0).getCoordinates());
         return true;     // returns true if the new move was determined, returns false if only the facts have been modified
     }

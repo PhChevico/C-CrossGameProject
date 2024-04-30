@@ -32,7 +32,6 @@ public class FactsHandler {
             it.remove(); // Removes the current element from the underlying collection
         }
         factsEvolved = true;
-        System.out.println("Facts reset");
     }
     public boolean factsChanged () {//did something new happen??(that what it returns)
         return factsEvolved;

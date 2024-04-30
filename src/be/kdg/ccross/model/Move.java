@@ -27,7 +27,7 @@ public class Move {
 
     public void setStartNewPathMove(boolean startNewPathMove) {
         StartNewPathMove = startNewPathMove;
-        System.out.println("setting Start move as true");
+
     }
 
     public void setBlockPlayerFromWinningMove(boolean blockPlayerFromWinningMove) {
@@ -36,7 +36,8 @@ public class Move {
 
     public void setContinuePathMove(boolean continuePathMove) {
         ContinuePathMove = continuePathMove;
-        System.out.println("Setting Continue move as true");
+
+
     }
 
     public String getCoordinates() {

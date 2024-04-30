@@ -19,13 +19,16 @@ public class InferenceEngine {
         currentFacts.resetFacts();//we reset the facts going on every time we call this method
         currentFacts.setFactsEvolved(false);//no new facts added to the list of what is happening
         // Determine which FactValues are currently present on the given board
-        if(session.getBoard().endStartWinningPathPossible(session)){//check if a possible "START_NEW_WINNING_PATH" situation is on
-            currentFacts.addFact(FactValues.START_NEW_WINNING_PATH);//if so add to the currentFacts(facts happening on the board) the fact value of "START..."
-        }else if (session.getBoard().endContinuePath(session)) {//check if a possible "CONTINUE_PATH" situation is on
-            currentFacts.addFact(FactValues.CONTINUE_PATH);//if so add to the current facts
-        }else if (session.getBoard().endBlockPlayerFromWinning(session)) {//check if a possible "BLOCK_PLAYER_FROM_WINNING" situation is on
-            currentFacts.addFact(FactValues.BLOCK_PLAYER_FROM_WINNING);//if so add to the current facts
-        }
+    if (session.getBoard().endBlockPlayerFromWinning(session)) {//check if a possible "BLOCK_PLAYER_FROM_WINNING" situation is on
+        currentFacts.addFact(FactValues.BLOCK_PLAYER_FROM_WINNING);//if so add to the current facts
+    }
+    else if (session.getBoard().endContinuePath(session)) {//check if a possible "CONTINUE_PATH" situation is on
+        currentFacts.addFact(FactValues.CONTINUE_PATH);//if so add to the current facts
+    }
+    if(session.getBoard().endStartWinningPathPossible(session)) {//check if a possible "START_NEW_WINNING_PATH" situation is on
+        currentFacts.addFact(FactValues.START_NEW_WINNING_PATH);//if so add to the currentFacts(facts happening on the board) the fact value of "START..."
+    }
+
     }
     /**
      *   rules are ordered - stops when a rule has been fired and starts re-evaluating the rules when the facts have been changed.

@@ -24,9 +24,10 @@ public class RulesHandler {
      *
      */
     public RulesHandler (){
-        rules.add (0, new RuleStartNewPath());
+        rules.add(0,new RuleBlockPlayerFromWinning());
         rules.add (1, new RuleContinuePath());
-        rules.add(2,new RuleBlockPlayerFromWinning());
+        rules.add (2, new RuleStartNewPath());
+
     }
     public boolean checkConditionRule (int index, FactsHandler facts) {//check if the condition of the Fact is okay to see if we can use
         return rules.get(index).conditionRule(facts);

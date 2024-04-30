@@ -12,6 +12,9 @@ public class Board {
     private Zone[] zones;
     private List<Square> squaresOfTheBoard;
     private boolean continuePath;
+    private char zoneToDefend;
+
+
 
     public Board() {
         squaresOfTheBoard = new ArrayList<>();
@@ -138,16 +141,15 @@ public class Board {
 
     }
     public boolean endStartWinningPathPossible(GameSession session){
-        System.out.println("Checkin winning path");
         if(session.getRound()<2 || !continuePath){
-            System.out.println("WINNING is true");
+
             continuePath = true;
             return true;
         }else return false;
     }
 
     public boolean endContinuePath(GameSession session) {
-        System.out.println("Checking continue Path");
+
         for (int i = 0; i < session.getBoard().dominatedZonesAsList(session.getPlayer1()).size(); i++) {
             if (!(session.getWinningPath().contains(session.getBoard().dominatedZonesAsList(session.getPlayer1()).get(i)))) {
                 continuePath = true;
@@ -161,15 +163,29 @@ public class Board {
     }
 
     public boolean endBlockPlayerFromWinning(GameSession session){
+        boolean playerIsWinning = false;
         List<Zone> checkList = session.getBoard().dominatedZonesAsList(session.getPlayer1());
-        for(int i = 65; i <= 80; i++){
-            checkList.add(getZone((char) i));
-            if(session.getEndGame().CheckZones(session.getPlayer1(), session.getBoard())){
-                return true;
+        for(int i = 65; i <= 80; i++) {
+            if(!(checkList.contains(getZone((char)(i))))){
+                checkList.add(getZone((char) i));
+                if (session.getEndGame().getWinningListZones().getWinningZones(session.getBoard()).contains(checkList) && !playerIsWinning) {
+                    if(!(getZone((char)(i)).getOwner()== session.getPlayerAI())) {
+                        setZoneToDefend((char) (i));
+                        playerIsWinning = true;
+
+                    }
+                }
+                checkList.remove(getZone((char) i));
             }
-            checkList.remove(getZone((char)i));
         }
-        return false;
+        return playerIsWinning;
+    }
+    public char getZoneToDefend() {
+        return zoneToDefend;
+    }
+
+    public void setZoneToDefend(char zoneToDefend) {
+        this.zoneToDefend = zoneToDefend;
     }
     //to the continued
 
