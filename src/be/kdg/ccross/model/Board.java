@@ -137,24 +137,20 @@ public class Board {
     public void determineBlockPlayerFromWinning(Move move){
 
     }
-    public void determineRandomMove(Move move){
-
-    }
-    public boolean endStartWinningPathPossible(GameSession session){
-        if(session.getRound()<2 || !continuePath){
-
-            continuePath = true;
-            return true;
+    public boolean endStartWinningPathPossible(GameSession session){//check if we have to start on a new winning path;
+        if(session.getRound()<2 || !continuePath){//we check by seeing if we are at our first round or if the player can continue on the previous created path
+            continuePath = true;//if we will start a new path we set continuePath as true to let know that we can continue in our path
+            return true;//and return true
         }else return false;
     }
 
-    public boolean endContinuePath(GameSession session) {
+    public boolean endContinuePath(GameSession session) {//method used to check if the player can continue the path
 
-        for (int i = 0; i < session.getBoard().dominatedZonesAsList(session.getPlayer1()).size(); i++) {
-            if (!(session.getWinningPath().contains(session.getBoard().dominatedZonesAsList(session.getPlayer1()).get(i)))) {
-                continuePath = true;
+        for (int i = 0; i < session.getBoard().dominatedZonesAsList(session.getPlayer1()).size(); i++) {//we loop through the player dominated zones
+            if (!(session.getWinningPath().contains(session.getBoard().dominatedZonesAsList(session.getPlayer1()).get(i)))) {//and check if he does not own a zone in our winning path
+                continuePath = true;//if so return true
             } else {
-                continuePath = false;
+                continuePath = false;//else we can't continue our path
                 break;
             }
 
@@ -162,23 +158,25 @@ public class Board {
         return continuePath;
     }
 
-    public boolean endBlockPlayerFromWinning(GameSession session){
+    public boolean endBlockPlayerFromWinning(GameSession session){//we block the player from winning
         boolean playerIsWinning = false;
-        List<Zone> checkList = session.getBoard().dominatedZonesAsList(session.getPlayer1());
-        for(int i = 65; i <= 80; i++) {
-            if(!(checkList.contains(getZone((char)(i))))){
-                checkList.add(getZone((char) i));
-                if (session.getEndGame().getWinningListZones().getWinningZones(session.getBoard()).contains(checkList) && !playerIsWinning) {
-                    if(!(getZone((char)(i)).getOwner()== session.getPlayerAI())) {
-                        setZoneToDefend((char) (i));
-                        playerIsWinning = true;
+        List<Zone> checkList = session.getBoard().dominatedZonesAsList(session.getPlayer1()); //we retrieve the zones dominated by the player
+        for(int i = 65; i <= 80; i++) {//we go through all the zones
+            if(!(checkList.contains(getZone((char)(i))))){//we first check if the zone is not already a dominated zone by the player
+                checkList.add(getZone((char) i));//if so we add the zone to the new List
+                for(List<Zone> listOfZone : session.getEndGame().getWinningListZones().getWinningZones(session.getBoard())){//go through all the possible winning combinations
+                    if(checkList.containsAll(listOfZone)){//see if the list contains the combination
+                        if(!(getZone((char)(i)).getOwner()== session.getPlayerAI())) {//and see if the zone is not already owned by the ai
+                            setZoneToDefend((char) (i));//if so we set the zone to defend(later on this will be retrieved to continue defend
+                            playerIsWinning = true;//and set is as true
 
+                        }
                     }
                 }
-                checkList.remove(getZone((char) i));
+                checkList.remove(getZone((char) i));//at the end of the loop we delete the added zone so that we can add the next zone
             }
         }
-        return playerIsWinning;
+        return playerIsWinning;//we return if we either found a zone to defend or not
     }
     public char getZoneToDefend() {
         return zoneToDefend;

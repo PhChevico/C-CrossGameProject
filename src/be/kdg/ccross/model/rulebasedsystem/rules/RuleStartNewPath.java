@@ -33,12 +33,15 @@ public class RuleStartNewPath extends Rule{
 
 
             }
-        for(int i=0; i<4;i++){
-            if(!(session.getWinningPath().get(0).getSquareOfZone().get(i).isStatus())){
-                move.setCoordinates(session.getWinningPath().get(0).getSquareOfZone().get(i).getCoordinates());
-                break;
-            }
+        boolean squareNotFound=true;
+        for(int j=0; j<4 && squareNotFound;j++) {
+            for (int i = 0; i < 4; i++) {
+                if (!(session.getWinningPath().get(j).getSquareOfZone().get(i).isStatus())) {
+                    move.setCoordinates(session.getWinningPath().get(j).getSquareOfZone().get(i).getCoordinates());
+                    squareNotFound=false;
+                }
 
+            }
         }
 
         return true;     // returns true if the new move was determined, returns false if only the facts have been modified
