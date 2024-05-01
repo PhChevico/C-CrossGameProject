@@ -43,6 +43,7 @@ public class RuleStartNewPath extends Rule{
                     move.setCoordinates(session.getWinningPath().get(j).getSquareOfZone().get(i).getCoordinates());
                     System.out.println(session.getWinningPath().get(j).getSquareOfZone().get(i).getCoordinates());
                     squareNotFound=false;
+                    break;
                 }
             }
         }
