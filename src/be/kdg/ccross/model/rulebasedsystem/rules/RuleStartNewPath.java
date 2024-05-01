@@ -23,24 +23,27 @@ public class RuleStartNewPath extends Rule{
         move.setStartNewPathMove(true);
         session.setWinningPath(null);
         Random r = new Random();
-        boolean freeWinningPath =true;
-        session.setWinningPath(session.getEndGame().getWinningListZones().getWinningZones(session.getBoard()).get(r.nextInt(34)));
-        for (int i = 0; i < session.getBoard().dominatedZonesAsList(session.getPlayer1()).size(); i++) {
-
-            if (!(session.getWinningPath().contains(session.getBoard().dominatedZonesAsList(session.getPlayer1()).get(i)))) {
-                freeWinningPath = false;
+        boolean pathNotFound=true;
+        while(pathNotFound) {
+            session.setWinningPath(session.getEndGame().getWinningListZones().getWinningZones(session.getBoard()).get(r.nextInt(34)));
+            boolean contains = false;
+            for (int i = 0;i<session.getBoard().dominatedZonesAsList(session.getPlayer1()).size();i++) {
+                if ((session.getWinningPath().contains(session.getBoard().dominatedZonesAsList(session.getPlayer1()).get(i)))) {
+                    contains = true;
+                }
             }
-
-
+            if(!contains){
+                pathNotFound = false;
             }
+        }
         boolean squareNotFound=true;
         for(int j=0; j<4 && squareNotFound;j++) {
             for (int i = 0; i < 4; i++) {
                 if (!(session.getWinningPath().get(j).getSquareOfZone().get(i).isStatus())) {
                     move.setCoordinates(session.getWinningPath().get(j).getSquareOfZone().get(i).getCoordinates());
+                    System.out.println(session.getWinningPath().get(j).getSquareOfZone().get(i).getCoordinates());
                     squareNotFound=false;
                 }
-
             }
         }
 

@@ -1,5 +1,7 @@
 package be.kdg.ccross.model;
 
+import java.sql.Timestamp;
+
 public class GameTime {
     private long startTime;
     private long endTime;
@@ -22,6 +24,12 @@ public class GameTime {
             return 0;
         }
         return endTime - startTime;
+    }
+
+    public Timestamp getStartTime() {
+        long startTimeMillis = this.startTime;
+        java.sql.Timestamp moveTime = new java.sql.Timestamp(System.currentTimeMillis() - startTimeMillis);
+        return moveTime;
     }
 }
 

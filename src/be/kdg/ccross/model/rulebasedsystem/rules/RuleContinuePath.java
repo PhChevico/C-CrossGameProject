@@ -25,9 +25,14 @@ public class RuleContinuePath extends Rule{
             setJ(0);
         }
         while((session.getWinningPath().get(getI()).getSquareOfZone().get(getJ()).isStatus())){
-            setJ(getJ()+1);
+            if(getJ()<5){
+                setI(getI()+1);
+                setJ(0);
+            }else{
+            setJ(getJ()+1);}
         }
         move.setCoordinates(session.getWinningPath().get(getI()).getSquareOfZone().get(getJ()).getCoordinates());
+        System.out.println(session.getWinningPath().get(j).getSquareOfZone().get(i).getCoordinates());
         move.setContinuePathMove(true);
         setJ(getJ()+1);
         if (getJ()>4){

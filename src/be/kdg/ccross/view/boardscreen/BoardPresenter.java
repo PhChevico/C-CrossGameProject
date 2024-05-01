@@ -2,6 +2,8 @@ package be.kdg.ccross.view.boardscreen;
 import be.kdg.ccross.model.*;
 import be.kdg.ccross.view.homeScreen.HomeScreenPresenter;
 import be.kdg.ccross.view.homeScreen.HomeScreenView;
+import be.kdg.ccross.view.pieChartScreen.PieChartPresenter;
+import be.kdg.ccross.view.pieChartScreen.PieChartView;
 import javafx.event.Event;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -30,6 +32,8 @@ public class BoardPresenter {
         this.session = session;
         this.view = view;
         session.getGameTime().start();
+        session.getDatabase().insertNewGame(session.getDatabase().generateGameId(),session.getGameTime().getStartTime());
+        session.getMove().getGameTime().start();
         // Show initial board
         this.view.boardMaker(session.getSquaresAsList());//call the method boardMaker to create the board passing the List of squares
         //(see in Board class)
@@ -53,21 +57,20 @@ public class BoardPresenter {
         }
         view.getNextRound().setOnAction(actionEvent -> { //when nextRound is pressed
 
-            if(session.getRound()%2==0){//decrease player Pawns by 1
-                session.getPlayer1().decreasePawnNumber(1);
-            }else {
-                session.getPlayerAI().decreasePawnNumber(1);
-            }
+
+            session.getPlayer1().decreasePawnNumber(1);
+
             session.updateCounter(1);//we update the counter of pawns placed as if 2 pawns were places already even if only 1 was placed
-            if(session.getRound()%2==0){//decrease player Pawns by 1
-                session.getPlayer1().addPawnNumber(1);
-            }else {
-                session.getPlayerAI().addPawnNumber(1);
-            }
+
+            session.getPlayer1().addPawnNumber(1);
+
             session.setLastMove(null);
             session.setRound(session.getRound()+1);//we go to the other round by adding 1 to the number of rounds
 
             view.getNextRound().setVisible(false);//we make the nextRound button non-visible
+            session.getMove().getGameTime().stop();
+            session.getMove().storeMoveData(1,session.getPlayer1().getName(),session);
+            session.getMove().getGameTime().start();
             if(!(session.getRound()%2==0)) {
                 session.getEngine().determineFacts(session);
                 session.getEngine().applyRules(session, session.getMove());
@@ -76,12 +79,12 @@ public class BoardPresenter {
                 session.dominateZones();
                 CheckZonesClaimed();//check if player dominated the zone
                 CheckPlayerWon();//check if player won
+
             }
         });
 
         // Add event listener
         view.setHandlerOnPawnCreated((Pair<String, ImageView> pair) -> {
-
             pair.getValue().addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
                 checkingActionToSquare(pair);
             });
@@ -99,6 +102,7 @@ public class BoardPresenter {
     private void checkingActionToSquare(Pair<String, ImageView> pair) {
 
         if (!session.getBoard().getSquare(pair.getKey()).isStatus() && session.validMove(pair.getKey())){
+
 
             //System.out.println(session.validMove(pair.getKey()));
             //here we put a pawn pair the square
@@ -119,6 +123,10 @@ public class BoardPresenter {
 
 
             if(session.getCounter() % 2 == 0){
+                session.getMove().getGameTime().stop();
+                session.getMove().storeMoveData(1,session.getPlayer1().getName(),session);
+                session.getMove().getGameTime().start();
+
                 session.setLastMove(null);
                 session.setRound(session.getRound()+1);
                 view.getNextRound().setVisible(false);
@@ -204,13 +212,27 @@ public class BoardPresenter {
 
         alert.showAndWait().ifPresent(buttonType -> {
             if (buttonType == closeButton) {
-                //Visual Presentation
+                // Create PieChartView and Presenter
+                PieChartView pieChartView = new PieChartView();
+                PieChartPresenter pieChartPresenter = new PieChartPresenter(session, pieChartView);
+
+                // Update view with move data
+                pieChartPresenter.updateView(session.getDatabase().getGameId());
+
+                // Show PieChartView in a new window
+                Scene scene = new Scene(pieChartView);
+                Stage pieChartStage = new Stage();
+                pieChartStage.setScene(scene);
+                pieChartStage.setTitle("Move Duration per Player");
+                pieChartStage.show();
+                ((Stage)view.getScene().getWindow()).close();
             } else if (buttonType == exitButton) {
                 // Exit the application
                 System.exit(0);
             }
         });
     }
+
     public void aiTurn(){
         System.out.println("AI TURN");
         if(session.getMove().isBlockPlayerFromWinningMove()){

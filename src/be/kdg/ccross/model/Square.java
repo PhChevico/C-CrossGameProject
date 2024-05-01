@@ -35,14 +35,10 @@
         public int getRow() {
             return row;
         }
-
-
         @Override
         public String toString() {
             return String.valueOf(column) + "-" + String.valueOf(row) ;
         }
-
-
         public String getCoordinates(){
             return this.getColumn() + "-" + this.getRow();
         }

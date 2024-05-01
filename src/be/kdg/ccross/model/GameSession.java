@@ -221,6 +221,10 @@ public class GameSession {
     public void setWinningPath(List<Zone> winningPath) {
         this.winningPath = winningPath;
     }
+
+    public Database getDatabase() {
+        return database;
+    }
 }
 
 

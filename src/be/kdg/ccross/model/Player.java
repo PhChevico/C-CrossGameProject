@@ -16,7 +16,6 @@ public class Player {
         dominatedSquare = new ArrayList<>();
     }
 
-
     public void setName(String name){
         this.name = name;
     }
@@ -36,34 +35,5 @@ public class Player {
     public void decreasePawnNumber(int insertedPawnNumber) {
         this.pawnNumber -= insertedPawnNumber;
     }
-
-
-    //CHANGE IT TO A TRY AND CATCH --- you parse in the player and the square, it checks it the square is occupied
-    // if not, it assigns ownership for the square and makes the squares status occupied
-    public void insertPawnInCell (Player player, Square square){
-        if(!square.isStatus()){
-            square.setOwnership(player);
-            square.setStatus(true);
-        }
-    }
-
-    public void setPawnNumber(int pawnNumber) {
-        this.pawnNumber = pawnNumber;
-    }
-
-    public List<Square> getDominatedSquare() {
-        return dominatedSquare;
-    }
-
-    public void setDominatedSquare(List<Square> dominatedSquare) {
-        this.dominatedSquare = dominatedSquare;
-    }
-
-
-
-    //methods when conquering zones...
-
-
-
 
 }
