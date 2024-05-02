@@ -32,15 +32,21 @@ public class Database {
 
         try {
             // Query to fetch player statistics
-            String query = "SELECT p.player_id, p.player_name, COUNT(g.game_id) AS games_played, " +
-                    "SUM(CASE WHEN g.winner_id = p.player_id THEN 1 ELSE 0 END) AS wins, " +
-                    "SUM(CASE WHEN g.winner_id != p.player_id THEN 1 ELSE 0 END) AS losses, " +
-                    "(SUM(CASE WHEN g.winner_id = p.player_id THEN 1 ELSE 0 END) / COUNT(g.game_id) * 100) AS win_percentage, " +
+            String query = "SELECT p.username AS player_name, COUNT(g.game_id) AS games_played, " +
+                    "SUM(CASE WHEN g.winner_username = p.username THEN 1 ELSE 0 END) AS wins, " +
+                    "SUM(CASE WHEN g.winner_username != p.username THEN 1 ELSE 0 END) AS losses, " +
+                    "CASE WHEN COUNT(g.game_id) > 0 THEN " +
+                    "    (SUM(CASE WHEN g.winner_username = p.username THEN 1 ELSE 0 END) / NULLIF(COUNT(g.game_id), 0) * 100) " +
+                    "ELSE " +
+                    "    0 " +
+                    "END AS win_percentage, " +
                     "AVG((SELECT COUNT(*) FROM Moves m WHERE m.game_id = g.game_id)) AS avg_moves, " +
-                    "AVG(EXTRACT(EPOCH FROM (g.end_time - g.start_time)) / (SELECT COUNT(*) FROM Moves m WHERE m.game_id = g.game_id)) AS avg_duration " +
+                    "AVG(EXTRACT(EPOCH FROM (g.end_time - g.start_time)) / NULLIF((SELECT COUNT(*) FROM Moves m WHERE m.game_id = g.game_id), 0)) AS avg_duration " +
                     "FROM Players p " +
-                    "LEFT JOIN Games g ON g.winner_id = p.player_id OR g.game_id IN (SELECT m.game_id FROM Moves m WHERE m.player_id = p.player_id) " +
-                    "GROUP BY p.player_id";
+                    "LEFT JOIN Games g ON g.winner_username = p.username OR g.game_id IN (SELECT m.game_id FROM Moves m WHERE m.username = p.username) " +
+                    "GROUP BY p.username";
+
+
 
             // Create statement and execute query
             Statement statement = connection.createStatement();
@@ -48,7 +54,6 @@ public class Database {
 
             // Process result set
             while (resultSet.next()) {
-                int playerId = resultSet.getInt("player_id");
                 String playerName = resultSet.getString("player_name");
                 int gamesPlayed = resultSet.getInt("games_played");
                 int wins = resultSet.getInt("wins");
@@ -58,7 +63,7 @@ public class Database {
                 double avgDuration = resultSet.getDouble("avg_duration");
 
                 // Create PlayerStatistics object and add to list
-                PlayerStatistics playerStats = new PlayerStatistics(playerId, playerName, gamesPlayed, wins, losses, winPercentage, avgMoves, avgDuration);
+                PlayerStatistics playerStats = new PlayerStatistics(playerName, gamesPlayed, wins, losses, winPercentage, avgMoves, avgDuration);
                 playerStatsList.add(playerStats);
             }
 

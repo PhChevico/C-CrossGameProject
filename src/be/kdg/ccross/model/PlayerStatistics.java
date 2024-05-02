@@ -10,8 +10,7 @@ public class PlayerStatistics {
     private double avgMoves;
     private double avgDuration;
 
-    public PlayerStatistics(int playerId, String playerName, int gamesPlayed, int wins, int losses, double winPercentage, double avgMoves, double avgDuration) {
-        this.playerId = playerId;
+    public PlayerStatistics(String playerName, int gamesPlayed, int wins, int losses, double winPercentage, double avgMoves, double avgDuration) {
         this.playerName = playerName;
         this.gamesPlayed = gamesPlayed;
         this.wins = wins;
