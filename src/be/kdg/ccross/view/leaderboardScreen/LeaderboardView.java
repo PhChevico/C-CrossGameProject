@@ -6,9 +6,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 
 import java.util.Comparator;
 
@@ -29,6 +28,7 @@ public class LeaderboardView extends VBox {
     }
 
     private void initialiseNodes() {
+
         goBack = new Button("Go back");
         rank = new Label("Rank");
         gamesPlayed = new Label("Games Played");
@@ -43,6 +43,14 @@ public class LeaderboardView extends VBox {
     }
 
     private void layoutNodes() {
+        BackgroundImage backgroundImage = new BackgroundImage(
+                new Image("images/bg1.png", false),
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                BackgroundSize.DEFAULT);
+        this.setBackground(new Background(backgroundImage));
+
         this.setSpacing(10);
         this.setAlignment(Pos.CENTER);
 
@@ -69,6 +77,8 @@ public class LeaderboardView extends VBox {
         // Add the "Go back" button spanning all columns
         HBox buttonPane = new HBox(goBack);
         buttonPane.setAlignment(Pos.CENTER);
+
+        goBack.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #d38103; -fx-font-weight: bold");
 
         this.getChildren().addAll(headerPane, dataPane, buttonPane);
     }

@@ -20,8 +20,8 @@ public class GameSession {
     private String lastMove;
     private int counter = 0;
     private int round = 0;
-    InferenceEngine engine;
-    Move move;
+    private InferenceEngine engine;
+    private Move move;
 
     public GameSession() {
         authentication = new Authentication();

@@ -3,8 +3,8 @@ package be.kdg.ccross.view.authenticationscreens;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -26,9 +26,17 @@ public class AuthenticationView extends VBox {
     public AuthenticationView() {
         initialiseNodes();
         layoutNodes();
-        this.setStyle("-fx-background-color: #e5d9c7");
+
     }
     public void initialiseNodes(){
+        BackgroundImage backgroundImage = new BackgroundImage(
+                new Image("images/bg1.png", false),
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                BackgroundSize.DEFAULT);
+        this.setBackground(new Background(backgroundImage));
+
 
         //if i dont getter for the attributes i put them inside layout nodes.
         usernamefield = new TextField("");
@@ -48,6 +56,14 @@ public class AuthenticationView extends VBox {
         buttonsConfirm = new HBox(5);
         password = new Label("Password: ");
         password.setFont(Font.font("Arial",15));
+        usernamefield.setStyle("-fx-background-color: rgba(65,255,12,0.27)");
+        passwordField.setStyle("-fx-background-color: rgba(65,255,12,0.27)");
+        name.setStyle("-fx-text-fill: rgb(25,96,3)");
+        password.setStyle("-fx-text-fill: rgb(25,96,3)");
+        screenTitle.setStyle("-fx-text-fill: rgb(25,96,3)");
+        createacc.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #d38103; -fx-font-weight: bold");
+        cancel.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #d38103; -fx-font-weight: bold");
+        log_in.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #d38103; -fx-font-weight: bold");
         //putting here the nodes init nodes that are not used with getters
         usernamefield.setMaxHeight(20);
         usernamefield.setMaxWidth(120);

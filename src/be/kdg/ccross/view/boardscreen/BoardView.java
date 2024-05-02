@@ -1,6 +1,7 @@
 package be.kdg.ccross.view.boardscreen;
 import be.kdg.ccross.model.Player;
 import be.kdg.ccross.model.Square;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -39,8 +40,9 @@ public class BoardView extends GridPane {
 
     private void initialiseNodes(){
         nextRound = new Button("Next Round");
-        player1pawns = new Label();
-        playerAIpawns = new Label();
+        player1pawns = new Label("= 12");
+        playerAIpawns = new Label("= 12");
+        setBackground(new Background(new BackgroundFill(javafx.scene.paint.Color.rgb(56, 36, 1, 1), CornerRadii.EMPTY, Insets.EMPTY)));
     }
 
     public void setHandlerOnPawnCreated(Consumer<Pair<String, ImageView>> event){
@@ -49,16 +51,9 @@ public class BoardView extends GridPane {
 
     private void layoutNodes() {
         //board layout
-        this.setAlignment(Pos.CENTER);
-        BackgroundImage backgroundImage = new BackgroundImage(
-                new Image("images/bg1.jpg", false),
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundPosition.CENTER,
-                BackgroundSize.DEFAULT);
-        this.setBackground(new Background(backgroundImage));
 
-        add(nextRound,0,0);//adding nextRound button to the view
+        add(nextRound,1,0);//adding nextRound button to the view
+        nextRound.setStyle("-fx-background-color: rgba(65,255,12,0.27); -fx-text-fill: #d38103; -fx-font-weight: bold");
         nextRound.setVisible(false);
 
         ImageView pawn1 = new ImageView(new Image("images/PinoVerde.png"));
@@ -67,6 +62,7 @@ public class BoardView extends GridPane {
         pawn1.setFitWidth(PAWN_SIZE);
         add(pawn1,0,1);
         add(player1pawns,1,1);
+        player1pawns.setStyle("-fx-font-weight: bold; -fx-text-fill: #37ff00");
 
         ImageView pawn2 = new ImageView(new Image("images/PinoLaranja.png"));
 
@@ -74,6 +70,7 @@ public class BoardView extends GridPane {
         pawn2.setFitWidth(PAWN_SIZE);
         add(pawn2,0,2);
         add(playerAIpawns,1,2);
+        playerAIpawns.setStyle("-fx-font-weight: bold; -fx-text-fill: #d38103");
 
     }
 

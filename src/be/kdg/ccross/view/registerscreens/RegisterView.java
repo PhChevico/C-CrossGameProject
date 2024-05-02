@@ -3,8 +3,8 @@ package be.kdg.ccross.view.registerscreens;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -28,10 +28,18 @@ public class RegisterView extends VBox {
     public RegisterView() {
         initialiseNodes();
         layoutNodes();
-        this.setStyle("-fx-background-color: #e5d9c7");
+
     }
 
     public void initialiseNodes(){
+        BackgroundImage backgroundImage = new BackgroundImage(
+                new Image("images/bg1.png", false),
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                BackgroundSize.DEFAULT);
+        this.setBackground(new Background(backgroundImage));
+
 
         nameField = new TextField();
         passwordField = new PasswordField();
@@ -50,6 +58,20 @@ public class RegisterView extends VBox {
         password.setFont(Font.font("Arial", 15));
         confirmPassword = new Label("Confirm Password:  ");
         confirmPassword.setFont(Font.font("Arial",15));
+
+        name.setStyle("-fx-text-fill: rgb(25,96,3)");
+        password.setStyle("-fx-text-fill: rgb(25,96,3)");
+        screenTitle.setStyle("-fx-text-fill: rgb(25,96,3)");
+        confirmPassword.setStyle("-fx-text-fill: rgb(25,96,3)");
+
+        register.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #d38103; -fx-font-weight: bold");
+        cancel.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #d38103; -fx-font-weight: bold");
+        log_in.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #d38103; -fx-font-weight: bold");
+
+        nameField.setStyle("-fx-background-color: rgba(65,255,12,0.27)");
+        passwordField.setStyle("-fx-background-color: rgba(65,255,12,0.27)");
+        confirmFiled.setStyle("-fx-background-color: rgba(65,255,12,0.27)");
+
         nameBox = new HBox(5);
         passwordBox = new HBox(5);
         confirmBox = new HBox();

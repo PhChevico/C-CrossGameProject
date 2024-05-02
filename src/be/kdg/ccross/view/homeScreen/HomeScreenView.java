@@ -1,6 +1,4 @@
 package be.kdg.ccross.view.homeScreen;
-
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -13,7 +11,6 @@ public class HomeScreenView extends VBox {
     private Button leaderboard;
     private Button exit;
 
-
     public HomeScreenView(){
         initialiseNodes();
         layoutNodes();
@@ -24,6 +21,12 @@ public class HomeScreenView extends VBox {
         load = new Button("Load");
         leaderboard = new Button("LeaderBoard");
         exit = new Button("Exit");
+
+        // Apply styles
+        play.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #d38103; -fx-font-weight: bold");
+        load.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #d38103; -fx-font-weight: bold");
+        leaderboard.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #d38103; -fx-font-weight: bold");
+        exit.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #d38103; -fx-font-weight: bold");
     }
 
     void layoutNodes() {
@@ -36,9 +39,8 @@ public class HomeScreenView extends VBox {
         exit.setMinSize(200, 20);
         setSpacing(20);
 
-
         BackgroundImage backgroundImage = new BackgroundImage(
-                new Image("images/bg1.jpg", false),
+                new Image("images/bg1.png", false),
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.CENTER,
@@ -47,7 +49,6 @@ public class HomeScreenView extends VBox {
 
         setMinHeight(600);
         setMinWidth(300);
-
     }
 
     Button getPlay() {
