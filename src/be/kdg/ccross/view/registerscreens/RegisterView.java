@@ -59,14 +59,14 @@ public class RegisterView extends VBox {
         confirmPassword = new Label("Confirm Password:  ");
         confirmPassword.setFont(Font.font("Arial",15));
 
-        name.setStyle("-fx-text-fill: rgb(25,96,3)");
-        password.setStyle("-fx-text-fill: rgb(25,96,3)");
+        name.setStyle("-fx-text-fill: rgb(0,0,0)");
+        password.setStyle("-fx-text-fill: rgb(0,0,0)");
         screenTitle.setStyle("-fx-text-fill: rgb(25,96,3)");
-        confirmPassword.setStyle("-fx-text-fill: rgb(25,96,3)");
+        confirmPassword.setStyle("-fx-text-fill: rgb(0,0,0)");
 
-        register.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #d38103; -fx-font-weight: bold");
-        cancel.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #d38103; -fx-font-weight: bold");
-        log_in.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #d38103; -fx-font-weight: bold");
+        register.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #000000; -fx-font-weight: bold");
+        cancel.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #000000; -fx-font-weight: bold");
+        log_in.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #000000; -fx-font-weight: bold");
 
         nameField.setStyle("-fx-background-color: rgba(65,255,12,0.27)");
         passwordField.setStyle("-fx-background-color: rgba(65,255,12,0.27)");
