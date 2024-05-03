@@ -31,6 +31,7 @@ public class PieChartPresenter {
         scene.setRoot(homeScreenView);
         Stage stage = (Stage) scene.getWindow();
         stage.setResizable(true);
+        stage.setTitle("C-Cross");
         HomeScreenPresenter homeScreenPresenter = new HomeScreenPresenter(session, homeScreenView);
         homeScreenView.getScene().getWindow().sizeToScene();
 

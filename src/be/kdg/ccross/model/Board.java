@@ -148,7 +148,7 @@ public class Board {
         return continuePath;
     }
 
-    public boolean endBlockPlayerFromWinning(GameSession session){//we block the player from winning
+    public boolean endBlockPlayerFromWinning(GameSession session){//used to determine if we should block the player from winning
         boolean playerIsWinning = false;
         List<Zone> checkList = session.getBoard().dominatedZonesAsList(session.getPlayer1()); //we retrieve the zones dominated by the player
         for(int i = 65; i <= 80; i++) {//we go through all the zones

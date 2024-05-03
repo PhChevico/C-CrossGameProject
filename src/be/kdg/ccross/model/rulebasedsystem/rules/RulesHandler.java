@@ -13,14 +13,16 @@ public class RulesHandler {
 
     /**
      * Order of the rules:
-     * 1. if the AI can make a move to start a new Winning Path and it doesn't already have one
-     *    -> the AI makes this move.
+     * 1. if the player could obtain in his/her next move a winning position
+     *    -> the AI makes this mov
      *
      * 2. if the AI can make a move to continue on the Winning Path
      *    -> the AI makes this move.
      *
-     * 3. if the player could obtain in his/her next move a winning position
-     *    -> the AI makes this move
+     * 3. if the AI can make a move to start a new Winning Path and it doesn't already have one
+     *    -> the AI makes this move.
+     *
+     *
      *
      */
     public RulesHandler (){
