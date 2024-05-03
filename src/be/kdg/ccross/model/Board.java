@@ -93,8 +93,6 @@ public class Board {
         return result;
     }
 
-
-
     private List<Square> getAllSquaresFromZones(){
         List<Square> squares = new ArrayList<>();
 
@@ -128,15 +126,6 @@ public class Board {
             }
         }
         return dominatedZones;
-    }
-    public void determineStartWinningPathPossible(Move move){
-
-    }
-    public void determineCotinuePath(Move move){
-
-    }
-    public void determineBlockPlayerFromWinning(Move move){
-
     }
     public boolean endStartWinningPathPossible(GameSession session){//check if we have to start on a new winning path;
         if(session.getRound()<2 || !continuePath){//we check by seeing if we are at our first round or if the player can continue on the previous created path

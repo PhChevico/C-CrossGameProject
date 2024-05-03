@@ -121,7 +121,6 @@ public class BoardPresenter {
 
             session.getPlayer1().decreasePawnNumber(1);
 
-
             if(session.getCounter() % 2 == 0){
                 session.getMove().getGameTime().stop();
                 session.getMove().storeMoveData(1,session.getPlayer1().getName(),session);
@@ -140,14 +139,14 @@ public class BoardPresenter {
             alert.showAndWait();
         }
         session.dominateZones();
-        if(!(session.getRound()%2==0)) {
-            session.getEngine().determineFacts(session);
-            session.getEngine().applyRules(session, session.getMove());
-            aiTurn();
-
-        }
         CheckZonesClaimed();//check if player dominated the zone
         CheckPlayerWon();//check if player won
+        if(!(session.getRound()%2==0)) {
+            aiTurn();
+            CheckZonesClaimed();//check if player dominated the zone
+            CheckPlayerWon();//check if player won
+        }
+
         view.getPlayer1pawns().setText("= " + String.valueOf(session.getPlayer1().getPawnNumber()));//update the label of player1 for the number of Pawns left
 
     }
@@ -192,7 +191,6 @@ public class BoardPresenter {
         } else {
             playerWinner = "AI";
         }
-
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("End of Game Summary");
         alert.setHeaderText(null);
@@ -235,6 +233,10 @@ public class BoardPresenter {
 
     public void aiTurn(){
         System.out.println("AI TURN");
+
+        session.getEngine().determineFacts(session);
+        session.getEngine().applyRules(session, session.getMove());
+
         if(session.getMove().isBlockPlayerFromWinningMove()){
             String[] parts = session.getMove().getCoordinates().split("-");
             session.getBoard().getSquare(session.getMove().getCoordinates()).setStatus(true);
@@ -284,17 +286,7 @@ public class BoardPresenter {
             event.consume();
         }
     }
-    void setHomeScreenView(){
 
-        HomeScreenView homeScreenView = new HomeScreenView();
-        Scene scene = view.getScene();
-        scene.setRoot(homeScreenView);
-        Stage stage = (Stage) scene.getWindow();
-        stage.setResizable(true);
-        HomeScreenPresenter homeScreenPresenter = new HomeScreenPresenter(session, homeScreenView);
-        homeScreenView.getScene().getWindow().sizeToScene();
-
-    }
     public void reset(){//used to reset all variable
         session = new GameSession();
         view = new BoardView();

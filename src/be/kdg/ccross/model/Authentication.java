@@ -41,8 +41,6 @@ public class Authentication {
     }
 
 
-
-
     public boolean isUsernameInDatabase(String login){
 
         String verifyUsername = "SELECT username FROM logs_info WHERE username = ?";

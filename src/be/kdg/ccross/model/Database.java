@@ -26,7 +26,6 @@ public class Database {
             e.printStackTrace();
         }
     }
-
     public List<PlayerStatistics> getPlayerStatistics() {
         List<PlayerStatistics> playerStatsList = new ArrayList<>();
 
@@ -75,9 +74,6 @@ public class Database {
         }
 
         return playerStatsList;
-    }
-    public Connection getConnection() {
-        return connection;
     }
     public int generateGameId() {
         int gameId = 0;
@@ -158,6 +154,9 @@ public class Database {
         }
 
         return moves;
+    }
+    public Connection getConnection() {
+        return connection;
     }
 
 

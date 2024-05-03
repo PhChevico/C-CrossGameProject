@@ -25,17 +25,6 @@ public class LeaderboardPresenter {
         addEventHandlers();
         updateView(); // Call updateView to initially populate the leaderboard
     }
-    private void setHomeScreenView(){
-
-        HomeScreenView homeScreenView = new HomeScreenView();
-        Scene scene = view.getScene();
-        scene.setRoot(homeScreenView);
-        Stage stage = (Stage) scene.getWindow();
-        stage.setResizable(true);
-        HomeScreenPresenter homeScreenPresenter = new HomeScreenPresenter(model, homeScreenView);
-        homeScreenView.getScene().getWindow().sizeToScene();
-
-    }
     private void addEventHandlers() {
 
         view.getGoBack().setOnAction(actionEvent -> setHomeScreenView());
@@ -84,9 +73,20 @@ public class LeaderboardPresenter {
     public void updateView() {
         // Fetch player statistics from the database
         ObservableList<PlayerStatistics> playerStatisticsList = FXCollections.observableArrayList(database.getPlayerStatistics());
-// Assuming sortBy and ascending are determined based on user input or some other logic
+        // Assuming sortBy and ascending are determined based on user input or some other logic
         boolean ascending = false;
 
         view.updateLeaderboard(playerStatisticsList, sortBy, ascending);
+    }
+    private void setHomeScreenView(){
+
+        HomeScreenView homeScreenView = new HomeScreenView();
+        Scene scene = view.getScene();
+        scene.setRoot(homeScreenView);
+        Stage stage = (Stage) scene.getWindow();
+        stage.setResizable(true);
+        HomeScreenPresenter homeScreenPresenter = new HomeScreenPresenter(model, homeScreenView);
+        homeScreenView.getScene().getWindow().sizeToScene();
+
     }
 }

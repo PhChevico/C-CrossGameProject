@@ -39,37 +39,6 @@ public class GameSession {
         return board.getSquaresAsList();
     }
 
-    public boolean registerUser(String userName, String password, String confirmPasswd) {
-        try {
-            authentication.registerUser(userName, password);
-            return true;
-        } catch (Exception e) {
-            System.out.println("Not possible to register: " + e.getMessage());
-            return false;
-        }
-    }
-
-    public Board getBoard() {
-        return board;
-    }
-
-    public void setLastMove(String lastMove) {
-        this.lastMove = lastMove;
-    }
-
-    public String getLastMove() {
-        return lastMove;
-    }
-
-
-    public int getCounter() {
-        return counter;
-    }
-
-    public void updateCounter(int i) {
-        this.counter = counter + i;
-    }
-
     //Rules for putting pawns in the board. Almost everything working, just trying to reset the setLastMove after 2 moves.
     public boolean validMove(String coordinates) {
         // If it's the first move, return true
@@ -114,35 +83,6 @@ public class GameSession {
 
         return aroundSquares;
     }
-
-    public Authentication getAuthentication() {
-        return authentication;
-    }
-
-    public String getUsername() {
-        return player1.getName();
-    }
-
-    public void setUsername(String username) {
-        player1.setName(username);
-    }
-
-    public int getRound() {
-        return round;
-    }
-
-    public void setRound(int round) {
-        this.round = round;
-    }
-
-    public Player getPlayer1() {
-        return player1;
-    }
-
-    public Player getPlayerAI() {
-        return playerAI;
-    }
-
     public void dominateZones() {//check if player owns at least 3 squares in the same zone
         for (int i = 65; i <= 80; i++) {//loop through all the coordinates
             List<Square> checkingSquares = board.getZone((char) i).getSquareOfZone();
@@ -197,6 +137,54 @@ public class GameSession {
         ;
     }
 
+    public Authentication getAuthentication() {
+        return authentication;
+    }
+
+    public String getUsername() {
+        return player1.getName();
+    }
+
+    public void setUsername(String username) {
+        player1.setName(username);
+    }
+
+    public int getRound() {
+        return round;
+    }
+
+    public void setRound(int round) {
+        this.round = round;
+    }
+
+    public Player getPlayer1() {
+        return player1;
+    }
+
+    public Player getPlayerAI() {
+        return playerAI;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public void setLastMove(String lastMove) {
+        this.lastMove = lastMove;
+    }
+
+    public String getLastMove() {
+        return lastMove;
+    }
+
+
+    public int getCounter() {
+        return counter;
+    }
+
+    public void updateCounter(int i) {
+        this.counter = counter + i;
+    }
 
     public EndGame getEndGame() {
         return endGame;
