@@ -85,6 +85,7 @@ public class LeaderboardPresenter {
         scene.setRoot(homeScreenView);
         Stage stage = (Stage) scene.getWindow();
         stage.setResizable(true);
+        stage.setTitle("C-Cross");
         HomeScreenPresenter homeScreenPresenter = new HomeScreenPresenter(model, homeScreenView);
         homeScreenView.getScene().getWindow().sizeToScene();
 
