@@ -216,6 +216,12 @@ public class MultiPlayerView extends GridPane {
     public Label getPlayer2pawns() {
         return player2pawns;
     }
+    public void reset(){
+        boardImages = new HashMap<String, ImageView>();
+        pawnImages = new HashMap<String, ImageView>();
+        this.initialiseNodes();
+        this.layoutNodes();
+    }
 }
 
 

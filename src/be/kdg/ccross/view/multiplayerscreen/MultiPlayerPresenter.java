@@ -144,7 +144,7 @@ public class MultiPlayerPresenter {
                 if(session.getRound()%2==0){//decrease player Pawns by 2
                     session.getDatabase().storeMoveData(session.getDatabase().getGameId(),session.getPlayer1().getName(),session);
                 }else {
-                    session.getDatabase().storeMoveData(session.getDatabase().getGameId(),session.getPlayerAI().getName(),session);
+                    session.getDatabase().storeMoveData(session.getDatabase().getGameId(),session.getPlayer2().getName(),session);
                 }
 
                 session.setLastMove(null);
@@ -186,19 +186,21 @@ public class MultiPlayerPresenter {
 
     public void CheckPlayerWon(){//used method to check if the player has either connected the zones or opponent's pawns==0;
 
-        if(session.getEndGame().Checkpawns(session.getPlayer1(), session.getPlayerAI())==2|| //if player 1 won
+        if(session.getEndGame().Checkpawns(session.getPlayer1(), session.getPlayer2())==2|| //if player 1 won
                 session.getEndGame().CheckZones(session.getPlayer1(),session.getBoard())){
             session.getGameTime().stop();//we stop the timer
             session.getDatabase().updateGameStats(session.getDatabase().getGameId(),session.getPlayer1(),session.getGameTime());//send data to the database
             displaySummary(true);//display the game summery
-            reset();//reset the game variables
 
-        }else if(session.getEndGame().Checkpawns(session.getPlayer1(), session.getPlayerAI())==1 || //if AI won
-                session.getEndGame().CheckZones(session.getPlayerAI(),session.getBoard())){
+
+
+        }else if(session.getEndGame().Checkpawns(session.getPlayer1(), session.getPlayer2())==1 || //if AI won
+                session.getEndGame().CheckZones(session.getPlayer2(),session.getBoard())){
             session.getGameTime().stop();
-            session.getDatabase().updateGameStats(session.getDatabase().getGameId(),session.getPlayerAI(),session.getGameTime());
+            session.getDatabase().updateGameStats(session.getDatabase().getGameId(),session.getPlayer2(),session.getGameTime());
             displaySummary(false);
-            reset();
+
+
         }
     }
 
@@ -229,6 +231,7 @@ public class MultiPlayerPresenter {
 
         alert.showAndWait().ifPresent(buttonType -> {
             if (buttonType == closeButton) {
+                reset();
                 // Create PieChartView and Presenter
                 PieChartView pieChartView = new PieChartView();
                 PieChartPresenter pieChartPresenter = new PieChartPresenter(session, pieChartView);
@@ -244,8 +247,10 @@ public class MultiPlayerPresenter {
                 pieChartStage.show();
                 ((Stage)view.getScene().getWindow()).close();
             } else if (buttonType == exitButton) {
+                reset();
                 // Exit the application
                 System.exit(0);
+
             }
         });
     }
@@ -271,9 +276,9 @@ public class MultiPlayerPresenter {
         }
     }
 
-    public void reset(){//used to reset all variable
+    public void reset(){//used to reset all variables
         session = new GameSession();
-        view = new MultiPlayerView();
+        // Update the UI with the new session and view
     }
 
 

@@ -1,10 +1,8 @@
 package be.kdg.ccross.model.rulebasedsystem.rules;
 
 import be.kdg.ccross.model.*;
-import be.kdg.ccross.model.rulebasedsystem.facts.FactValues;
 import be.kdg.ccross.model.rulebasedsystem.facts.FactsHandler;
 
-import static be.kdg.ccross.model.rulebasedsystem.facts.FactValues.BLOCK_PLAYER_FROM_WINNING;
 import static be.kdg.ccross.model.rulebasedsystem.facts.FactValues.CONTINUE_PATH;
 
 public class RuleContinuePath extends Rule{
@@ -36,7 +34,7 @@ public class RuleContinuePath extends Rule{
 
         while (true) {
             // Check if the current winning path has the AI player as its owner
-            if (session.getWinningPath().get(i).getOwner() == session.getPlayerAI()) {
+            if (session.getWinningPath().get(i).getOwner() == session.getPlayer2()) {
                 // Move to the next winning path if available, otherwise go to the first one
                 i = (i + 1) % session.getWinningPath().size();
             }

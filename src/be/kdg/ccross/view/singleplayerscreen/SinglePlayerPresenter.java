@@ -151,8 +151,8 @@ public class SinglePlayerPresenter {
                 view.addZonePlayer1(checkingSquares,session.getBoard().getZone((char)i).isRotate());//add the zone visually by calling the method
 
 
-            };
-            if (session.getBoard().getZone((char)i).getOwner()==session.getPlayerAI()){//same as previous step
+            }
+            if (session.getBoard().getZone((char)i).getOwner()==session.getPlayer2()){//same as previous step
                 view.addZonePlayerAI(checkingSquares,session.getBoard().getZone((char)i).isRotate());
 
 
@@ -162,19 +162,19 @@ public class SinglePlayerPresenter {
 
     public void CheckPlayerWon(){//used method to check if the player has either connected the zones or opponent's pawns==0;
 
-        if(session.getEndGame().Checkpawns(session.getPlayer1(), session.getPlayerAI())==2|| //if player 1 won
+        if(session.getEndGame().Checkpawns(session.getPlayer1(), session.getPlayer2())==2|| //if player 1 won
                 session.getEndGame().CheckZones(session.getPlayer1(),session.getBoard())){
             session.getGameTime().stop();//we stop the timer
             session.getDatabase().updateGameStats(session.getDatabase().getGameId(),session.getPlayer1(),session.getGameTime());//send data to the database
             displaySummary(true);//display the game summery
-            reset();//reset the game variables
 
-        }else if(session.getEndGame().Checkpawns(session.getPlayer1(), session.getPlayerAI())==1 || //if AI won
-                session.getEndGame().CheckZones(session.getPlayerAI(),session.getBoard())){
+
+        }else if(session.getEndGame().Checkpawns(session.getPlayer1(), session.getPlayer2())==1 || //if AI won
+                session.getEndGame().CheckZones(session.getPlayer2(),session.getBoard())){
             session.getGameTime().stop();
-            session.getDatabase().updateGameStats(session.getDatabase().getGameId(),session.getPlayerAI(),session.getGameTime());
+            session.getDatabase().updateGameStats(session.getDatabase().getGameId(),session.getPlayer2(),session.getGameTime());
             displaySummary(false);
-            reset();
+
         }
     }
 
@@ -205,6 +205,7 @@ public class SinglePlayerPresenter {
 
         alert.showAndWait().ifPresent(buttonType -> {
             if (buttonType == closeButton) {
+                reset();
                 // Create PieChartView and Presenter
                 PieChartView pieChartView = new PieChartView();
                 PieChartPresenter pieChartPresenter = new PieChartPresenter(session, pieChartView);
@@ -220,6 +221,7 @@ public class SinglePlayerPresenter {
                 pieChartStage.show();
                 ((Stage)view.getScene().getWindow()).close();
             } else if (buttonType == exitButton) {
+                reset();
                 // Exit the application
                 System.exit(0);
             }
@@ -236,7 +238,7 @@ public class SinglePlayerPresenter {
             String[] parts = session.getMove().getCoordinates().split("-"); //retrieve the coordinates
             session.getBoard().getSquare(session.getMove().getCoordinates()).setStatus(true);//set the status of the square as true
             view.add(view.createPawn2(session.getMove().getCoordinates()), Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));//add a pawn on those coordinates
-            session.getBoard().getSquare(session.getMove().getCoordinates()).setOwnership(session.getPlayerAI());//we set the ownership of the square by the AI
+            session.getBoard().getSquare(session.getMove().getCoordinates()).setOwnership(session.getPlayer2());//we set the ownership of the square by the AI
             session.getMove().setBlockPlayerFromWinningMove(false);//we reset the move
             session.setRound(session.getRound()+1);//and we go to the next round
             session.dominateZones();//we check if by this move the AI can retrieve a Zone
@@ -245,7 +247,7 @@ public class SinglePlayerPresenter {
             String[] parts = session.getMove().getCoordinates().split("-");
             session.getBoard().getSquare(session.getMove().getCoordinates()).setStatus(true);
             view.add(view.createPawn2(session.getMove().getCoordinates()), Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
-            session.getBoard().getSquare(session.getMove().getCoordinates()).setOwnership(session.getPlayerAI());//we do the same but for player 2
+            session.getBoard().getSquare(session.getMove().getCoordinates()).setOwnership(session.getPlayer2());//we do the same but for player 2
             session.getMove().setStartNewPathMove(false);
             session.setRound(session.getRound()+1);
             session.dominateZones();
@@ -253,14 +255,14 @@ public class SinglePlayerPresenter {
             String[] parts = session.getMove().getCoordinates().split("-");
             session.getBoard().getSquare(session.getMove().getCoordinates()).setStatus(true);
             view.add(view.createPawn2(session.getMove().getCoordinates()), Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
-            session.getBoard().getSquare(session.getMove().getCoordinates()).setOwnership(session.getPlayerAI());//we do the same but for player 2
+            session.getBoard().getSquare(session.getMove().getCoordinates()).setOwnership(session.getPlayer2());//we do the same but for player 2
             session.setRound(session.getRound()+1);
             session.getMove().setContinuePathMove(false);
             session.dominateZones();
 
         }
-        session.getPlayerAI().decreasePawnNumber(1);
-        view.getPlayerAIpawns().setText("= " + String.valueOf(session.getPlayerAI().getPawnNumber()));//update the label of player2 for the number of Pawns left
+        session.getPlayer2().decreasePawnNumber(1);
+        view.getPlayerAIpawns().setText("= " + String.valueOf(session.getPlayer2().getPawnNumber()));//update the label of player2 for the number of Pawns left
     }
 
     void closeApplication(Event event) {//alert to in case of end application
@@ -284,7 +286,6 @@ public class SinglePlayerPresenter {
 
     public void reset(){//used to reset all variable
         session = new GameSession();
-        view = new SinglePlayerView();
     }
 
 

@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS Games (
                                      start_time TIMESTAMP NOT NULL,
                                      end_time TIMESTAMP,
                                      winner_username VARCHAR(15), -- Use username instead of player_id
-                                     total_play_time INTERVAL,
+                                     total_play_time BIGINT,
                                      FOREIGN KEY (winner_username) REFERENCES logs_info(username) -- Reference the username column in logs_info
 );
 SELECT * FROM Moves;

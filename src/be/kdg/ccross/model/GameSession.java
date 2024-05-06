@@ -2,10 +2,8 @@ package be.kdg.ccross.model;//In this implementation we will use hard-code to sh
 //we didn't start implementing javaFX
 
 import be.kdg.ccross.model.rulebasedsystem.InferenceEngine;
-import javafx.application.Platform;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 ;
 public class GameSession {
@@ -95,31 +93,31 @@ public class GameSession {
                 if (c.isStatus()) {
                     if (c.getOwnership() == getPlayer1()) {
                         countp1 += 1;
-                    } else if (c.getOwnership() == getPlayerAI()) {
+                    } else if (c.getOwnership() == getPlayer2()) {
                         countp2 += 1;
                     }
                 }
             }
-            if (!(board.getZone((char) i).getOwner() == getPlayer1() || board.getZone((char) i).getOwner() == getPlayerAI())) {
+            if (!(board.getZone((char) i).getOwner() == getPlayer1() || board.getZone((char) i).getOwner() == getPlayer2())) {
                 if (countp1 == 3) {
                     board.getZone((char) i).setOwner(getPlayer1());
                     getPlayer1().addPawnNumber(3);
                     System.out.println("Player1");
                     switch (countp2) {
                         case 1:
-                            if (getPlayerAI().getPawnNumber() <= 11) {
-                                getPlayerAI().addPawnNumber(1);
+                            if (getPlayer2().getPawnNumber() <= 11) {
+                                getPlayer2().addPawnNumber(1);
                             }
                             break;
                         case 2:
-                            if (getPlayerAI().getPawnNumber() <= 10) {
-                                getPlayerAI().addPawnNumber(2);
+                            if (getPlayer2().getPawnNumber() <= 10) {
+                                getPlayer2().addPawnNumber(2);
                             }
                             break;
                     }
                 } else if (countp2 == 3) {
-                    board.getZone((char) i).setOwner(getPlayerAI());
-                    getPlayerAI().addPawnNumber(3);
+                    board.getZone((char) i).setOwner(getPlayer2());
+                    getPlayer2().addPawnNumber(3);
                     System.out.println("Player2");
                     switch (countp1) {
                         case 1:
@@ -137,6 +135,18 @@ public class GameSession {
             }
         }
         ;
+    }
+    public void reset(){
+        authentication = new Authentication();
+        board = new Board();
+        database = new Database();
+        player1 = new Player();
+        player2 = new Player();
+        playerAI = new Player();
+        gameTime = new GameTime();
+        endGame = new EndGame();
+        engine = new InferenceEngine();
+        move = new Move();
     }
 
     public Authentication getAuthentication() {
@@ -163,7 +173,7 @@ public class GameSession {
         return player1;
     }
 
-    public Player getPlayerAI() {
+    public Player getPlayer2() {
         return playerAI;
     }
 
@@ -216,7 +226,6 @@ public class GameSession {
         return database;
     }
 
-    public Player getPlayer2() {return player2;}
 }
 
 

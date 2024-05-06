@@ -2,8 +2,6 @@ package be.kdg.ccross.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.Random;
 
 public class Board {
     private final int sizeRows_board = 9;
@@ -156,7 +154,7 @@ public class Board {
                 checkList.add(getZone((char) i));//if so we add the zone to the new List
                 for(List<Zone> listOfZone : session.getEndGame().getWinningListZones().getWinningZones(session.getBoard())){//go through all the possible winning combinations
                     if(checkList.containsAll(listOfZone)){//see if the list contains the combination
-                        if(!(getZone((char)(i)).getOwner()== session.getPlayerAI())) {//and see if the zone is not already owned by the ai
+                        if(!(getZone((char)(i)).getOwner()== session.getPlayer2())) {//and see if the zone is not already owned by the ai
                             setZoneToDefend((char) (i));//if so we set the zone to defend(later on this will be retrieved to continue defend
                             playerIsWinning = true;//and set is as true
 
