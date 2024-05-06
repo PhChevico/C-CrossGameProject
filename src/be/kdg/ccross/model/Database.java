@@ -126,6 +126,20 @@ public class Database {
             e.printStackTrace();
         }
     }
+    public void storeMoveData(int gameId, String playerName, GameSession session) {
+        try {
+            String query = "INSERT INTO Moves (game_id, username, move_time) VALUES (?, ?, ?)";
+            PreparedStatement pstmt = getConnection().prepareStatement(query);
+            pstmt.setInt(1, getGameId());
+            pstmt.setString(2, playerName);
+            long elapsedTimeMillis = session.getGameTime().getElapsedTime();
+
+            pstmt.setLong(3, elapsedTimeMillis);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     public List<Move> getMovesByGameId(int gameId) {
         List<Move> moves = new ArrayList<>();
@@ -158,6 +172,22 @@ public class Database {
     public Connection getConnection() {
         return connection;
     }
+
+    public void updateGameStats(int gameId,Player winner, GameTime time) {//used to insert the game statistic at the end of each game
+        try {
+            String updateGameQuery = "UPDATE Games SET end_time=?, winner_username=?, total_play_time=? WHERE game_id=?";
+            PreparedStatement pstmt = connection.prepareStatement(updateGameQuery);
+            pstmt.setTimestamp(1, time.getEndTime());
+            pstmt.setString(2, winner.getName());
+            pstmt.setLong(3, time.getElapsedTime());
+            pstmt.setInt(4, gameId);
+            pstmt.executeUpdate();
+            pstmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 }

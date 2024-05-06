@@ -8,7 +8,6 @@ DROP TABLE IF EXISTS Moves cascade ;
 DROP SEQUENCE IF EXISTS seq_game_id;
 SELECT * FROM logs_info;
 CREATE TABLE IF NOT EXISTS logs_info (
-                                         name VARCHAR(15) NOT NULL,
                                          username VARCHAR(15) NOT NULL PRIMARY KEY,
                                          password VARCHAR(25) NOT NULL
 );
@@ -37,10 +36,10 @@ CREATE TABLE IF NOT EXISTS Moves (
 );
 
 -- Insert sample data into logs_info table
-INSERT INTO logs_info (name, username, password)
+INSERT INTO logs_info (username, password)
 VALUES
-    ('John Doe', 'john123', 'password123'),
-    ('Alice Smith', 'alice456', 'qwerty789');
+    ('john123', 'password123'),
+    ('alice456', 'qwerty789');
 
 -- Insert sample data into Players table
 INSERT INTO Players (username)

@@ -1,17 +1,15 @@
 package be.kdg.ccross.view.homeScreen;
 
 import be.kdg.ccross.model.GameSession;
-import be.kdg.ccross.view.boardscreen.BoardPresenter;
-import be.kdg.ccross.view.boardscreen.BoardView;
-import be.kdg.ccross.view.homeScreen.HomeScreenView;
 import be.kdg.ccross.view.leaderboardScreen.LeaderboardPresenter;
 import be.kdg.ccross.view.leaderboardScreen.LeaderboardView;
+import be.kdg.ccross.view.selectModeScreen.SelectModePresenter;
+import be.kdg.ccross.view.selectModeScreen.SelectModeView;
 import javafx.event.Event;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class HomeScreenPresenter {
@@ -27,7 +25,7 @@ public class HomeScreenPresenter {
     }
 
     void addEventHandlers() {
-        view.getPlay().setOnAction(actionEvent -> setGameView());
+        view.getPlay().setOnAction(actionEvent -> setSelectMode());
 
         view.getLeaderboard().setOnAction(actionEvent -> setLeaderboardView());
 
@@ -35,16 +33,16 @@ public class HomeScreenPresenter {
         view.getScene().getWindow().setOnCloseRequest(this::closeApplication);
     }
 
-    void setGameView(){
+    void setSelectMode(){
 
-        BoardView boardView = new BoardView();
-        view.getScene().setRoot(boardView);
-        BoardPresenter boardPresenter = new BoardPresenter(model, boardView);
-        boardView.getScene().getWindow().sizeToScene();
-        double centerX = Screen.getPrimary().getVisualBounds().getWidth() / 2 - boardView.getScene().getWindow().getWidth() / 2;
-        double centerY = Screen.getPrimary().getVisualBounds().getHeight() / 2 - boardView.getScene().getWindow().getHeight() / 2;
-        boardView.getScene().getWindow().setX(centerX);
-        boardView.getScene().getWindow().setY(centerY);
+        SelectModeView selectModeView = new SelectModeView();
+        Scene scene = view.getScene();
+        scene.setRoot(selectModeView);
+        Stage stage = (Stage) scene.getWindow();
+        stage.setResizable(true);
+        stage.setTitle("C-Cross");
+        SelectModePresenter selectModePresenter = new SelectModePresenter(model, selectModeView);
+        selectModeView.getScene().getWindow().sizeToScene();
 
     }
     void setLeaderboardView(){

@@ -28,8 +28,14 @@ public class GameTime {
 
     public Timestamp getStartTime() {
         long startTimeMillis = this.startTime;
-        java.sql.Timestamp moveTime = new java.sql.Timestamp(System.currentTimeMillis() - startTimeMillis);
-        return moveTime;
+        java.sql.Timestamp time = new java.sql.Timestamp(System.currentTimeMillis() - startTimeMillis);
+        return time;
+    }
+
+    public Timestamp getEndTime() {
+        long startTimeMillis = this.endTime;
+        java.sql.Timestamp time = new java.sql.Timestamp(System.currentTimeMillis() - startTimeMillis);
+        return time;
     }
 }
 

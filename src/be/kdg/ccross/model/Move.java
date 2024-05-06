@@ -28,20 +28,7 @@ public class Move {
         this.coordinates = null;
         this.gameTime = new GameTime();
     }
-    public void storeMoveData(int gameId, String playerName, GameSession session) {
-        try {
-            String query = "INSERT INTO Moves (game_id, username, move_time) VALUES (?, ?, ?)";
-            PreparedStatement pstmt = session.getDatabase().getConnection().prepareStatement(query);
-            pstmt.setInt(1, session.getDatabase().getGameId());
-            pstmt.setString(2, playerName);
-            long elapsedTimeMillis = gameTime.getElapsedTime();
 
-            pstmt.setLong(3, elapsedTimeMillis);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     public boolean isStartNewPathMove() {
         return StartNewPathMove;

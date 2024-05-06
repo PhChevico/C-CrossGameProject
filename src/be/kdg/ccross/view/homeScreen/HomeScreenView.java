@@ -23,10 +23,10 @@ public class HomeScreenView extends VBox {
         exit = new Button("Exit");
 
         // Apply styles
-        play.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #d38103; -fx-font-weight: bold");
-        load.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #d38103; -fx-font-weight: bold");
-        leaderboard.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #d38103; -fx-font-weight: bold");
-        exit.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #d38103; -fx-font-weight: bold");
+        play.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #000000; -fx-font-weight: bold");
+        load.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #000000; -fx-font-weight: bold");
+        leaderboard.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #000000; -fx-font-weight: bold");
+        exit.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #000000; -fx-font-weight: bold");
     }
 
     void layoutNodes() {

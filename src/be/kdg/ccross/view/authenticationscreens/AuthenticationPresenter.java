@@ -34,7 +34,10 @@ public class AuthenticationPresenter {
         view.getLog_in().setOnAction(actionEvent -> {
             String username = view.getUsernamefield().getText();
             String password = view.getPasswordField().getText();
-            if (model.getAuthentication().isLoginCorrect(username,password)){
+            if ((username == null) && (password==null)) {
+                userError(null);
+
+            }else if (model.getAuthentication().isLoginCorrect(username,password)){
                 welcome(null);
             }else {
                 userError(null);

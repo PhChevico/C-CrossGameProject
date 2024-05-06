@@ -32,7 +32,9 @@ public class RegisterPresenter {
             String userName = view.getNameField().getText();
             String password = view.getPasswordField().getText();
             String confirmPasswd = view.getConfirmFiled().getText();
-            if (!model.getAuthentication().registerUser(userName ,password)){
+            if ((userName.isEmpty()) || (password.isEmpty())) {
+                userError(null);
+            }else if (!model.getAuthentication().registerUser(userName ,password)){
                 userError(null);
             } else if (!Objects.equals(password, confirmPasswd)) {
                 passwordError(null);

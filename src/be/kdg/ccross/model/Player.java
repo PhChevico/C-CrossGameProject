@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
+    private Move move = new Move();
+
+
     private String name;
     private int nOfWins; //get from database
     private final int MAX_NUMB_PAWNS = 12; //each player has a total of 12 pawns
@@ -35,5 +38,9 @@ public class Player {
     public void decreasePawnNumber(int insertedPawnNumber) {
         this.pawnNumber -= insertedPawnNumber;
     }
+    public Move getMove() {
+        return move;
+    }
+
 
 }

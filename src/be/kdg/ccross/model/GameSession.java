@@ -14,6 +14,7 @@ public class GameSession {
     private Board board;
     private Database database;
     private Player player1;
+    private Player player2;
     private Player playerAI;
     private GameTime gameTime;
     private EndGame endGame;
@@ -28,6 +29,7 @@ public class GameSession {
         board = new Board();
         database = new Database();
         player1 = new Player();
+        player2 = new Player();
         playerAI = new Player();
         gameTime = new GameTime();
         endGame = new EndGame();
@@ -213,6 +215,8 @@ public class GameSession {
     public Database getDatabase() {
         return database;
     }
+
+    public Player getPlayer2() {return player2;}
 }
 
 

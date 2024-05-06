@@ -1,4 +1,5 @@
-package be.kdg.ccross.view.boardscreen;
+package be.kdg.ccross.view.multiplayerscreen;
+
 import be.kdg.ccross.model.Player;
 import be.kdg.ccross.model.Square;
 import javafx.geometry.Insets;
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 
-public class BoardView extends GridPane {
+public class MultiPlayerView extends GridPane {
 
     //static final String IMAGES_SQUARE_TEST_JPG = "images/squareTest.jpg";
     private final int SQUARE_SIZE = 85;//size of the square(same as the pawn)
@@ -27,10 +28,10 @@ public class BoardView extends GridPane {
 
     private Button nextRound; //button used to place only one pawn nad pass the round to the opponent
     private Label player1pawns; //label used to indicate how many pawns are left for player1
-    private Label playerAIpawns; //same but for player 2
+    private Label player2pawns; //same but for player 2
 
 
-    public BoardView(){
+    public MultiPlayerView(){
 
         boardImages = new HashMap<String, ImageView>();
         pawnImages = new HashMap<String, ImageView>();
@@ -41,7 +42,7 @@ public class BoardView extends GridPane {
     private void initialiseNodes(){
         nextRound = new Button("Next Round");
         player1pawns = new Label("= 12");
-        playerAIpawns = new Label("= 12");
+        player2pawns = new Label("= 12");
         setBackground(new Background(new BackgroundFill(javafx.scene.paint.Color.rgb(56, 36, 1, 1), CornerRadii.EMPTY, Insets.EMPTY)));
     }
 
@@ -53,7 +54,7 @@ public class BoardView extends GridPane {
         //board layout
 
         add(nextRound,1,0);//adding nextRound button to the view
-        nextRound.setStyle("-fx-background-color: rgba(65,255,12,0.27); -fx-text-fill: #d38103; -fx-font-weight: bold");
+        nextRound.setStyle("-fx-background-color: rgba(65,255,12,0.27); -fx-text-fill: #000000; -fx-font-weight: bold");
         nextRound.setVisible(false);
 
         ImageView pawn1 = new ImageView(new Image("images/PinoVerde.png"));
@@ -69,8 +70,8 @@ public class BoardView extends GridPane {
         pawn2.setFitHeight(PAWN_SIZE);
         pawn2.setFitWidth(PAWN_SIZE);
         add(pawn2,0,2);
-        add(playerAIpawns,1,2);
-        playerAIpawns.setStyle("-fx-font-weight: bold; -fx-text-fill: #d38103");
+        add(player2pawns,1,2);
+        player2pawns.setStyle("-fx-font-weight: bold; -fx-text-fill: #d38103");
 
     }
 
@@ -119,7 +120,7 @@ public class BoardView extends GridPane {
 
                 // Putting the image into the map
                 getBoardImages().put(boardAsList, img);//we update the HashMap with the BoardImage for
-                                                       //for game logic(see in BoardPresenter)
+                //for game logic(see in BoardPresenter)
             }
         }
 
@@ -183,7 +184,7 @@ public class BoardView extends GridPane {
         }
 
     }
-    public void addZonePlayerAI(List<Square> zoneAsList,boolean rotate){
+    public void addZonePlayer2(List<Square> zoneAsList,boolean rotate){
         int counter = 1;
         int counterForFlip=0;
         int countingWhenFlip = 1;
@@ -212,8 +213,8 @@ public class BoardView extends GridPane {
         return player1pawns;
     }
 
-    public Label getPlayerAIpawns() {
-        return playerAIpawns;
+    public Label getPlayer2pawns() {
+        return player2pawns;
     }
 }
 
