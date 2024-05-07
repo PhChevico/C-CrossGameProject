@@ -50,7 +50,7 @@ public class SinglePlayerView extends GridPane {
         //board layout
 
         add(nextRound,1,0);//adding nextRound button to the view
-        nextRound.setStyle("-fx-background-color: rgba(65,255,12,0.27); -fx-text-fill: #000000; -fx-font-weight: bold");
+        nextRound.setStyle("-fx-background-color: rgba(65,255,12,0.27); -fx-text-fill: #4f2e00; -fx-font-weight: bold");
         nextRound.setVisible(false);
 
         ImageView pawn1 = new ImageView(new Image("images/PinoVerde.png"));

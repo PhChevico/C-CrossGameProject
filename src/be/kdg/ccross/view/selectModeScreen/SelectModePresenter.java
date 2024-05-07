@@ -34,6 +34,19 @@ public class SelectModePresenter {
 
         view.getGoBack().setOnAction(actionEvent -> setHomeScreenView());
 
+        view.getSinglePlayer().setOnMouseEntered(e -> view.getSinglePlayer().setStyle("-fx-background-color: orange; -fx-text-fill: #4f2e00; -fx-font-weight: bold"));
+        view.getSinglePlayer().setOnMouseExited(e -> view.getSinglePlayer().setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #4f2e00; -fx-font-weight: bold"));
+
+        view.getMultiPlayer().setOnMouseEntered(e -> view.getMultiPlayer().setStyle("-fx-background-color: orange; -fx-text-fill: #4f2e00; -fx-font-weight: bold"));
+        view.getMultiPlayer().setOnMouseExited(e -> view.getMultiPlayer().setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #4f2e00; -fx-font-weight: bold"));
+
+        view.getGoBack().setOnMouseEntered(e -> view.getGoBack().setStyle("-fx-background-color: orange; -fx-text-fill: #4f2e00; -fx-font-weight: bold"));
+        view.getGoBack().setOnMouseExited(e -> view.getGoBack().setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #4f2e00; -fx-font-weight: bold"));
+
+        view.getExit().setOnMouseEntered(e -> view.getExit().setStyle("-fx-background-color: orange; -fx-text-fill: #4f2e00; -fx-font-weight: bold"));
+        view.getExit().setOnMouseExited(e -> view.getExit().setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #4f2e00; -fx-font-weight: bold"));
+
+
         view.getExit().setOnAction(this::closeApplication);
         view.getScene().getWindow().setOnCloseRequest(this::closeApplication);
 

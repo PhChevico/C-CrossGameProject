@@ -25,12 +25,27 @@ public class HomeScreenPresenter {
     }
 
     void addEventHandlers() {
+
         view.getPlay().setOnAction(actionEvent -> setSelectMode());
 
         view.getLeaderboard().setOnAction(actionEvent -> setLeaderboardView());
 
+        view.getPlay().setOnMouseEntered(e -> view.getPlay().setStyle("-fx-background-color: orange; -fx-text-fill: #4f2e00; -fx-font-weight: bold"));
+        view.getPlay().setOnMouseExited(e -> view.getPlay().setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #4f2e00; -fx-font-weight: bold"));
+
+        view.getInstructions().setOnMouseEntered(e -> view.getInstructions().setStyle("-fx-background-color: orange; -fx-text-fill: #4f2e00; -fx-font-weight: bold"));
+        view.getInstructions().setOnMouseExited(e -> view.getInstructions().setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #4f2e00; -fx-font-weight: bold"));
+
+        view.getLeaderboard().setOnMouseEntered(e -> view.getLeaderboard().setStyle("-fx-background-color: orange; -fx-text-fill: #4f2e00; -fx-font-weight: bold"));
+        view.getLeaderboard().setOnMouseExited(e -> view.getLeaderboard().setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #4f2e00; -fx-font-weight: bold"));
+
+        view.getExit().setOnMouseEntered(e -> view.getExit().setStyle("-fx-background-color: orange; -fx-text-fill: #4f2e00; -fx-font-weight: bold"));
+        view.getExit().setOnMouseExited(e -> view.getExit().setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #4f2e00; -fx-font-weight: bold"));
+
         view.getExit().setOnAction(this::closeApplication);
         view.getScene().getWindow().setOnCloseRequest(this::closeApplication);
+
+
     }
 
     void setSelectMode(){

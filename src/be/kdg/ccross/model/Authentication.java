@@ -21,7 +21,7 @@ public class Authentication {
 
 
     public boolean registerUser(String name, String password){
-        String createUserDatabase = "INSERT INTO logs_info (username, password) VALUES (?,?)";
+        String createUserDatabase = "INSERT INTO Players (username, password) VALUES (?,?)";
 
         if(isUsernameInDatabase(name)){
             System.out.println("Username already exists, try another name.");
@@ -42,7 +42,7 @@ public class Authentication {
 
     public boolean isUsernameInDatabase(String login){
 
-        String verifyUsername = "SELECT username FROM logs_info WHERE username = ?";
+        String verifyUsername = "SELECT username FROM Players WHERE username = ?";
         try (PreparedStatement statement = connection.prepareStatement(verifyUsername)) {
             statement.setString(1, login);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -55,7 +55,7 @@ public class Authentication {
 
 
     public boolean isLoginCorrect(String login, String password){
-        String verifyLogin = "SELECT password FROM logs_info WHERE username = ?";
+        String verifyLogin = "SELECT password FROM Players WHERE username = ?";
         if(!isUsernameInDatabase(login))
             return false;
 

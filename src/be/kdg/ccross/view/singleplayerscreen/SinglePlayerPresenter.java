@@ -37,6 +37,10 @@ public class SinglePlayerPresenter {
 
     void addEventHandlers() {
 
+        view.getNextRound().setOnMouseEntered(e -> view.getNextRound().setStyle("-fx-background-color: orange; -fx-text-fill: #4f2e00; -fx-font-weight: bold"));
+        view.getNextRound().setOnMouseExited(e -> view.getNextRound().setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #4f2e00; -fx-font-weight: bold"));
+
+
 
         //return the coordinates of the square.
         for (Map.Entry<String, ImageView> entry : view.getBoardImages().entrySet()) {

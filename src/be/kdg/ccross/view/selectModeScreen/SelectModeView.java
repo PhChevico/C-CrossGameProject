@@ -2,6 +2,7 @@ package be.kdg.ccross.view.selectModeScreen;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 
@@ -11,6 +12,7 @@ public class SelectModeView extends VBox {
     private Button multiPlayer;
     private Button goBack;
     private Button exit;
+    private Label selectMode;
 
     public SelectModeView(){
         initialiseNodes();
@@ -18,20 +20,22 @@ public class SelectModeView extends VBox {
     }
 
     void initialiseNodes(){
+        selectMode = new Label("SELECT MODE");
         singlePlayer = new Button("SinglePlayer Mode");
         multiPlayer = new Button("MultiPlayer Mode");
         goBack = new Button("Go back to main menu");
         exit = new Button("Exit");
 
         // Apply styles
-        singlePlayer.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #000000; -fx-font-weight: bold");
-        multiPlayer.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #000000; -fx-font-weight: bold");
-        goBack.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #000000; -fx-font-weight: bold");
-        exit.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #000000; -fx-font-weight: bold");
+        selectMode.setStyle("-fx-text-fill: #4f2e00; -fx-font-weight: bold");
+        singlePlayer.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #4f2e00; -fx-font-weight: bold");
+        multiPlayer.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #4f2e00; -fx-font-weight: bold");
+        goBack.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #4f2e00; -fx-font-weight: bold");
+        exit.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #4f2e00; -fx-font-weight: bold");
     }
 
     void layoutNodes() {
-        super.getChildren().addAll(singlePlayer, multiPlayer, goBack, exit);
+        super.getChildren().addAll(selectMode,singlePlayer, multiPlayer, goBack, exit);
 
         setAlignment(Pos.CENTER);
         singlePlayer.setMinSize(200, 20);

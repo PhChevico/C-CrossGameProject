@@ -1,21 +1,16 @@
 CREATE DATABASE c_cross_team21;
 /*u should also turn number that is specific to each game*/
 
-DROP TABLE IF EXISTS logs_info cascade ;
 DROP TABLE IF EXISTS Players cascade ;
 DROP TABLE IF EXISTS Games cascade ;
 DROP TABLE IF EXISTS Moves cascade ;
 DROP SEQUENCE IF EXISTS seq_game_id;
-SELECT * FROM logs_info;
-CREATE TABLE IF NOT EXISTS logs_info (
+SELECT * FROM Players;
+CREATE TABLE IF NOT EXISTS Players (
                                          username VARCHAR(15) NOT NULL PRIMARY KEY,
                                          password VARCHAR(25) NOT NULL
 );
-SELECT * FROM Players;
-CREATE TABLE IF NOT EXISTS Players (
-                                       username VARCHAR(15) NOT NULL,
-                                       FOREIGN KEY (username) REFERENCES logs_info(username)
-);
+
 SELECT * FROM Games;
 CREATE TABLE IF NOT EXISTS Games (
                                      game_id SERIAL PRIMARY KEY,
@@ -23,7 +18,7 @@ CREATE TABLE IF NOT EXISTS Games (
                                      end_time TIMESTAMP,
                                      winner_username VARCHAR(15), -- Use username instead of player_id
                                      total_play_time BIGINT,
-                                     FOREIGN KEY (winner_username) REFERENCES logs_info(username) -- Reference the username column in logs_info
+                                     FOREIGN KEY (winner_username) REFERENCES Players(username) -- Reference the username column in logs_info
 );
 SELECT * FROM Moves;
 CREATE TABLE IF NOT EXISTS Moves (
@@ -32,7 +27,7 @@ CREATE TABLE IF NOT EXISTS Moves (
                                      username VARCHAR(15) NOT NULL,
                                      move_time BIGINT NOT NULL,
                                      FOREIGN KEY (game_id) REFERENCES Games(game_id),
-                                     FOREIGN KEY (username) REFERENCES logs_info(username)
+                                     FOREIGN KEY (username) REFERENCES Players(username)
 );
 
 -- Insert sample data into logs_info table
@@ -61,7 +56,7 @@ VALUES
     (2, 'alice456', 7000), -- 7 seconds for move in game 2 by user 'alice456'
     (2, 'john123', 4000); -- 4 seconds for move in game 2 by user 'john123'
 -- Insert more sample data into logs_info table
-INSERT INTO logs_info (name, username, password)
+INSERT INTO logs_info (username, password)
 VALUES
     ('Bob Johnson', 'bob789', 'pass123'),
     ('Emily Brown', 'emily012', 'secure456');

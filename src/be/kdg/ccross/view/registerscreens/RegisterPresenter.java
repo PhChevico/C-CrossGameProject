@@ -44,6 +44,18 @@ public class RegisterPresenter {
             }
 
         });
+
+        view.getRegister().setOnMouseEntered(e -> view.getRegister().setStyle("-fx-background-color: orange; -fx-text-fill: #4f2e00; -fx-font-weight: bold"));
+        view.getRegister().setOnMouseExited(e -> view.getRegister().setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #4f2e00; -fx-font-weight: bold"));
+
+
+        view.getLog_in().setOnMouseEntered(e -> view.getLog_in().setStyle("-fx-background-color: orange; -fx-text-fill: #4f2e00; -fx-font-weight: bold"));
+        view.getLog_in().setOnMouseExited(e -> view.getLog_in().setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #4f2e00; -fx-font-weight: bold"));
+
+
+        view.getCancel().setOnMouseEntered(e -> view.getCancel().setStyle("-fx-background-color: orange; -fx-text-fill: #4f2e00; -fx-font-weight: bold"));
+        view.getCancel().setOnMouseExited(e -> view.getCancel().setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #4f2e00; -fx-font-weight: bold"));
+
     }
     private void setAuthenticationView(){
         AuthenticationView authenticationView = new AuthenticationView();

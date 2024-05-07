@@ -44,8 +44,14 @@ public class AuthenticationPresenter {
             }
 
         });
+        view.getLog_in().setOnMouseEntered(e -> view.getLog_in().setStyle("-fx-background-color: orange; -fx-text-fill: #4f2e00; -fx-font-weight: bold"));
+        view.getLog_in().setOnMouseExited(e -> view.getLog_in().setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #4f2e00; -fx-font-weight: bold"));
 
+        view.getcreateacc().setOnMouseEntered(e -> view.getcreateacc().setStyle("-fx-background-color: orange; -fx-text-fill: #4f2e00; -fx-font-weight: bold"));
+        view.getcreateacc().setOnMouseExited(e -> view.getcreateacc().setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #4f2e00; -fx-font-weight: bold"));
 
+        view.getCancel().setOnMouseEntered(e -> view.getCancel().setStyle("-fx-background-color: orange; -fx-text-fill: #4f2e00; -fx-font-weight: bold"));
+        view.getCancel().setOnMouseExited(e -> view.getCancel().setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #4f2e00; -fx-font-weight: bold"));
     }
 
     void setHomeScreenView(){

@@ -78,7 +78,7 @@ public class LeaderboardView extends VBox {
         HBox buttonPane = new HBox(goBack);
         buttonPane.setAlignment(Pos.CENTER);
 
-        goBack.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #000000; -fx-font-weight: bold");
+        goBack.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #4f2e00; -fx-font-weight: bold");
 
         this.getChildren().addAll(headerPane, dataPane, buttonPane);
     }

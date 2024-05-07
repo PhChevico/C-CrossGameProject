@@ -58,12 +58,12 @@ public class AuthenticationView extends VBox {
         password.setFont(Font.font("Arial",15));
         usernamefield.setStyle("-fx-background-color: rgba(65,255,12,0.27)");
         passwordField.setStyle("-fx-background-color: rgba(65,255,12,0.27)");
-        name.setStyle("-fx-text-fill: rgb(0,0,0)");
-        password.setStyle("-fx-text-fill: rgb(0,0,0)");
-        screenTitle.setStyle("-fx-text-fill: rgb(25,96,3)");
-        createacc.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #000000; -fx-font-weight: bold");
-        cancel.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #000000; -fx-font-weight: bold");
-        log_in.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #000000; -fx-font-weight: bold");
+        name.setStyle("-fx-text-fill: rgb(79,46,0)");
+        password.setStyle("-fx-text-fill: rgb(79,46,0)");
+        screenTitle.setStyle("-fx-text-fill: rgb(79,46,0)");
+        createacc.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #4f2e00; -fx-font-weight: bold");
+        cancel.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #4f2e00; -fx-font-weight: bold");
+        log_in.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #4f2e00; -fx-font-weight: bold");
         //putting here the nodes init nodes that are not used with getters
         usernamefield.setMaxHeight(20);
         usernamefield.setMaxWidth(120);
