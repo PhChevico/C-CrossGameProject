@@ -41,7 +41,6 @@ public class InferenceEngine {
                 while (i < currentRules.numberOfRules() && !ruleFired && !currentFacts.factsChanged()) {//as long as the Number of rules is less than i
                     //,rule is not fired and facts did not evolve
                     if (currentRules.checkConditionRule(i, currentFacts)) {//check if the rule condition matches the current facts happening by going through all the rules
-                        System.out.println("Rule is being fired following the current fact " + currentFacts);
                         ruleFired = currentRules.fireActionRule(i, session, move);//if they do, we make the AI move
                         //we return then to ruleFired the boolean true to ruleFired to say "okay we have applied the rule" so that we can go out of the loop
                     }

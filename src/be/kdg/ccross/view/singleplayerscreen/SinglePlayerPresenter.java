@@ -53,31 +53,7 @@ public class SinglePlayerPresenter {
 
         }
         view.getNextRound().setOnAction(actionEvent -> { //when nextRound is pressed
-
-
-            session.getPlayer1().decreasePawnNumber(1);
-
-            session.updateCounter(1);//we update the counter of pawns placed as if 2 pawns were places already even if only 1 was placed
-
-            session.getPlayer1().addPawnNumber(1);
-
-            session.setLastMove(null);
-            session.setRound(session.getRound()+1);//we go to the other round by adding 1 to the number of rounds
-
-            view.getNextRound().setVisible(false);//we make the nextRound button non-visible
-            session.getMove().getGameTime().stop();
-            session.getDatabase().storeMoveData(1,session.getPlayer1().getName(),session);
-            session.getMove().getGameTime().start();
-            if(!(session.getRound()%2==0)) {
-                session.getEngine().determineFacts(session);
-                session.getEngine().applyRules(session, session.getMove());
-                aiTurn();
-
-                session.dominateZones();
-                CheckZonesClaimed();//check if player dominated the zone
-                CheckPlayerWon();//check if player won
-
-            }
+            goToNextRound();//call the method
         });
 
         // Add event listener
@@ -146,6 +122,30 @@ public class SinglePlayerPresenter {
 
         view.getPlayer1pawns().setText("= " + String.valueOf(session.getPlayer1().getPawnNumber()));//update the label of player1 for the number of Pawns left
 
+    }
+    public void goToNextRound(){
+        session.getPlayer1().decreasePawnNumber(1);
+
+        session.updateCounter(1);//we update the counter of pawns placed as if 2 pawns were places already even if only 1 was placed
+
+        session.getPlayer1().addPawnNumber(1);
+
+        session.setLastMove(null);
+        session.setRound(session.getRound()+1);//we go to the other round by adding 1 to the number of rounds
+
+        view.getNextRound().setVisible(false);//we make the nextRound button non-visible
+        session.getMove().getGameTime().stop();
+        session.getDatabase().storeMoveData(1,session.getPlayer1().getName(),session);
+        session.getMove().getGameTime().start();
+        if(!(session.getRound()%2==0)) {
+            session.getEngine().determineFacts(session);
+            session.getEngine().applyRules(session, session.getMove());
+            aiTurn();
+
+            session.dominateZones();
+            CheckZonesClaimed();//check if player dominated the zone
+            CheckPlayerWon();//check if player won
+        }
     }
 
     private void CheckZonesClaimed(){//used to check the zones claimed.We use this method each time a pawn is placed
@@ -260,8 +260,8 @@ public class SinglePlayerPresenter {
             session.getBoard().getSquare(session.getMove().getCoordinates()).setStatus(true);
             view.add(view.createPawn2(session.getMove().getCoordinates()), Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
             session.getBoard().getSquare(session.getMove().getCoordinates()).setOwnership(session.getPlayer2());//we do the same but for player 2
-            session.setRound(session.getRound()+1);
             session.getMove().setContinuePathMove(false);
+            session.setRound(session.getRound()+1);
             session.dominateZones();
 
         }

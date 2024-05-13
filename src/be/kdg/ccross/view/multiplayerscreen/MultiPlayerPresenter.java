@@ -25,16 +25,15 @@ public class MultiPlayerPresenter {
     public MultiPlayerPresenter(GameSession session, MultiPlayerView view){
         this.session = session;
         this.view = view;
-        session.getGameTime().start();
-        session.getDatabase().insertNewGame(session.getDatabase().generateGameId(),session.getGameTime().getStartTime());
-        session.getPlayer1().getMove().getGameTime().start();
+        session.getGameTime().start();//start the game time
+        session.getDatabase().insertNewGame(session.getDatabase().generateGameId(),session.getGameTime().getStartTime());//create a new game in the database
+        session.getPlayer1().getMove().getGameTime().start();//start the move time for the first move
         // Show initial board
         this.view.boardMaker(session.getSquaresAsList());//call the method boardMaker to create the board passing the List of squares
         //(see in Board class)
         this.addEventHandlers();
 
     }
-
 
     void addEventHandlers() {
 
@@ -54,39 +53,7 @@ public class MultiPlayerPresenter {
 
         }
         view.getNextRound().setOnAction(actionEvent -> { //when nextRound is pressed
-
-
-            if(session.getRound()%2==0){//decrease player Pawns by 1
-                session.getPlayer1().decreasePawnNumber(1);
-            }else {
-                session.getPlayer2().decreasePawnNumber(1);
-            }
-            session.updateCounter(1);//we update the counter of pawns placed as if 2 pawns were places already even if only 1 was placed
-            if(session.getRound()%2==0){//decrease player Pawns by 1
-                session.getPlayer1().addPawnNumber(1);
-            }else {
-                session.getPlayer2().addPawnNumber(1);
-            }
-            session.setLastMove(null);
-            session.setRound(session.getRound()+1);//we go to the other round by adding 1 to the number of rounds
-
-            view.getNextRound().setVisible(false);//we make the nextRound button non-visible
-            if(session.getRound()%2==0){//decrease player Pawns by 1
-                session.getPlayer1().getMove().getGameTime().stop();
-                session.getPlayer2().getMove().getGameTime().start();
-            }else {
-                session.getPlayer2().getMove().getGameTime().stop();
-                session.getPlayer1().getMove().getGameTime().start();
-            }
-
-            session.getDatabase().storeMoveData(1,session.getPlayer1().getName(),session);
-
-
-            session.dominateZones();
-            CheckZonesClaimed();//check if player dominated the zone
-            CheckPlayerWon();//check if player won
-
-
+            goNextRound();//we call the method to go to the next round
         });
 
         // Add event listener
@@ -95,7 +62,6 @@ public class MultiPlayerPresenter {
                 checkingActionToSquare(pair);
             });
         });
-
 
 
         view.getScene().getWindow().setOnCloseRequest(this::closeApplication);//close the app
@@ -169,6 +135,41 @@ public class MultiPlayerPresenter {
 
         view.getPlayer1pawns().setText("= " + String.valueOf(session.getPlayer1().getPawnNumber()));//update the label of player1 for the number of Pawns left
         view.getPlayer2pawns().setText("= " + String.valueOf(session.getPlayer2().getPawnNumber()));//update the label of player1 for the number of Pawns left
+
+    }
+    public void goNextRound(){
+
+
+        if(session.getRound()%2==0){//decrease player Pawns by 1
+            session.getPlayer1().decreasePawnNumber(1);
+        }else {
+            session.getPlayer2().decreasePawnNumber(1);
+        }
+        session.updateCounter(1);//we update the counter of pawns placed as if 2 pawns were places already even if only 1 was placed
+        if(session.getRound()%2==0){//decrease player Pawns by 1
+            session.getPlayer1().addPawnNumber(1);
+        }else {
+            session.getPlayer2().addPawnNumber(1);
+        }
+        session.setLastMove(null);
+        session.setRound(session.getRound()+1);//we go to the other round by adding 1 to the number of rounds
+
+        view.getNextRound().setVisible(false);//we make the nextRound button non-visible
+        if(session.getRound()%2==0){//stop the time and start the time for the other player
+            session.getPlayer1().getMove().getGameTime().stop();
+            session.getPlayer2().getMove().getGameTime().start();
+        }else {
+            session.getPlayer2().getMove().getGameTime().stop();
+            session.getPlayer1().getMove().getGameTime().start();
+        }
+
+        session.getDatabase().storeMoveData(1,session.getPlayer1().getName(),session);
+
+
+        session.dominateZones();
+        CheckZonesClaimed();//check if player dominated the zone
+        CheckPlayerWon();//check if player won
+
 
     }
 
@@ -258,8 +259,6 @@ public class MultiPlayerPresenter {
             }
         });
     }
-
-
 
     void closeApplication(Event event) {//alert to in case of end application
         Alert alert = new Alert(Alert.AlertType.WARNING);
