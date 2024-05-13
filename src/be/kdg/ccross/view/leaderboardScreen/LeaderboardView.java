@@ -1,6 +1,6 @@
 package be.kdg.ccross.view.leaderboardScreen;
 
-import be.kdg.ccross.model.PlayerStatistics;
+import be.kdg.ccross.model.PlayerStatistics;//--> to modify
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

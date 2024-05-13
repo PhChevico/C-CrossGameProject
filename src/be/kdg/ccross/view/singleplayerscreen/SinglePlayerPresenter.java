@@ -1,7 +1,8 @@
 package be.kdg.ccross.view.singleplayerscreen;
 import be.kdg.ccross.model.*;
-import be.kdg.ccross.view.pieChartScreen.PieChartPresenter;
-import be.kdg.ccross.view.pieChartScreen.PieChartView;
+import be.kdg.ccross.view.histogramScreen.HistogramPresenter;
+import be.kdg.ccross.view.histogramScreen.HistogramView;
+import be.kdg.ccross.view.histogramScreen.*;
 import javafx.event.Event;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -96,7 +97,7 @@ public class SinglePlayerPresenter {
 
             if(session.getCounter() % 2 == 0){
                 session.getMove().getGameTime().stop();
-                session.getDatabase().storeMoveData(1,session.getPlayer1().getName(),session);
+                session.getDatabase().storeMoveData(session.getDatabase().getGameId(),session.getPlayer1().getName(),session);
                 session.getMove().getGameTime().start();
 
                 session.setLastMove(null);
@@ -211,14 +212,14 @@ public class SinglePlayerPresenter {
             if (buttonType == closeButton) {
                 reset();
                 // Create PieChartView and Presenter
-                PieChartView pieChartView = new PieChartView();
-                PieChartPresenter pieChartPresenter = new PieChartPresenter(session, pieChartView);
+                HistogramView histogramView = new HistogramView();
+                HistogramPresenter histogramPresenter = new HistogramPresenter(session,histogramView);
 
                 // Update view with move data
-                pieChartPresenter.updateView(session.getDatabase().getGameId());
+                histogramPresenter.updateView(session.getDatabase().getGameId());
 
                 // Show PieChartView in a new window
-                Scene scene = new Scene(pieChartView);
+                Scene scene = new Scene(histogramView);
                 Stage pieChartStage = new Stage();
                 pieChartStage.setScene(scene);
                 pieChartStage.setTitle("Move Duration per Player");

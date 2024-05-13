@@ -1,8 +1,7 @@
 package be.kdg.ccross.view.multiplayerscreen;
 
 import be.kdg.ccross.model.*;
-import be.kdg.ccross.view.pieChartScreen.PieChartPresenter;
-import be.kdg.ccross.view.pieChartScreen.PieChartView;
+import be.kdg.ccross.view.histogramScreen.*;
 import javafx.event.Event;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -277,18 +276,18 @@ public class MultiPlayerPresenter {
             if (buttonType == closeButton) {
                 reset();
                 // Create PieChartView and Presenter
-                PieChartView pieChartView = new PieChartView();
-                PieChartPresenter pieChartPresenter = new PieChartPresenter(session, pieChartView);
+                //PieChartView pieChartView = new PieChartView();
+                //PieChartPresenter pieChartPresenter = new PieChartPresenter(session, pieChartView);
 
                 // Update view with move data
-                pieChartPresenter.updateView(session.getDatabase().getGameId());
+                //pieChartPresenter.updateView(session.getDatabase().getGameId());
 
                 // Show PieChartView in a new window
-                Scene scene = new Scene(pieChartView);
-                Stage pieChartStage = new Stage();
-                pieChartStage.setScene(scene);
-                pieChartStage.setTitle("Move Duration per Player");
-                pieChartStage.show();
+                //Scene scene = new Scene(pieChartView);
+                //Stage pieChartStage = new Stage();
+                //pieChartStage.setScene(scene);
+                //pieChartStage.setTitle("Move Duration per Player");
+                //pieChartStage.show();
                 ((Stage)view.getScene().getWindow()).close();
             } else if (buttonType == exitButton) {
                 reset();

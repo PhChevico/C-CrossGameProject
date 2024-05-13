@@ -132,7 +132,7 @@ public class Database {
             PreparedStatement pstmt = getConnection().prepareStatement(query);
             pstmt.setInt(1, getGameId());
             pstmt.setString(2, playerName);
-            long elapsedTimeMillis = session.getGameTime().getElapsedTime();
+            long elapsedTimeMillis = session.getMove().getGameTime().getElapsedTime();
 
             pstmt.setLong(3, elapsedTimeMillis);
             pstmt.executeUpdate();
