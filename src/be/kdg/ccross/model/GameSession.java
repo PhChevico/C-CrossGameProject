@@ -136,18 +136,6 @@ public class GameSession {
         }
         ;
     }
-    public void reset(){
-        authentication = new Authentication();
-        board = new Board();
-        database = new Database();
-        player1 = new Player();
-        player2 = new Player();
-        playerAI = new Player();
-        gameTime = new GameTime();
-        endGame = new EndGame();
-        engine = new InferenceEngine();
-        move = new Move();
-    }
 
     public Authentication getAuthentication() {
         return authentication;

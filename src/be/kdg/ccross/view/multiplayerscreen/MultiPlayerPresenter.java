@@ -46,7 +46,6 @@ public class MultiPlayerPresenter {
         for (Map.Entry<String, ImageView> entry : view.getBoardImages().entrySet()) {
             ImageView squareImg = entry.getValue();
             squareImg.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
-                System.out.println(entry.getKey());
                 checkingActionToSquare(new Pair<>(entry.getKey(), entry.getValue()));
                 mouseEvent.consume();
             });
@@ -137,6 +136,46 @@ public class MultiPlayerPresenter {
         view.getPlayer2pawns().setText("= " + String.valueOf(session.getPlayer2().getPawnNumber()));//update the label of player1 for the number of Pawns left
 
     }
+    public void addZonePlayer1(List<Square> zoneAsList,boolean rotate) {
+        int counter = 1;
+
+        for (Square s : zoneAsList) {
+            String[] parts = s.getCoordinates().split("-");
+            String filename = "images/Verde0"+counter+".png";
+            Image image = new Image(filename);
+            ImageView img = new ImageView(image);
+            img.setFitWidth(view.getSQUARE_SIZE());
+            img.setFitHeight(view.getSQUARE_SIZE());
+            counter = (counter % 5) + 1;
+
+
+            if (rotate) {
+                img.setRotate(180);
+            }
+            view.add(img, Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
+        }
+
+    }
+    public void addZonePlayer2(List<Square> zoneAsList,boolean rotate){
+        int counter = 1;
+        int counterForFlip=0;
+        int countingWhenFlip = 1;
+
+        for (Square s : zoneAsList) {
+            String[] parts = s.getCoordinates().split("-");
+            String filename = "images/Laranja0"+counter+".png";
+            Image image = new Image(filename);
+            ImageView img = new ImageView(image);
+            img.setFitWidth(view.getSQUARE_SIZE());
+            img.setFitHeight(view.getSQUARE_SIZE());
+            counter = (counter % 5) + 1;
+
+            if (rotate) {
+                img.setRotate(180);
+            }
+            view.add(img, Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
+        }
+    }
     public void goNextRound(){
 
 
@@ -177,12 +216,12 @@ public class MultiPlayerPresenter {
         for (int i = 65; i <= 80; i++) {//loop through all the zones (from A to P in integer)
             List<Square> checkingSquares = session.getBoard().getZone((char)i).getSquareOfZone();//pass the list of squares of a single zone to a list
             if(session.getBoard().getZone((char)i).getOwner()==session.getPlayer1()){//if the zone is owned by player 1
-                view.addZonePlayer1(checkingSquares,session.getBoard().getZone((char)i).isRotate());//add the zone visually by calling the method
+                addZonePlayer1(checkingSquares,session.getBoard().getZone((char)i).isRotate());//add the zone visually by calling the method
 
 
             };
             if (session.getBoard().getZone((char)i).getOwner()==session.getPlayer2()){//same as previous step
-                view.addZonePlayer2(checkingSquares,session.getBoard().getZone((char)i).isRotate());
+                addZonePlayer2(checkingSquares,session.getBoard().getZone((char)i).isRotate());
 
 
             }

@@ -1,5 +1,5 @@
 package be.kdg.ccross.view.singleplayerscreen;
-import be.kdg.ccross.model.Square;
+
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -160,45 +160,9 @@ public class SinglePlayerView extends GridPane {
 
         return pawn;
     }
-    public void addZonePlayer1(List<Square> zoneAsList,boolean rotate) {
-        int counter = 1;
 
-        for (Square s : zoneAsList) {
-            String[] parts = s.getCoordinates().split("-");
-            String filename = "images/Verde0"+counter+".png";
-            Image image = new Image(filename);
-            ImageView img = new ImageView(image);
-            img.setFitWidth(SQUARE_SIZE);
-            img.setFitHeight(SQUARE_SIZE);
-            counter = (counter % 5) + 1;
-
-
-            if (rotate) {
-                img.setRotate(180);
-            }
-            add(img, Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
-        }
-
-    }
-    public void addZonePlayerAI(List<Square> zoneAsList,boolean rotate){
-        int counter = 1;
-        int counterForFlip=0;
-        int countingWhenFlip = 1;
-
-        for (Square s : zoneAsList) {
-            String[] parts = s.getCoordinates().split("-");
-            String filename = "images/Laranja0"+counter+".png";
-            Image image = new Image(filename);
-            ImageView img = new ImageView(image);
-            img.setFitWidth(SQUARE_SIZE);
-            img.setFitHeight(SQUARE_SIZE);
-            counter = (counter % 5) + 1;
-
-            if (rotate) {
-                img.setRotate(180);
-            }
-            add(img, Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
-        }
+    public int getSQUARE_SIZE() {
+        return SQUARE_SIZE;
     }
 
     public Button getNextRound() { //used for eventHandler

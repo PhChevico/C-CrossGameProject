@@ -64,7 +64,6 @@ public class Board {
     }
 
 
-
     public List<String> getSquaresAsList(){
 
         // Get all squares

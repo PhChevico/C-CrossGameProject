@@ -152,12 +152,12 @@ public class SinglePlayerPresenter {
         for (int i = 65; i <= 80; i++) {//loop through all the zones (from A to P in integer)
             List<Square> checkingSquares = session.getBoard().getZone((char)i).getSquareOfZone();//pass the list of squares of a single zone to a list
             if(session.getBoard().getZone((char)i).getOwner()==session.getPlayer1()){//if the zone is owned by player 1
-                view.addZonePlayer1(checkingSquares,session.getBoard().getZone((char)i).isRotate());//add the zone visually by calling the method
+                addZonePlayer1(checkingSquares,session.getBoard().getZone((char)i).isRotate());//add the zone visually by calling the method
 
 
             }
             if (session.getBoard().getZone((char)i).getOwner()==session.getPlayer2()){//same as previous step
-                view.addZonePlayerAI(checkingSquares,session.getBoard().getZone((char)i).isRotate());
+                addZonePlayerAI(checkingSquares,session.getBoard().getZone((char)i).isRotate());
 
 
             }
@@ -267,6 +267,46 @@ public class SinglePlayerPresenter {
         }
         session.getPlayer2().decreasePawnNumber(1);
         view.getPlayerAIpawns().setText("= " + String.valueOf(session.getPlayer2().getPawnNumber()));//update the label of player2 for the number of Pawns left
+    }
+    public void addZonePlayer1(List<Square> zoneAsList,boolean rotate) {
+        int counter = 1;
+
+        for (Square s : zoneAsList) {
+            String[] parts = s.getCoordinates().split("-");
+            String filename = "images/Verde0"+counter+".png";
+            Image image = new Image(filename);
+            ImageView img = new ImageView(image);
+            img.setFitWidth(view.getSQUARE_SIZE());
+            img.setFitHeight(view.getSQUARE_SIZE());
+            counter = (counter % 5) + 1;
+
+
+            if (rotate) {
+                img.setRotate(180);
+            }
+            view.add(img, Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
+        }
+
+    }
+    public void addZonePlayerAI(List<Square> zoneAsList,boolean rotate){
+        int counter = 1;
+        int counterForFlip=0;
+        int countingWhenFlip = 1;
+
+        for (Square s : zoneAsList) {
+            String[] parts = s.getCoordinates().split("-");
+            String filename = "images/Laranja0"+counter+".png";
+            Image image = new Image(filename);
+            ImageView img = new ImageView(image);
+            img.setFitWidth(view.getSQUARE_SIZE());
+            img.setFitHeight(view.getSQUARE_SIZE());
+            counter = (counter % 5) + 1;
+
+            if (rotate) {
+                img.setRotate(180);
+            }
+            view.add(img, Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
+        }
     }
 
     void closeApplication(Event event) {//alert to in case of end application
