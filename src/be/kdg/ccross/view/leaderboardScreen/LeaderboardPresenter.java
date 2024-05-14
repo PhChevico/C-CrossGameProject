@@ -96,7 +96,8 @@ public class LeaderboardPresenter {
                         String.valueOf(stats.getGamesPlayed()),
                         String.valueOf(stats.getWins()),
                         String.valueOf(stats.getLosses()),
-                        String.format("%.2f", (double) (stats.getWins() / stats.getLosses())),
+                        String.format("%.2f", (stats.getLosses()==0)&&(stats.getWins()==0)||((stats.getLosses()>0)&&stats.getWins()==0) ? 0 :
+                                stats.getLosses()==0 ?  100 : (double) (stats.getWins() / stats.getLosses())),
                         String.format("%.2f", stats.getAvgMoves()),
                         String.format("%.2f", stats.getAvgDuration())
                 })

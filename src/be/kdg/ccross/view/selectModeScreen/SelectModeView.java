@@ -52,8 +52,8 @@ public class SelectModeView extends VBox {
                 BackgroundSize.DEFAULT);
         this.setBackground(new Background(backgroundImage));
 
-        setMinHeight(100);
-        setMinWidth(100);
+        setMinHeight(300);
+        setMinWidth(600);
     }
 
     Button getSinglePlayer() {

@@ -8,6 +8,7 @@ import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -186,6 +187,30 @@ public class Database {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    public void updateLastAccessTime(String username) {
+        String sql = "UPDATE players SET last_access_time = ? WHERE username = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
+            pstmt.setString(2, username);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Method to retrieve the last player who accessed the game
+    public String getLastAccessedPlayer() {
+        String sql = "SELECT username FROM players ORDER BY last_access_time DESC LIMIT 1";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getString("username");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
     private List<PlayerStatistics> playerStatisticsList;
 }

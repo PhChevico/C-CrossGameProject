@@ -27,7 +27,7 @@ public class GameSession {
         board = new Board();
         database = new Database();
         player1 = new Player();
-        player1.setName(getUsername());
+        player1.setName(database.getLastAccessedPlayer());
         player2 = new Player();
         playerAI = new Player();
         gameTime = new GameTime();

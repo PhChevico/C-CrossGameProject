@@ -1,10 +1,12 @@
 package be.kdg.ccross.model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
     private Move move = new Move();
+    private LocalDateTime lastAccessTime;
 
 
     private String name;
@@ -40,6 +42,13 @@ public class Player {
     }
     public Move getMove() {
         return move;
+    }
+    public LocalDateTime getLastAccessTime() {
+        return lastAccessTime;
+    }
+
+    public void updateLastAccessTime() {
+        this.lastAccessTime = LocalDateTime.now();
     }
 
 

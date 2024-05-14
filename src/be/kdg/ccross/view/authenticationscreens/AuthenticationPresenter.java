@@ -38,6 +38,7 @@ public class AuthenticationPresenter {
                 userError(null);
 
             }else if (model.getAuthentication().isLoginCorrect(username,password)){
+                model.getDatabase().updateLastAccessTime(username);
                 welcome(null);
             }else {
                 userError(null);

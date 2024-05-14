@@ -10,6 +10,11 @@ CREATE TABLE IF NOT EXISTS Players (
                                          username VARCHAR(15) NOT NULL PRIMARY KEY,
                                          password VARCHAR(25) NOT NULL
 );
+ALTER TABLE Players
+    ADD COLUMN last_access_time TIMESTAMP;
+
+
+
 
 SELECT * FROM Games;
 CREATE TABLE IF NOT EXISTS Games (

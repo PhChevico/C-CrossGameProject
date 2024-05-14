@@ -1,6 +1,7 @@
 package be.kdg.ccross.view.histogramScreen;
 
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
@@ -17,7 +18,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class HistogramView extends BorderPane {
-    private Button goBackButton;
+    private Button goBack;
     private BarChart<String, Number> barChart;
     private Set<String> addedLegendItems = new HashSet<>();
 
@@ -27,7 +28,7 @@ public class HistogramView extends BorderPane {
     }
 
     private void initialiseNodes() {
-        goBackButton = new Button("Go back to Main Menu");
+        goBack = new Button("Go back to Main Menu");
         barChart = new BarChart<>(new CategoryAxis(), new NumberAxis());
     }
 
@@ -39,10 +40,11 @@ public class HistogramView extends BorderPane {
                 BackgroundPosition.CENTER,
                 BackgroundSize.DEFAULT);
         this.setBackground(new Background(backgroundImage));
-        goBackButton.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #d38103; -fx-font-weight: bold");
-        this.setBottom(goBackButton);
-        setAlignment(goBackButton, Pos.CENTER);
-        setCenter(barChart);
+        goBack.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #4f2e00; -fx-font-weight: bold");
+        this.setBottom(goBack);
+        this.setPadding(new Insets(10));
+        setAlignment(goBack, Pos.CENTER);
+        setTop(barChart);
 
         // Adjust the scale of the X-axis
         CategoryAxis xAxis = (CategoryAxis) barChart.getXAxis();
@@ -53,8 +55,8 @@ public class HistogramView extends BorderPane {
         yAxis.setLabel("Move Time");
     }
 
-    public Button getGoBackButton() {
-        return goBackButton;
+    public Button getGoBack() {
+        return goBack;
     }
 
     public void updateHistogramData(ObservableList<XYChart.Series<String, Number>> data, Map<String, String> moveColorMap, String outlierMoveName) {
@@ -86,7 +88,7 @@ public class HistogramView extends BorderPane {
                 bottomVBox.getChildren().add(outlierLabel);
             } else {
                 VBox newBottomVBox = new VBox();
-                setBottom(newBottomVBox);
+                setCenter(newBottomVBox);
                 newBottomVBox.getChildren().add(outlierLabel);
                 newBottomVBox.setAlignment(Pos.CENTER);
             }
