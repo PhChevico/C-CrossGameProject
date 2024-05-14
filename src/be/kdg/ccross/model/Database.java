@@ -187,7 +187,5 @@ public class Database {
             e.printStackTrace();
         }
     }
-
-
-
+    private List<PlayerStatistics> playerStatisticsList;
 }

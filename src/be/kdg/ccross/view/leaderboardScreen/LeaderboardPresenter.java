@@ -5,9 +5,10 @@ import be.kdg.ccross.model.GameSession;
 import be.kdg.ccross.model.PlayerStatistics;
 import be.kdg.ccross.view.homeScreen.HomeScreenPresenter;
 import be.kdg.ccross.view.homeScreen.HomeScreenView;
+import be.kdg.ccross.view.piechartscreen.PieChartPresenter;
+import be.kdg.ccross.view.piechartscreen.PieChartView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -25,9 +26,10 @@ public class LeaderboardPresenter {
         addEventHandlers();
         updateView(); // Call updateView to initially populate the leaderboard
     }
-    private void addEventHandlers() {
 
+    private void addEventHandlers() {
         view.getGoBack().setOnAction(actionEvent -> setHomeScreenView());
+
         view.getRank().setOnMouseClicked(mouseEvent -> {
             sortBy = "Rank";
             updateView();
@@ -70,20 +72,28 @@ public class LeaderboardPresenter {
 
         view.getGoBack().setOnMouseEntered(e -> view.getGoBack().setStyle("-fx-background-color: orange; -fx-text-fill: #4f2e00; -fx-font-weight: bold"));
         view.getGoBack().setOnMouseExited(e -> view.getGoBack().setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #4f2e00; -fx-font-weight: bold"));
-
-
     }
 
     public void updateView() {
         // Fetch player statistics from the database
         ObservableList<PlayerStatistics> playerStatisticsList = FXCollections.observableArrayList(database.getPlayerStatistics());
-        // Assuming sortBy and ascending are determined based on user input or some other logic
         boolean ascending = false;
 
-        view.updateLeaderboard(playerStatisticsList, sortBy, ascending);
+        view.updateLeaderboard(playerStatisticsList, sortBy, ascending, this::setPieChartPlayer);
     }
-    private void setHomeScreenView(){
 
+    public void setPieChartPlayer(PlayerStatistics stats) {
+        PieChartView pieChartView = new PieChartView();
+        Scene scene = view.getScene();
+        scene.setRoot(pieChartView);
+        Stage stage = (Stage) scene.getWindow();
+        stage.setResizable(true);
+        stage.setTitle("Player Statistics - " + stats.getPlayerName());
+        new PieChartPresenter(model, pieChartView, stats.getPlayerName(), stats.getWins(), stats.getLosses());
+        pieChartView.getScene().getWindow().sizeToScene();
+    }
+
+    private void setHomeScreenView() {
         HomeScreenView homeScreenView = new HomeScreenView();
         Scene scene = view.getScene();
         scene.setRoot(homeScreenView);
@@ -92,6 +102,5 @@ public class LeaderboardPresenter {
         stage.setTitle("C-Cross");
         HomeScreenPresenter homeScreenPresenter = new HomeScreenPresenter(model, homeScreenView);
         homeScreenView.getScene().getWindow().sizeToScene();
-
     }
 }
