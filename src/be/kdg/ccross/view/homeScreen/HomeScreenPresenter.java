@@ -1,6 +1,8 @@
 package be.kdg.ccross.view.homeScreen;
 
 import be.kdg.ccross.model.GameSession;
+import be.kdg.ccross.view.instructionscreen.InstructionsPresenter;
+import be.kdg.ccross.view.instructionscreen.InstructionsView;
 import be.kdg.ccross.view.leaderboardScreen.LeaderboardPresenter;
 import be.kdg.ccross.view.leaderboardScreen.LeaderboardView;
 import be.kdg.ccross.view.selectModeScreen.SelectModePresenter;
@@ -29,6 +31,8 @@ public class HomeScreenPresenter {
         view.getPlay().setOnAction(actionEvent -> setSelectMode());
 
         view.getLeaderboard().setOnAction(actionEvent -> setLeaderboardView());
+
+        view.getInstructions().setOnAction(actionEvent -> setInstructionView());
 
         view.getPlay().setOnMouseEntered(e -> view.getPlay().setStyle("-fx-background-color: orange; -fx-text-fill: #4f2e00; -fx-font-weight: bold"));
         view.getPlay().setOnMouseExited(e -> view.getPlay().setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #4f2e00; -fx-font-weight: bold"));
@@ -67,6 +71,14 @@ public class HomeScreenPresenter {
         LeaderboardPresenter leaderboardPresenter = new LeaderboardPresenter(model,leaderboardView);
         leaderboardView.getScene().getWindow().sizeToScene();
     }
+    void setInstructionView(){
+
+        InstructionsView instructionsView = new InstructionsView();
+        view.getScene().setRoot(instructionsView);
+        InstructionsPresenter instructionsPresenter = new InstructionsPresenter(model,instructionsView);
+        instructionsView.getScene().getWindow().sizeToScene();
+    }
+
 
     void closeApplication(Event event) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
