@@ -26,7 +26,7 @@ public class MultiPlayerPresenter {
         this.view = view;
         session.getGameTime().start();//start the game time
         session.getDatabase().insertNewGame(session.getDatabase().generateGameId(),session.getGameTime().getStartTime());//create a new game in the database
-        session.getPlayer1().getMove().getGameTime().start();//start the move time for the first move
+        session.getMove().getGameTime().start();//start the move time for the first move
         // Show initial board
         this.view.boardMaker(session.getSquaresAsList());//call the method boardMaker to create the board passing the List of squares
         //(see in Board class)
@@ -102,18 +102,13 @@ public class MultiPlayerPresenter {
 
             if(session.getCounter() % 2 == 0){
                 if(session.getRound()%2==0){//decrease player Pawns by 1
-                    session.getPlayer1().getMove().getGameTime().stop();
-                    session.getPlayer2().getMove().getGameTime().start();
+                    session.getMove().getGameTime().stop();
+                    session.getDatabase().storeMoveData(session.getDatabase().getGameId(),session.getPlayer1().getName(),session);
+
                 }else {
-                    session.getPlayer2().getMove().getGameTime().stop();
-                    session.getPlayer1().getMove().getGameTime().start();
+                    session.getMove().getGameTime().start();
                 }
 
-                if(session.getRound()%2==0){//decrease player Pawns by 2
-                    session.getDatabase().storeMoveData(session.getDatabase().getGameId(),session.getPlayer1().getName(),session);
-                }else {
-                    session.getDatabase().storeMoveData(session.getDatabase().getGameId(),session.getPlayer2().getName(),session);
-                }
 
                 session.setLastMove(null);
                 session.setRound(session.getRound()+1);
@@ -194,14 +189,13 @@ public class MultiPlayerPresenter {
 
         view.getNextRound().setVisible(false);//we make the nextRound button non-visible
         if(session.getRound()%2==0){//stop the time and start the time for the other player
-            session.getPlayer1().getMove().getGameTime().stop();
-            session.getPlayer2().getMove().getGameTime().start();
+            session.getMove().getGameTime().stop();
+            session.getDatabase().storeMoveData(session.getDatabase().getGameId(),session.getPlayer1().getName(),session);
         }else {
-            session.getPlayer2().getMove().getGameTime().stop();
-            session.getPlayer1().getMove().getGameTime().start();
+            session.getMove().getGameTime().start();
         }
 
-        session.getDatabase().storeMoveData(1,session.getPlayer1().getName(),session);
+
 
 
         session.dominateZones();
@@ -248,19 +242,19 @@ public class MultiPlayerPresenter {
     }
 
     public void displaySummary(boolean winner) {
-        long totalPlayTimeMillis = session.getGameTime().getElapsedTime();
+        long totalPlayTimeMillis = this.session.getGameTime().getElapsedTime();
         String playerWinner;
         if (winner) {
-            playerWinner = session.getPlayer1().getName();
+            playerWinner = this.session.getPlayer1().getName();
         } else {
-            playerWinner = session.getPlayer2().getName();
+            playerWinner = "AI";
         }
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("End of Game Summary");
         alert.setHeaderText(null);
-        alert.setContentText("Winner: " + (winner ? session.getPlayer1().getName() : session.getPlayer2().getName()) + "\nTotal Play Time: " +
+        alert.setContentText("Winner: " + (winner ? session.getPlayer1().getName() : "AI") + "\nTotal Play Time: " +
                 ((double) (totalPlayTimeMillis)) / 1000 + " seconds\n" +
-                "Total Rounds " + (winner ? session.getPlayer1().getName() : session.getPlayer2().getName()) + ": " + session.getRound() / 2 + " Rounds\n" +
+                "Total Rounds " + session.getPlayer1().getName() + ": " + session.getRound() / 2 + " Rounds\n" +
                 "Average Duration per Move: " + ((double) (totalPlayTimeMillis / (session.getRound() / 2))) / 1000 + " seconds"
         );
 
@@ -276,24 +270,22 @@ public class MultiPlayerPresenter {
             if (buttonType == closeButton) {
                 reset();
                 // Create PieChartView and Presenter
-                //PieChartView pieChartView = new PieChartView();
-                //PieChartPresenter pieChartPresenter = new PieChartPresenter(session, pieChartView);
+                HistogramView histogramView = new HistogramView();
+                HistogramPresenter histogramPresenter = new HistogramPresenter(session,histogramView);
 
                 // Update view with move data
-                //pieChartPresenter.updateView(session.getDatabase().getGameId());
-
+                histogramPresenter.updateView(session.getDatabase().getGameId());
                 // Show PieChartView in a new window
-                //Scene scene = new Scene(pieChartView);
-                //Stage pieChartStage = new Stage();
-                //pieChartStage.setScene(scene);
-                //pieChartStage.setTitle("Move Duration per Player");
-                //pieChartStage.show();
+                Scene scene = new Scene(histogramView);
+                Stage pieChartStage = new Stage();
+                pieChartStage.setScene(scene);
+                pieChartStage.setTitle("Move Duration per Player");
+                pieChartStage.show();
                 ((Stage)view.getScene().getWindow()).close();
             } else if (buttonType == exitButton) {
                 reset();
                 // Exit the application
                 System.exit(0);
-
             }
         });
     }
