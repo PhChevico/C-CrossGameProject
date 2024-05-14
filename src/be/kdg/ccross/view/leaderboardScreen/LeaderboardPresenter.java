@@ -12,6 +12,10 @@ import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class LeaderboardPresenter {
     private String sortBy;
     private GameSession model;
@@ -22,18 +26,13 @@ public class LeaderboardPresenter {
         this.model = model;
         this.view = view;
         this.database = new Database(); // Create an instance of the Database class
-        sortBy = "Win";
+        sortBy = "Wins";
         addEventHandlers();
         updateView(); // Call updateView to initially populate the leaderboard
     }
 
     private void addEventHandlers() {
         view.getGoBack().setOnAction(actionEvent -> setHomeScreenView());
-
-        view.getRank().setOnMouseClicked(mouseEvent -> {
-            sortBy = "Rank";
-            updateView();
-        });
 
         view.getGamesPlayed().setOnMouseClicked(mouseEvent -> {
             sortBy = "Games Played";
@@ -76,20 +75,83 @@ public class LeaderboardPresenter {
 
     public void updateView() {
         // Fetch player statistics from the database
-        ObservableList<PlayerStatistics> playerStatisticsList = FXCollections.observableArrayList(database.getPlayerStatistics());
-        boolean ascending = false;
+        List<PlayerStatistics> playerStatisticsList = database.getPlayerStatistics();
 
-        view.updateLeaderboard(playerStatisticsList, sortBy, ascending, this::setPieChartPlayer);
+        // Filter out players with at least 1 game played
+        List<PlayerStatistics> filteredList = playerStatisticsList.stream()
+                .filter(stats -> stats.getGamesPlayed() > 0)
+                .collect(Collectors.toList());
+
+        // Sort the filtered list based on the selected criterion
+        boolean ascending = false;
+        List<PlayerStatistics> sortedList = filteredList.stream()
+                .sorted(getComparator(sortBy, ascending))
+                .collect(Collectors.toList());
+
+        // Format the sorted data for the view
+        List<String[]> formattedData = sortedList.stream()
+                .map(stats -> new String[]{
+                        String.valueOf(sortedList.indexOf(stats) + 1),  // Use the index of the sorted list for rank
+                        stats.getPlayerName(),
+                        String.valueOf(stats.getGamesPlayed()),
+                        String.valueOf(stats.getWins()),
+                        String.valueOf(stats.getLosses()),
+                        String.format("%.2f", (double) (stats.getWins() / stats.getLosses())),
+                        String.format("%.2f", stats.getAvgMoves()),
+                        String.format("%.2f", stats.getAvgDuration())
+                })
+                .collect(Collectors.toList());
+
+        view.updateLeaderboard(formattedData, this::setPieChartPlayer);
     }
 
-    public void setPieChartPlayer(PlayerStatistics stats) {
+
+
+    private Comparator<PlayerStatistics> getComparator(String sortBy, boolean ascending) {
+        Comparator<PlayerStatistics> comparator;
+
+        switch (sortBy) {
+            case "Games Played":
+                comparator = Comparator.comparingInt(PlayerStatistics::getGamesPlayed);
+                break;
+            case "Player Name":
+                comparator = Comparator.comparing(PlayerStatistics::getPlayerName);
+                break;
+            case "Wins":
+                comparator = Comparator.comparingInt(PlayerStatistics::getWins);
+                break;
+            case "Losses":
+                comparator = Comparator.comparingInt(PlayerStatistics::getLosses);
+                break;
+            case "% Games Won":
+                comparator = Comparator.comparingDouble(stats -> (double) stats.getWins() / stats.getLosses());
+                break;
+            case "Avg Moves":
+                comparator = Comparator.comparingDouble(PlayerStatistics::getAvgMoves);
+                break;
+            case "Avg Duration":
+                comparator = Comparator.comparingDouble(PlayerStatistics::getAvgDuration);
+                break;
+            default:
+                comparator = Comparator.comparingInt(PlayerStatistics::getWins);
+                break;
+        }
+
+        return ascending ? comparator : comparator.reversed();
+    }
+
+    public void setPieChartPlayer(String[] data) {
+        String playerName = data[1];
+        int wins = Integer.parseInt(data[3]);
+        int losses = Integer.parseInt(data[4]);
+
         PieChartView pieChartView = new PieChartView();
         Scene scene = view.getScene();
         scene.setRoot(pieChartView);
         Stage stage = (Stage) scene.getWindow();
         stage.setResizable(true);
-        stage.setTitle("Player Statistics - " + stats.getPlayerName());
-        new PieChartPresenter(model, pieChartView, stats.getPlayerName(), stats.getWins(), stats.getLosses());
+        stage.setTitle("Player Statistics - " + playerName);
+        new PieChartPresenter(model, pieChartView, playerName, wins, losses);
         pieChartView.getScene().getWindow().sizeToScene();
     }
 
