@@ -32,21 +32,20 @@ public class Database {
 
         try {
             // Query to fetch player statistics
-            String query = "SELECT p.username AS player_name, COUNT(g.game_id) AS games_played, " +
+            String query = "SELECT p.username AS player_name, " +
+                    "COUNT(g.game_id) AS games_played, " +
                     "SUM(CASE WHEN g.winner_username = p.username THEN 1 ELSE 0 END) AS wins, " +
-                    "SUM(CASE WHEN g.winner_username != p.username THEN 1 ELSE 0 END) AS losses, " +
+                    "COUNT(g.game_id) - SUM(CASE WHEN g.winner_username = p.username THEN 1 ELSE 0 END) AS losses, " +
                     "CASE WHEN COUNT(g.game_id) > 0 THEN " +
                     "    (SUM(CASE WHEN g.winner_username = p.username THEN 1 ELSE 0 END) / NULLIF(COUNT(g.game_id), 0) * 100) " +
                     "ELSE " +
                     "    0 " +
                     "END AS win_percentage, " +
                     "AVG((SELECT COUNT(*) FROM Moves m WHERE m.game_id = g.game_id)) AS avg_moves, " +
-                    "AVG(EXTRACT(EPOCH FROM (g.end_time - g.start_time)) / NULLIF((SELECT COUNT(*) FROM Moves m WHERE m.game_id = g.game_id), 0)) AS avg_duration " +
+                    "AVG(EXTRACT(EPOCH FROM (g.end_time - g.start_time)) / NULLIF((SELECT COUNT(*) FROM Moves m WHERE m.game_id = g.game_id), 0.0)) AS avg_duration " +
                     "FROM Players p " +
                     "LEFT JOIN Games g ON g.winner_username = p.username OR g.game_id IN (SELECT m.game_id FROM Moves m WHERE m.username = p.username) " +
                     "GROUP BY p.username";
-
-
 
             // Create statement and execute query
             Statement statement = connection.createStatement();
@@ -174,12 +173,12 @@ public class Database {
         return connection;
     }
 
-    public void updateGameStats(int gameId,Player winner, GameTime time) {//used to insert the game statistic at the end of each game
+    public void updateGameStats(int gameId,String winner, GameTime time) {//used to insert the game statistic at the end of each game
         try {
             String updateGameQuery = "UPDATE Games SET end_time=?, winner_username=?, total_play_time=? WHERE game_id=?";
             PreparedStatement pstmt = connection.prepareStatement(updateGameQuery);
             pstmt.setTimestamp(1, time.getEndTime());
-            pstmt.setString(2, winner.getName());
+            pstmt.setString(2, winner);
             pstmt.setLong(3, time.getElapsedTime());
             pstmt.setInt(4, gameId);
             pstmt.executeUpdate();

@@ -24,15 +24,12 @@ public class GameTime {
     }
 
     public Timestamp getStartTime() {
-        long startTimeMillis = this.startTime;
-        java.sql.Timestamp time = new java.sql.Timestamp(System.currentTimeMillis() - startTimeMillis);
-        return time;
+        return new Timestamp(startTime);
     }
 
+
     public Timestamp getEndTime() {
-        long startTimeMillis = this.endTime;
-        java.sql.Timestamp time = new java.sql.Timestamp(System.currentTimeMillis() - startTimeMillis);
-        return time;
+        return new Timestamp(endTime);
     }
 }
 

@@ -226,7 +226,7 @@ public class MultiPlayerPresenter {
         if(session.getEndGame().Checkpawns(session.getPlayer1(), session.getPlayer2())==2|| //if player 1 won
                 session.getEndGame().CheckZones(session.getPlayer1(),session.getBoard())){
             session.getGameTime().stop();//we stop the timer
-            session.getDatabase().updateGameStats(session.getDatabase().getGameId(),session.getPlayer1(),session.getGameTime());//send data to the database
+            session.getDatabase().updateGameStats(session.getDatabase().getGameId(),session.getPlayer1().getName(),session.getGameTime());//send data to the database
             displaySummary(true);//display the game summery
 
 
@@ -234,7 +234,7 @@ public class MultiPlayerPresenter {
         }else if(session.getEndGame().Checkpawns(session.getPlayer1(), session.getPlayer2())==1 || //if AI won
                 session.getEndGame().CheckZones(session.getPlayer2(),session.getBoard())){
             session.getGameTime().stop();
-            session.getDatabase().updateGameStats(session.getDatabase().getGameId(),session.getPlayer2(),session.getGameTime());
+            session.getDatabase().updateGameStats(session.getDatabase().getGameId(),"Player2",session.getGameTime());
             displaySummary(false);
 
 
