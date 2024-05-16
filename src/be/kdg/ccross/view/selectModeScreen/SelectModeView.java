@@ -52,7 +52,7 @@ public class SelectModeView extends VBox {
                 BackgroundSize.DEFAULT);
         this.setBackground(new Background(backgroundImage));
 
-        setMinHeight(300);
+        setMinHeight(600);
         setMinWidth(600);
     }
 

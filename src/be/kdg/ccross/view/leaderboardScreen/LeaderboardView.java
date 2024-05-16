@@ -79,6 +79,8 @@ public class LeaderboardView extends VBox {
         goBack.setStyle("-fx-background-color: rgba(55,255,0,0.27); -fx-text-fill: #4f2e00; -fx-font-weight: bold");
 
         this.getChildren().addAll(headerPane, dataPane, buttonPane);
+        setMinHeight(600);
+        setMinWidth(600);
     }
 
     // Method to update the leaderboard with the player statistics

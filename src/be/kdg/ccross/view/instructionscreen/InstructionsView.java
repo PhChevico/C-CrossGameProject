@@ -47,7 +47,7 @@ public class InstructionsView extends VBox {
         textNode.setFill(Color.rgb(79, 46, 0));
 
         instructionsTextFlow = new TextFlow(textNode);
-        instructionsTextFlow.setMaxWidth(600);
+        instructionsTextFlow.setMaxWidth(500);
 
         backButton = new Button("Go Back");
     }
@@ -60,7 +60,7 @@ public class InstructionsView extends VBox {
 
         // Create a rectangle with 25% opacity
         Rectangle backgroundRectangle = new Rectangle();
-        backgroundRectangle.setWidth(650); // Set the width of the rectangle
+        backgroundRectangle.setWidth(600); // Set the width of the rectangle
         backgroundRectangle.setHeight(150); // Set the height of the rectangle (adjust as needed)
         backgroundRectangle.setFill(Color.rgb(255, 153, 10, 0.40)); // Set the color with 25% opacity
 
@@ -73,6 +73,8 @@ public class InstructionsView extends VBox {
         this.getChildren().addAll(instructionsTitle, stackPane, backButton);
         this.setAlignment(Pos.CENTER);
         this.setSpacing(25);
+        setMinHeight(600);
+        setMinWidth(600);
     }
 
     Button getBackButton() {

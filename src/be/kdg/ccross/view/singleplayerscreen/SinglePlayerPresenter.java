@@ -303,19 +303,21 @@ public class SinglePlayerPresenter {
                 int randomY = Integer.parseInt(randomParts[1].trim());
 
                 // Check if the selected square is not occupied, is different from the main square, and belongs to a different zone
-                if (!session.getBoard().getSquare(randomSquare).isStatus() &&
-                        (session.getBoard().getSquareZone(mainSquare) != session.getBoard().getSquareZone(randomSquare)) &&
-                        (session.getBoard().getSquaresAsList().contains(randomSquare))) {
+                if((session.getBoard().getSquaresAsList().contains(randomSquare))) {
+                    if (!session.getBoard().getSquare(randomSquare).isStatus() &&
+                            (session.getBoard().getSquareZone(mainSquare) != session.getBoard().getSquareZone(randomSquare))) {
 
-                    // Add a pawn in the randomly selected adjacent square
-                    session.getBoard().getSquare(randomSquare).setStatus(true);
-                    view.add(view.createPawn2(randomSquare), randomX, randomY);
-                    session.getBoard().getSquare(randomSquare).setOwnership(session.getPlayer2());
-                    placed = true;
+                        // Add a pawn in the randomly selected adjacent square
+                        session.getBoard().getSquare(randomSquare).setStatus(true);
+                        view.add(view.createPawn2(randomSquare), randomX, randomY);
+                        session.getBoard().getSquare(randomSquare).setOwnership(session.getPlayer2());
+                        placed = true;
+                    }
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Error parsing coordinates for square: " + randomSquare + " - " + e.getMessage());
             }
+
         }
 
         if (!placed) {

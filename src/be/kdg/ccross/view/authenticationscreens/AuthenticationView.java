@@ -81,7 +81,8 @@ public class AuthenticationView extends VBox {
         cancel.setMinSize(90,15);
         log_in.setMinSize(90,15);
         setSpacing(25);
-
+        setMinHeight(600);
+        setMinWidth(600);
 
 
     }
