@@ -21,6 +21,7 @@ public class GameSession {
     private int round = 0;
     private InferenceEngine engine;
     private Move move;
+    private boolean level;
 
     public GameSession() {
         authentication = new Authentication();
@@ -215,7 +216,13 @@ public class GameSession {
         return database;
     }
 
+    public boolean isLevel() {
+        return level;
+    }
 
+    public void setLevel(boolean level) {
+        this.level = level;
+    }
 }
 
 

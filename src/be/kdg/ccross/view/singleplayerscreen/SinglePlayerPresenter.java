@@ -13,8 +13,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 
 public class SinglePlayerPresenter {
@@ -85,7 +87,7 @@ public class SinglePlayerPresenter {
             String[] parts = pair.getKey().split("-");
             view.add(view.createPawn1(pair.getKey()), Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));//create and place the pawn on the board
             session.getBoard().getSquare(pair.getKey()).setOwnership(session.getPlayer1());//we retrieve the square with coordinate and we pass the ownership of
-                // who clicked on that square
+            // who clicked on that square
 
             System.out.println(session.getBoard().getSquare(pair.getKey()).isStatus());
 
@@ -233,26 +235,33 @@ public class SinglePlayerPresenter {
         });
     }
 
-    public void aiTurn(){
+    public void aiTurn() {
         System.out.println("AI TURN");
 
-        session.getEngine().determineFacts(session);//determine the facts happening
-        session.getEngine().applyRules(session, session.getMove());//apply the rules
+        session.getEngine().determineFacts(session); // determine the facts happening
+        session.getEngine().applyRules(session, session.getMove()); // apply the rules
 
-        if(session.getMove().isBlockPlayerFromWinningMove()){//check if the move isBlockPlayerFromWinning is true
-            String[] parts = session.getMove().getCoordinates().split("-"); //retrieve the coordinates
-            session.getBoard().getSquare(session.getMove().getCoordinates()).setStatus(true);//set the status of the square as true
-            view.add(view.createPawn2(session.getMove().getCoordinates()), Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));//add a pawn on those coordinates
-            session.getBoard().getSquare(session.getMove().getCoordinates()).setOwnership(session.getPlayer2());//we set the ownership of the square by the AI
-            session.getMove().setBlockPlayerFromWinningMove(false);//we reset the move
-            session.setRound(session.getRound()+1);//and we go to the next round
-            session.dominateZones();//we check if by this move the AI can retrieve a Zone
+        if (session.getMove().isBlockPlayerFromWinningMove()) { // check if the move isBlockPlayerFromWinning is true
+            String coordinates = session.getMove().getCoordinates();
+            String[] parts = coordinates.split("-"); // retrieve the coordinates
+            session.getBoard().getSquare(coordinates).setStatus(true); // set the status of the square as true
+            view.add(view.createPawn2(coordinates), Integer.parseInt(parts[0]), Integer.parseInt(parts[1])); // add a pawn on those coordinates
+            session.getBoard().getSquare(coordinates).setOwnership(session.getPlayer2()); // set the ownership of the square by the AI
 
-        }else if (session.getMove().isStartNewPathMove()) {//repeat but with a different move.
+            if(session.isLevel()){placePawnInRandomAdjacentSquare(session.getMove().getCoordinates());}
+
+            session.getMove().setBlockPlayerFromWinningMove(false); // reset the move
+            session.setRound(session.getRound() + 1); // go to the next round
+            session.dominateZones(); // check if by this move the AI can retrieve a Zone
+        }
+        else if (session.getMove().isStartNewPathMove()) {//repeat but with a different move.
             String[] parts = session.getMove().getCoordinates().split("-");
             session.getBoard().getSquare(session.getMove().getCoordinates()).setStatus(true);
             view.add(view.createPawn2(session.getMove().getCoordinates()), Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
             session.getBoard().getSquare(session.getMove().getCoordinates()).setOwnership(session.getPlayer2());//we do the same but for player 2
+
+            if(session.isLevel()){placePawnInRandomAdjacentSquare(session.getMove().getCoordinates());}
+
             session.getMove().setStartNewPathMove(false);
             session.setRound(session.getRound()+1);
             session.dominateZones();
@@ -260,6 +269,9 @@ public class SinglePlayerPresenter {
             String[] parts = session.getMove().getCoordinates().split("-");
             session.getBoard().getSquare(session.getMove().getCoordinates()).setStatus(true);
             view.add(view.createPawn2(session.getMove().getCoordinates()), Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
+
+            if(session.isLevel()){placePawnInRandomAdjacentSquare(session.getMove().getCoordinates());}
+
             session.getBoard().getSquare(session.getMove().getCoordinates()).setOwnership(session.getPlayer2());//we do the same but for player 2
             session.getMove().setContinuePathMove(false);
             session.setRound(session.getRound()+1);
@@ -269,6 +281,50 @@ public class SinglePlayerPresenter {
         session.getPlayer2().decreasePawnNumber(1);
         view.getPlayerAIpawns().setText("= " + String.valueOf(session.getPlayer2().getPawnNumber()));//update the label of player2 for the number of Pawns left
     }
+    // Helper method to handle placing a pawn in a random adjacent square
+    // Helper method to handle placing a pawn in a random adjacent square
+    private void placePawnInRandomAdjacentSquare(String mainSquare) {
+        List<String> aroundSquares = session.aroundSquares(mainSquare);
+        Random random = new Random();
+
+        boolean placed = false;
+        while (!placed && !aroundSquares.isEmpty()) {
+            String randomSquare = aroundSquares.remove(random.nextInt(aroundSquares.size()));
+            String[] randomParts = randomSquare.split("-");
+
+            // Ensure that randomParts has exactly two elements
+            if (randomParts.length != 2) {
+                System.out.println("Invalid square format: " + randomSquare);
+                continue;
+            }
+
+            try {
+                int randomX = Integer.parseInt(randomParts[0].trim());
+                int randomY = Integer.parseInt(randomParts[1].trim());
+
+                // Check if the selected square is not occupied, is different from the main square, and belongs to a different zone
+                if (!session.getBoard().getSquare(randomSquare).isStatus() &&
+                        (session.getBoard().getSquareZone(mainSquare) != session.getBoard().getSquareZone(randomSquare)) &&
+                        (session.getBoard().getSquaresAsList().contains(randomSquare))) {
+
+                    // Add a pawn in the randomly selected adjacent square
+                    session.getBoard().getSquare(randomSquare).setStatus(true);
+                    view.add(view.createPawn2(randomSquare), randomX, randomY);
+                    session.getBoard().getSquare(randomSquare).setOwnership(session.getPlayer2());
+                    placed = true;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Error parsing coordinates for square: " + randomSquare + " - " + e.getMessage());
+            }
+        }
+
+        if (!placed) {
+            // Handle the case where no adjacent square is available
+            System.out.println("No adjacent squares available to place a pawn.");
+        }
+    }
+
+
     public void addZonePlayer1(List<Square> zoneAsList,boolean rotate) {
         int counter = 1;
 
